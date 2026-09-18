@@ -1,5 +1,5 @@
 /* TEAM */
-  Maintainer: krishanth7
+  Maintainer: krishanth
   Site: https://github.com/krishanth7
   Location: Independent, open source
 
