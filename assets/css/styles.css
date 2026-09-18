@@ -21,11 +21,26 @@
   --ink-050: #f7f9fc;
   --white: #ffffff;
 
-  /* Accent — a single measured blue, plus one green for verified facts */
+  /* Accent — a single measured blue, plus one green for verified facts.
+     Deliberately restrained: one hue carries the whole identity. */
+  --brand-800: #0c2f6e;
   --brand-700: #12408f;
   --brand-600: #1a56c4;
   --brand-500: #2a6fe8;
   --brand-100: #e4edfd;
+
+  /* Cipher effect — the decoder tokens from the brief, mapped onto the
+     project palette rather than the neon defaults. */
+  --ink: var(--text);
+  --ink-2: var(--brand-500);
+  --ink-3: var(--brand-600);
+
+  /* Motion — one easing curve and two durations, used everywhere. */
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --t-fast: 160ms;
+  --t-base: 280ms;
+  --t-slow: 620ms;
   --verify-600: #12715a;
   --verify-100: #dcf3ec;
   --warn-600: #8a5a06;
@@ -73,6 +88,9 @@
     --accent-soft: #14213c;
     --code-bg: #060a12;
     --code-text: #dde5f2;
+    --ink: var(--text);
+    --ink-2: #8fb8ff;
+    --ink-3: #6fa0ff;
     --verify-600: #59c9a8;
     --verify-100: #0e2a24;
     --warn-600: #e0b264;
@@ -98,6 +116,9 @@
   --accent-soft: #14213c;
   --code-bg: #060a12;
   --code-text: #dde5f2;
+  --ink: var(--text);
+  --ink-2: #8fb8ff;
+  --ink-3: #6fa0ff;
   --verify-600: #59c9a8;
   --verify-100: #0e2a24;
   --warn-600: #e0b264;
@@ -836,3 +857,201 @@ figcaption {
   font-size: 0.8rem;
   color: var(--text-faint);
 }
+
+/* ==========================================================================
+   Cipher / decoder effect
+   Scrambled characters resolve into the word, hold, then re-encrypt.
+   Driven entirely by `content` on a pseudo-element with steps(1), so there
+   is no interpolation and each frame lands crisply.
+
+   The text lives in aria-label, not in the DOM: generated content is not
+   dependably exposed to assistive technology, and a screen reader should be
+   given the word, never the scramble.
+   ========================================================================== */
+.fx-decoder {
+  display: inline-block;
+  font-family: var(--font);
+  font-weight: 700;
+  font-variation-settings: "MONO" 1;
+  letter-spacing: 0.06em;
+  color: var(--ink-3);
+  white-space: nowrap;
+  /* The scrambled frames are all the same length as "model.fit()", so the
+     line never reflows and no width reservation is needed -- reserving one
+     would only push the following punctuation away from the word. */
+}
+
+.fx-decoder::after {
+  content: "model.fit()";
+  animation: fx-decoder 7.5s steps(1) infinite;
+}
+
+@keyframes fx-decoder {
+  0%       { content: "▓#☰3&*▒%@()"; color: var(--ink-3); }
+  6%       { content: "m#☰3&*▒%@()"; }
+  12%      { content: "mo☰3&.▒%t()"; }
+  18%      { content: "mod3&.f▒t()"; }
+  24%      { content: "mode1.fi▒()"; color: var(--ink-2); }
+  30%, 84% { content: "model.fit()"; color: var(--ink); }
+  90%      { content: "m0d3l.f1t()"; color: var(--ink-2); }
+  96%      { content: "▓#d€&.▒%t()"; color: var(--ink-3); }
+}
+
+/* Someone who has asked for less motion gets the decoded word, held still. */
+@media (prefers-reduced-motion: reduce) {
+  .fx-decoder::after {
+    content: "model.fit()";
+    animation: none;
+    color: var(--ink);
+  }
+}
+
+/* ==========================================================================
+   Scroll reveal
+   The `is-ready` class is set by JavaScript. Without it nothing is hidden,
+   so the page is fully readable when the script fails, is blocked, or the
+   visitor has asked for reduced motion.
+   ========================================================================== */
+.is-ready .reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity var(--t-slow) var(--ease-out),
+    transform var(--t-slow) var(--ease-out);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+
+.is-ready .reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Once it has arrived, drop the compositing hint again. */
+.is-ready .reveal.is-settled { will-change: auto; }
+
+@media (prefers-reduced-motion: reduce) {
+  .is-ready .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* ==========================================================================
+   Section numbering — a quiet structural cue, not decoration
+   ========================================================================== */
+.section__head { counter-increment: section; }
+
+.eyebrow::before {
+  content: counter(section, decimal-leading-zero) " / ";
+  color: var(--text-faint);
+  font-weight: 500;
+}
+
+body { counter-reset: section; }
+
+.section__head--center .eyebrow::before { content: none; }
+
+/* ==========================================================================
+   Motion refinements
+   One easing curve, two durations. Everything that moves uses them.
+   ========================================================================== */
+.card {
+  transition:
+    transform var(--t-base) var(--ease),
+    box-shadow var(--t-base) var(--ease),
+    border-color var(--t-base) var(--ease);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--border-strong);
+  }
+
+  .roadmap li {
+    transition: border-color var(--t-base) var(--ease), transform var(--t-base) var(--ease);
+  }
+  .roadmap li:hover {
+    border-color: var(--border-strong);
+    transform: translateX(3px);
+  }
+
+  figure {
+    transition: box-shadow var(--t-base) var(--ease), transform var(--t-base) var(--ease);
+  }
+  figure:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+}
+
+.btn {
+  transition:
+    background var(--t-fast) var(--ease),
+    border-color var(--t-fast) var(--ease),
+    color var(--t-fast) var(--ease),
+    transform var(--t-fast) var(--ease);
+}
+.btn:active { transform: translateY(1px); }
+
+.nav__links a {
+  position: relative;
+  transition: color var(--t-fast) var(--ease), background var(--t-fast) var(--ease);
+}
+
+/* Active-section indicator, set by the scrollspy. */
+.nav__links a[aria-current="true"] { color: var(--text); }
+.nav__links a[aria-current="true"]::after {
+  content: "";
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 2px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--accent);
+  transform-origin: left;
+  animation: nav-underline var(--t-base) var(--ease-out);
+}
+
+@keyframes nav-underline {
+  from { transform: scaleX(0); opacity: 0; }
+  to   { transform: scaleX(1); opacity: 1; }
+}
+
+@media (max-width: 900px) {
+  .nav__links a[aria-current="true"]::after { display: none; }
+  .nav__links a[aria-current="true"] { background: var(--bg-inset); }
+}
+
+/* The hero wash drifts slowly rather than sitting static. */
+@media (prefers-reduced-motion: no-preference) {
+  .hero::before { animation: hero-drift 26s var(--ease) infinite alternate; }
+}
+
+@keyframes hero-drift {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to   { transform: translate3d(3%, 2%, 0) scale(1.08); }
+}
+
+/* Tabular figures so a counting number does not jitter mid-animation. */
+.stat__value { font-variant-numeric: tabular-nums; }
+
+.stat {
+  transition: background var(--t-base) var(--ease);
+}
+@media (hover: hover) and (pointer: fine) {
+  .stat:hover { background: var(--bg-alt); }
+}
+
+/* ==========================================================================
+   Corporate detail: a fine rule above each section heading
+   ========================================================================== */
+.section__head .eyebrow {
+  padding-top: 14px;
+  border-top: 2px solid var(--accent);
+}
+.section__head--center .eyebrow { border-top: 0; padding-top: 0; }

@@ -123,17 +123,17 @@ y.<span class="tok-fn">backward</span>()
 <!-- ============================ STATS ============================ -->
 <section class="section" style="padding-top:0">
   <div class="wrap">
-    <div class="stats">
+    <div class="stats reveal">
       <div class="stat">
-        <div class="stat__value mono-num">251</div>
+        <div class="stat__value mono-num" data-count-to="251">251</div>
         <div class="stat__label">lines in the gradient engine &mdash; the whole thing</div>
       </div>
       <div class="stat">
-        <div class="stat__value mono-num">~11,500</div>
+        <div class="stat__value mono-num" data-count-to="11500" data-count-prefix="~" data-count-group="1">~11,500</div>
         <div class="stat__label">lines across 65 focused modules</div>
       </div>
       <div class="stat">
-        <div class="stat__value mono-num">709</div>
+        <div class="stat__value mono-num" data-count-to="709">709</div>
         <div class="stat__label">tests, running in about 17 seconds on CPU</div>
       </div>
       <div class="stat">
@@ -147,9 +147,13 @@ y.<span class="tok-fn">backward</span>()
 <!-- ============================ WHAT IS IT ============================ -->
 <section class="section section--alt" id="what">
   <div class="wrap">
-    <div class="section__head">
+    <div class="section__head reveal">
       <span class="eyebrow">What it is</span>
-      <h2>Every deep-learning tutorial ends at <code>model.fit()</code>. Every production framework starts a million lines below it.</h2>
+      <h2>
+        Every deep-learning tutorial ends at
+        <span class="fx-decoder" role="img" aria-label="model.fit()"></span>.
+        Every production framework starts a million lines below it.
+      </h2>
       <p class="lede">
         There is almost nothing in between that you can read. EveryO is that middle: small
         enough to follow end to end in an afternoon, and verified carefully enough to trust
@@ -157,7 +161,7 @@ y.<span class="tok-fn">backward</span>()
       </p>
     </div>
 
-    <div class="grid grid--3">
+    <div class="grid grid--3 reveal">
       <article class="card">
         <div class="card__icon" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 16 4-4-4-4M6 8l-4 4 4 4M14.5 4l-5 16"/></svg>
@@ -224,7 +228,7 @@ y.<span class="tok-fn">backward</span>()
 <!-- ============================ CAPABILITIES ============================ -->
 <section class="section" id="capabilities">
   <div class="wrap">
-    <div class="section__head">
+    <div class="section__head reveal">
       <span class="eyebrow">Capabilities</span>
       <h2>What ships today</h2>
       <p class="lede">
@@ -233,7 +237,7 @@ y.<span class="tok-fn">backward</span>()
       </p>
     </div>
 
-    <div class="table-scroll">
+    <div class="table-scroll reveal">
       <table>
         <caption class="visually-hidden">EveryO capabilities by area, with status</caption>
         <thead>
@@ -271,7 +275,7 @@ y.<span class="tok-fn">backward</span>()
 <!-- ============================ CORRECTNESS ============================ -->
 <section class="section section--alt" id="correctness">
   <div class="wrap">
-    <div class="section__head">
+    <div class="section__head reveal">
       <span class="eyebrow">Correctness</span>
       <h2>Correctness is the feature</h2>
       <p class="lede">
@@ -280,7 +284,7 @@ y.<span class="tok-fn">backward</span>()
       </p>
     </div>
 
-    <div class="grid grid--2">
+    <div class="grid grid--2 reveal">
       <div>
 <pre class="term"><code>gradients      vs finite differences ..... every differentiable op, float64
 matmul         vs TensorFlow ............. <span class="tok-out">0.000e+00</span>
@@ -322,7 +326,7 @@ its GRADIENT   vs TensorFlow ............. <span class="tok-out">3.725e-09</span
 <!-- ============================ RESULTS ============================ -->
 <section class="section" id="results">
   <div class="wrap">
-    <div class="section__head">
+    <div class="section__head reveal">
       <span class="eyebrow">Results</span>
       <h2>Produced by the code, not by a designer</h2>
       <p class="lede">
@@ -331,7 +335,7 @@ its GRADIENT   vs TensorFlow ............. <span class="tok-out">3.725e-09</span
       </p>
     </div>
 
-    <div class="grid grid--2">
+    <div class="grid grid--2 reveal">
       <figure>
         <img src="assets/img/training-curves.png" alt="Training and validation loss and accuracy curves over 25 epochs" loading="lazy" width="1744" height="670">
         <figcaption>Training and validation curves over 25 epochs &mdash; <code>examples/neural_network.py</code>.</figcaption>
@@ -365,7 +369,7 @@ its GRADIENT   vs TensorFlow ............. <span class="tok-out">3.725e-09</span
 <!-- ============================ SCALING ============================ -->
 <section class="section section--alt" id="scaling">
   <div class="wrap">
-    <div class="section__head">
+    <div class="section__head reveal">
       <span class="eyebrow">Scaling</span>
       <h2>Mixed precision, ONNX and multi-core training</h2>
       <p class="lede">
@@ -374,7 +378,7 @@ its GRADIENT   vs TensorFlow ............. <span class="tok-out">3.725e-09</span
       </p>
     </div>
 
-    <div class="grid grid--3">
+    <div class="grid grid--3 reveal">
       <article class="card">
         <h3><code>autocast</code> + <code>GradScaler</code></h3>
         <p>
@@ -439,7 +443,7 @@ its GRADIENT   vs TensorFlow ............. <span class="tok-out">3.725e-09</span
 <!-- ============================ GET STARTED ============================ -->
 <section class="section" id="start">
   <div class="wrap">
-    <div class="section__head">
+    <div class="section__head reveal">
       <span class="eyebrow">Get started</span>
       <h2>Running in about sixty seconds</h2>
       <p class="lede">
@@ -448,8 +452,8 @@ its GRADIENT   vs TensorFlow ............. <span class="tok-out">3.725e-09</span
       </p>
     </div>
 
-    <div class="grid grid--2">
-      <div class="steps">
+    <div class="grid grid--2 reveal">
+      <div class="steps reveal">
         <div class="step">
           <span class="step__n" aria-hidden="true"></span>
           <div>
@@ -510,7 +514,7 @@ eo.<span class="tok-fn">export_onnx</span>(model, <span class="tok-str">"model.o
       </div>
     </div>
 
-    <figure style="margin-top:28px">
+    <figure class="reveal" style="margin-top:28px">
       <img src="assets/img/terminal.png" alt="Terminal showing everyo doctor and everyo demo running end to end" loading="lazy" width="2096" height="992">
       <figcaption><code>everyo doctor</code> and <code>everyo demo</code>, running end to end on a machine with no GPU.</figcaption>
     </figure>
@@ -520,7 +524,7 @@ eo.<span class="tok-fn">export_onnx</span>(model, <span class="tok-str">"model.o
 <!-- ============================ ROADMAP ============================ -->
 <section class="section section--alt" id="roadmap">
   <div class="wrap">
-    <div class="section__head">
+    <div class="section__head reveal">
       <span class="eyebrow">Roadmap</span>
       <h2>Shipped, and honestly unbuilt</h2>
       <p class="lede">
@@ -528,7 +532,7 @@ eo.<span class="tok-fn">export_onnx</span>(model, <span class="tok-str">"model.o
       </p>
     </div>
 
-    <ul class="roadmap">
+    <ul class="roadmap reveal">
       <li><span class="chip chip--ok">Shipped</span><span><strong>Convolution and pooling</strong> &mdash; <code>Conv2D</code>, <code>MaxPool2D</code>, <code>AvgPool2D</code></span></li>
       <li><span class="chip chip--ok">Shipped</span><span><strong>Batch and layer normalization</strong> &mdash; <code>BatchNorm1D</code>, <code>BatchNorm2D</code>, <code>LayerNorm</code></span></li>
       <li><span class="chip chip--ok">Shipped</span><span><strong>Recurrent layers, attention, transformers</strong> &mdash; <code>RNN</code>, <code>LSTM</code>, <code>GRU</code>, <code>TransformerEncoder</code></span></li>
@@ -546,7 +550,7 @@ eo.<span class="tok-fn">export_onnx</span>(model, <span class="tok-str">"model.o
 <!-- ============================ GOVERNANCE ============================ -->
 <section class="section" id="governance">
   <div class="wrap">
-    <div class="section__head">
+    <div class="section__head reveal">
       <span class="eyebrow">Governance</span>
       <h2>How the project is run</h2>
       <p class="lede">
@@ -556,7 +560,7 @@ eo.<span class="tok-fn">export_onnx</span>(model, <span class="tok-str">"model.o
       </p>
     </div>
 
-    <div class="table-scroll">
+    <div class="table-scroll reveal">
       <table>
         <caption class="visually-hidden">Project governance and policy documents</caption>
         <thead>
