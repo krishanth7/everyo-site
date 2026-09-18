@@ -1055,3 +1055,315 @@ body { counter-reset: section; }
   border-top: 2px solid var(--accent);
 }
 .section__head--center .eyebrow { border-top: 0; padding-top: 0; }
+
+/* ==========================================================================
+   Custom scrollbars
+   Replaces the operating system's scrollbar with one that belongs to the
+   page. Implemented in CSS only: a JavaScript scroll hijack would break
+   keyboard paging, momentum scrolling, find-in-page and every assistive
+   technology that relies on the real scroll position.
+
+   Firefox gets the standard two-value `scrollbar-color`; WebKit and Blink
+   get the pseudo-elements. Both are progressive — an engine that supports
+   neither simply shows its native bar.
+   ========================================================================== */
+:root {
+  --scroll-track: var(--bg-alt);
+  --scroll-thumb: var(--ink-300);
+  --scroll-thumb-hover: var(--brand-600);
+  --scroll-size: 12px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --scroll-track: #0b1220;
+    --scroll-thumb: #2b3a56;
+    --scroll-thumb-hover: var(--accent);
+  }
+}
+
+:root[data-theme="dark"] {
+  --scroll-track: #0b1220;
+  --scroll-thumb: #2b3a56;
+  --scroll-thumb-hover: var(--accent);
+}
+
+/* The standard properties and the WebKit pseudo-elements are mutually
+   exclusive in Blink: if `scrollbar-color` is set, Chromium ignores every
+   ::-webkit-scrollbar rule and falls back to a plain thin bar. So the
+   standard properties are scoped to engines that have no pseudo-element
+   support -- Firefox -- and Chromium and Safari get the fuller treatment. */
+@supports not selector(::-webkit-scrollbar) {
+  html {
+    scrollbar-width: thin;
+    scrollbar-color: var(--scroll-thumb) var(--scroll-track);
+  }
+}
+
+*::-webkit-scrollbar {
+  width: var(--scroll-size);
+  height: var(--scroll-size);
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--scroll-track);
+}
+
+*::-webkit-scrollbar-thumb {
+  background: var(--scroll-thumb);
+  border-radius: 99px;
+  /* A transparent border with background-clip gives the thumb breathing room
+     without needing a second element. */
+  border: 3px solid transparent;
+  background-clip: content-box;
+  transition: background-color var(--t-fast) var(--ease);
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: var(--scroll-thumb-hover);
+  background-clip: content-box;
+}
+
+*::-webkit-scrollbar-corner { background: var(--scroll-track); }
+
+/* Inner scrollers — code blocks and wide tables — get a slimmer bar that
+   reads as part of the panel rather than the page. */
+.code-card pre::-webkit-scrollbar,
+.term::-webkit-scrollbar,
+.table-scroll::-webkit-scrollbar { height: 9px; width: 9px; }
+
+.code-card pre::-webkit-scrollbar-track,
+.term::-webkit-scrollbar-track { background: transparent; }
+
+.code-card pre::-webkit-scrollbar-thumb,
+.term::-webkit-scrollbar-thumb {
+  background: rgba(231, 236, 245, 0.22);
+  background-clip: content-box;
+  border: 2px solid transparent;
+}
+
+.code-card pre::-webkit-scrollbar-thumb:hover,
+.term::-webkit-scrollbar-thumb:hover {
+  background: rgba(231, 236, 245, 0.42);
+  background-clip: content-box;
+}
+
+@supports not selector(::-webkit-scrollbar) {
+  .code-card pre,
+  .term,
+  .table-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(231, 236, 245, 0.28) transparent;
+  }
+}
+
+/* ==========================================================================
+   Scroll progress
+   A hairline across the top of the sticky header. Width is set by script
+   from the real scroll position, so it reports scrolling rather than
+   replacing it.
+   ========================================================================== */
+.scroll-progress {
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  height: 2px;
+  width: 0;
+  background: linear-gradient(90deg, var(--brand-500), var(--brand-700));
+  transition: width 80ms linear;
+  pointer-events: none;
+  z-index: 2;
+}
+
+:root[data-theme="dark"] .scroll-progress,
+:root:not([data-theme="light"]) .scroll-progress {
+  background: linear-gradient(90deg, var(--accent), #b9d0ff);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-progress { transition: none; }
+}
+
+/* ==========================================================================
+   Sponsors and advertising
+   Self-hosted slots. No third-party script, no cookie, no tracking pixel —
+   which is what lets the footer keep saying the site collects nothing.
+   ========================================================================== */
+.ads { padding-block: clamp(44px, 6vw, 72px); }
+
+.ads__label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin-bottom: 20px;
+}
+.ads__label::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.ad-grid {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+}
+
+.ad-slot {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 168px;
+  padding: 22px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  text-decoration: none;
+  color: inherit;
+  overflow: hidden;
+  transition:
+    border-color var(--t-base) var(--ease),
+    transform var(--t-base) var(--ease),
+    box-shadow var(--t-base) var(--ease);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .ad-slot:hover {
+    border-color: var(--border-strong);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+    text-decoration: none;
+  }
+}
+
+.ad-slot__tag {
+  align-self: flex-start;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 3px 9px;
+  margin-bottom: 16px;
+}
+
+.ad-slot h3 { font-size: 1rem; margin-bottom: 6px; }
+.ad-slot p { font-size: 0.86rem; color: var(--text-muted); margin-bottom: 0; }
+.ad-slot__cta {
+  margin-top: auto;
+  padding-top: 16px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+/* The empty slot, shown until a sponsor fills it. Dashed rather than solid so
+   it never reads as a real placement. */
+.ad-slot--open {
+  border-style: dashed;
+  background: var(--bg-alt);
+  align-items: flex-start;
+  justify-content: center;
+}
+.ad-slot--open h3 { color: var(--text-muted); }
+
+/* Where a third-party ad unit would mount, if one is ever switched on. */
+.ad-unit {
+  display: block;
+  width: 100%;
+  min-height: 90px;
+}
+
+/* ==========================================================================
+   Design refinement pass
+   Tighter vertical rhythm, a firmer typographic hierarchy and quieter
+   surfaces. The aim is a page that reads as a product document rather than
+   a landing page.
+   ========================================================================== */
+
+/* Denser, more deliberate type scale. Monospace runs wide, so the headline
+   sizes are pulled back and the tracking tightened to compensate. */
+h1 { letter-spacing: -0.035em; line-height: 1.08; }
+h2 { letter-spacing: -0.028em; line-height: 1.16; }
+h3 { letter-spacing: -0.018em; }
+
+.lede { max-width: 68ch; }
+
+/* Measured line length. Monospace at full container width is tiring to read. */
+.card p,
+.card__list { max-width: 62ch; }
+
+/* A hairline rule between major sections instead of relying on fill alone,
+   so the structure survives in both themes. */
+.section + .section { border-top: 1px solid var(--border); }
+.section--alt + .section--alt { border-top: 0; }
+
+/* Panels sit flatter. Shadows are for things that genuinely float. */
+.card { box-shadow: none; }
+.card--flat { background: var(--bg-alt); }
+
+figure { box-shadow: none; }
+
+/* Stat band: heavier numerals, quieter labels, and a top rule that ties it
+   to the section headings. */
+.stats { border-radius: var(--radius); }
+.stat { padding: 26px 22px; }
+.stat__value { letter-spacing: -0.04em; }
+.stat__label {
+  font-size: 0.78rem;
+  color: var(--text-faint);
+  line-height: 1.55;
+}
+
+/* Tables read as data, not as prose. */
+thead th { font-size: 0.68rem; letter-spacing: 0.12em; }
+tbody td { font-size: 0.86rem; padding: 15px 18px; }
+tbody tr { transition: background var(--t-fast) var(--ease); }
+@media (hover: hover) and (pointer: fine) {
+  tbody tr:hover { background: var(--bg-alt); }
+}
+
+/* Callouts lose the tinted fill and keep only the rule — less shouting. */
+.callout {
+  background: transparent;
+  border: 0;
+  border-left: 2px solid var(--accent);
+  border-radius: 0;
+  padding: 4px 0 4px 20px;
+}
+.callout--warn { border-left-color: var(--warn-600); }
+
+/* Chips: flatter, with a hairline instead of a fill in the neutral case. */
+.chip { padding: 4px 10px; letter-spacing: 0.01em; }
+.chip--plan { background: transparent; border: 1px solid var(--border); }
+
+/* Header: thinner, with the rule carried by the progress bar's track. */
+.nav { height: 60px; }
+.site-header { border-bottom-color: var(--border); }
+
+/* Hero: calmer wash, firmer pill. */
+.hero::before { opacity: 0.6; }
+.pill { box-shadow: none; background: var(--bg-alt); }
+
+/* Code panels: squarer corners read as more technical. */
+.code-card { border-radius: var(--radius); }
+.term { border-radius: 8px; }
+
+/* Footer: a quieter close. */
+.site-footer { background: var(--bg); }
+.footer__base { font-size: 0.78rem; }
+
+/* Roadmap rows sit on the page rather than on cards. */
+.roadmap li { background: transparent; }
+
+/* Consistent focus ring on every interactive surface. */
+.ad-slot:focus-visible,
+.card a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }

@@ -1,4 +1,16 @@
+# robots.txt — https://krishanth7.github.io/everyo-site/
+#
+# Everything here is public documentation for an open-source project and is
+# meant to be indexed, quoted and summarised. Nothing is disallowed.
+
 User-agent: *
 Allow: /
+
+# Machine-readable companions
+#   /llms.txt                    a summary written for language models
+#   /humans.txt                  the people and tools behind the site
+#   /.well-known/security.txt    how to report a vulnerability (RFC 9116)
+#   /ads.txt                     authorised digital sellers (template)
+#   /cats.txt                    no specification, one cat
 
 Sitemap: https://krishanth7.github.io/everyo-site/sitemap.xml

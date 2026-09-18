@@ -1,0 +1,23 @@
+# security.txt for the EveryO project site — RFC 9116
+#
+# EveryO is an open-source library. Vulnerabilities in the library itself and
+# in this site are both reported through GitHub's private advisory workflow,
+# so a report never has to sit in a public issue.
+
+Contact: https://github.com/krishanth7/EveryO/security/advisories/new
+Policy: https://github.com/krishanth7/EveryO/blob/main/SECURITY.md
+Expires: 2027-09-18T00:00:00.000Z
+Preferred-Languages: en
+Canonical: https://krishanth7.github.io/everyo-site/.well-known/security.txt
+
+# In scope
+#   This site (krishanth7.github.io/everyo-site) and the EveryO library.
+#
+# Notes for researchers
+#   The library makes no network calls, stores no credentials and loads models
+#   without pickle, so the usual deserialisation and SSRF classes should not
+#   apply. If you find one anyway, that is exactly the report worth sending.
+#
+#   This site is static, has no backend, no cookies and no third-party
+#   scripts. Please do not report missing security headers that GitHub Pages
+#   controls and the project cannot set.

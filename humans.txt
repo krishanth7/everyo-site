@@ -1,0 +1,17 @@
+/* TEAM */
+  Maintainer: krishanth7
+  Site: https://github.com/krishanth7
+  Location: Independent, open source
+
+/* THANKS */
+  NumPy — the array library the whole framework rests on.
+  TensorFlow — used as the correctness referee, not as a dependency.
+  Every contributor who opened an issue or read the source.
+
+/* SITE */
+  Standards: HTML5, CSS custom properties, vanilla JavaScript
+  Components: none — no framework, no build step, no package manager
+  Typeface: Google Sans Code (variable, MONO axis at 1)
+  Analytics: none. No cookies, no third-party trackers.
+  Hosting: GitHub Pages
+  Source: https://github.com/krishanth7/everyo-site

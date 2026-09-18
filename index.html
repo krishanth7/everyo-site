@@ -31,6 +31,7 @@
 <a class="skip-link" href="#main">Skip to content</a>
 
 <header class="site-header">
+  <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
   <div class="wrap">
     <nav class="nav" aria-label="Primary">
       <a class="brand" href="#top">
@@ -45,6 +46,7 @@
         <li><a href="#results">Results</a></li>
         <li><a href="#scaling">Scaling</a></li>
         <li><a href="#start">Get started</a></li>
+        <li><a href="#sponsors">Sponsors</a></li>
         <li><a href="#governance">Governance</a></li>
       </ul>
 
@@ -547,6 +549,78 @@ eo.<span class="tok-fn">export_onnx</span>(model, <span class="tok-str">"model.o
   </div>
 </section>
 
+<!-- ============================ SPONSORS / ADS ============================ -->
+<section class="section ads" id="sponsors">
+  <div class="wrap">
+    <p class="ads__label">Sponsors</p>
+
+    <div class="ad-grid reveal">
+      <a class="ad-slot" href="https://github.com/sponsors/krishanth7">
+        <span class="ad-slot__tag">Support</span>
+        <h3>Sponsor EveryO</h3>
+        <p>
+          Fund the roadmap directly &mdash; GPU-resident tensors, multi-node
+          training and a tracing ONNX exporter are the next three items.
+        </p>
+        <span class="ad-slot__cta">Become a sponsor &rarr;</span>
+      </a>
+
+      <a class="ad-slot" href="https://github.com/krishanth7/EveryO">
+        <span class="ad-slot__tag">Project</span>
+        <h3>Star the repository</h3>
+        <p>
+          The cheapest way to help. It costs nothing and it is how the next
+          person learning autograd finds this.
+        </p>
+        <span class="ad-slot__cta">Open on GitHub &rarr;</span>
+      </a>
+
+      <div class="ad-slot ad-slot--open">
+        <span class="ad-slot__tag">Available</span>
+        <h3>Your placement here</h3>
+        <p>
+          One slot, self-hosted: an image and a link, no tracking script.
+          Enquiries through the repository discussions.
+        </p>
+        <span class="ad-slot__cta">Enquire &rarr;</span>
+      </div>
+    </div>
+
+    <!--
+      ====================================================================
+      THIRD-PARTY AD NETWORK — DISABLED ON PURPOSE
+      ====================================================================
+      The slots above are plain HTML: no script, no cookie, no tracking
+      pixel. That is what lets the footer state that this site collects
+      nothing, and it matches EveryO's own no-telemetry position.
+
+      Switching on a network below reverses that. Before you uncomment it:
+
+        1. Put your real publisher ID in /ads.txt and uncomment that line.
+        2. Read the note in ads.txt about the file needing to sit at the
+           domain root -- on a GitHub Pages project path it will not be
+           found by verification crawlers.
+        3. Replace BOTH placeholder IDs here with your own.
+        4. Update the footer line "This site collects nothing" -- with a
+           third-party ad script running it is no longer true, and leaving
+           it would be a false privacy claim.
+        5. Check whether you now need a cookie-consent notice for visitors
+           in the UK and EU. You probably do.
+
+      <script async
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-REPLACE_WITH_YOUR_ID"
+        crossorigin="anonymous"></script>
+      <ins class="adsbygoogle ad-unit"
+        data-ad-client="ca-pub-REPLACE_WITH_YOUR_ID"
+        data-ad-slot="REPLACE_WITH_YOUR_SLOT_ID"
+        data-ad-format="auto"
+        data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+      ====================================================================
+    -->
+  </div>
+</section>
+
 <!-- ============================ GOVERNANCE ============================ -->
 <section class="section" id="governance">
   <div class="wrap">
@@ -649,6 +723,18 @@ eo.<span class="tok-fn">export_onnx</span>(model, <span class="tok-str">"model.o
           <li><a href="https://github.com/krishanth7/EveryO/blob/main/SUPPORT.md">Support</a></li>
           <li><a href="https://github.com/krishanth7/EveryO/security/policy">Security</a></li>
           <li><a href="https://github.com/krishanth7/EveryO/blob/main/LICENSE">License</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>This site</h4>
+        <ul>
+          <li><a href="llms.txt">llms.txt</a></li>
+          <li><a href="humans.txt">humans.txt</a></li>
+          <li><a href=".well-known/security.txt">security.txt</a></li>
+          <li><a href="robots.txt">robots.txt</a></li>
+          <li><a href="ads.txt">ads.txt</a></li>
+          <li><a href="cats.txt">cats.txt</a></li>
         </ul>
       </div>
     </div>

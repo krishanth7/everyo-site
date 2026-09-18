@@ -205,4 +205,31 @@
       spy.observe(s);
     });
   }
+
+  /* Scroll progress.
+     Reports the real scroll position rather than replacing it: no wheel
+     interception, no transform on the body, so keyboard paging, momentum
+     scrolling and find-in-page all keep working exactly as the OS intends. */
+  var progress = document.getElementById("scroll-progress");
+  if (progress && window.requestAnimationFrame) {
+    var ticking = false;
+
+    function paintProgress() {
+      var doc = document.documentElement;
+      var scrollable = doc.scrollHeight - window.innerHeight;
+      var ratio = scrollable > 0 ? window.scrollY / scrollable : 0;
+      progress.style.width = Math.max(0, Math.min(1, ratio)) * 100 + "%";
+      ticking = false;
+    }
+
+    function onScroll() {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(paintProgress);
+    }
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll, { passive: true });
+    paintProgress();
+  }
 })();

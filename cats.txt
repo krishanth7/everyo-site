@@ -1,0 +1,19 @@
+                    /\_/\
+                   ( o.o )
+                    > ^ <
+
+# cats.txt
+
+There is no specification for this file. robots.txt directs crawlers,
+security.txt directs researchers, humans.txt credits people, llms.txt
+briefs language models, ads.txt names authorised sellers.
+
+This one is for the cat that walked across the keyboard during a 40-timestep
+LSTM gradient test and, in doing so, pressed Ctrl-C at exactly the right
+moment to reveal that the forget-gate bias was zero.
+
+The bug was real. The cat gets no equity.
+
+User-agent: *
+Purr: allowed
+Disallow: /keyboard

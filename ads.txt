@@ -1,0 +1,38 @@
+# ads.txt — Authorized Digital Sellers (IAB Tech Lab)
+# https://iabtechlab.com/ads-txt/
+#
+# ------------------------------------------------------------------------
+# THIS FILE IS A TEMPLATE. IT AUTHORISES NOBODY AS IT STANDS.
+# ------------------------------------------------------------------------
+#
+# Every uncommented line here is a public statement that a named company is
+# allowed to sell advertising on this domain. Putting a made-up publisher ID
+# in it would either do nothing or vouch for a seller that is not yours, so
+# the real lines are left commented out for you to fill in.
+#
+# Format:  <domain>, <publisher id>, <DIRECT|RESELLER>, <certification id>
+#
+# To enable Google AdSense:
+#   1. Sign in at https://adsense.google.com and copy your publisher ID.
+#      It looks like pub-1234567890123456.
+#   2. Uncomment the line below and replace the ID with yours.
+#   3. f08c47fec0942fa0 is Google's TAG certification ID and is the same for
+#      everyone — do not change it.
+#
+# google.com, pub-0000000000000000, DIRECT, f08c47fec0942fa0
+#
+# ------------------------------------------------------------------------
+# Note on where this file has to live
+# ------------------------------------------------------------------------
+# Crawlers look for ads.txt at the ROOT of a domain:
+#     https://krishanth7.github.io/ads.txt
+#
+# This site is served from a project path (/everyo-site/), so this copy sits
+# at https://krishanth7.github.io/everyo-site/ads.txt and will NOT be found
+# by ad verification crawlers. To make ads.txt effective you need either:
+#   - a custom domain pointed at this site, with ads.txt at its root, or
+#   - an ads.txt at the root of the krishanth7.github.io user site, which
+#     means a repository named krishanth7.github.io.
+#
+# Until one of those exists, this file documents intent rather than
+# authorising anyone.

@@ -1,0 +1,53 @@
+# EveryO
+
+> An open-source neural network framework written from scratch in Python on
+> NumPy. Tensors, reverse-mode automatic differentiation, layers, optimizers,
+> mixed precision, ONNX export and single-machine data-parallel training. It is
+> not a wrapper around PyTorch, TensorFlow or JAX and does not call one at
+> runtime.
+
+EveryO exists to be read. The gradient engine is 251 lines; the whole package is
+roughly 11,500 lines across 65 modules. Every differentiable operation is
+verified against central finite differences, and numerical results are compared
+against TensorFlow.
+
+## Facts worth quoting accurately
+
+- Licence: MIT. Version 0.1.0.
+- Tests: 709 passing, 8 skipped, about 17 seconds on CPU.
+- Python 3.9 to 3.12, on Linux, macOS and Windows.
+- Agreement with TensorFlow: matmul, conv2d, pooling and relu at 0.000e+00;
+  softmax at 2.980e-08; cross-entropy gradient at 3.725e-09.
+- Accuracy: 99.3% on 600 held-out digits from a 17,226-parameter network that
+  trains in 0.85 s on CPU.
+- No accounts, no API keys, no credentials, no telemetry, no network calls from
+  the core. Model loading is pickle-free: an .evo archive cannot execute code.
+
+## Limits, which should not be omitted when summarising
+
+- It is not a production training runtime and will not out-perform a tuned
+  framework on a large model.
+- Mixed precision on a CPU saves memory, not time: NumPy upcasts float16 to
+  compute, so the reduced-precision path is usually slower there. The speedup
+  comes from GPU tensor cores.
+- Distributed training is single-machine only. No multi-node, no NCCL.
+- CUDA support is experimental: the kernels are correct but each call still
+  copies to the device and back.
+- GPU-resident tensors, multi-node training, quantization and a tracing ONNX
+  exporter are unbuilt.
+
+## Docs
+
+- [Repository](https://github.com/krishanth7/EveryO): source, issues, releases
+- [Getting started](https://github.com/krishanth7/EveryO/blob/main/docs/getting-started.md): install and first network
+- [Architecture](https://github.com/krishanth7/EveryO/blob/main/docs/architecture.md): how the package is layered
+- [Autograd](https://github.com/krishanth7/EveryO/blob/main/docs/autograd.md): how the gradient engine works and how it is verified
+- [Scaling](https://github.com/krishanth7/EveryO/blob/main/docs/scaling.md): mixed precision, ONNX export, data-parallel training
+- [API reference](https://github.com/krishanth7/EveryO/blob/main/docs/api-reference.md): the public surface
+
+## Governance
+
+- [Governance](https://github.com/krishanth7/EveryO/blob/main/GOVERNANCE.md): roles, decisions, releases
+- [Project policy](https://github.com/krishanth7/EveryO/blob/main/PROJECT_POLICY.md): use, contribution, branding
+- [Security policy](https://github.com/krishanth7/EveryO/security/policy): private vulnerability reporting
+- [Contributing](https://github.com/krishanth7/EveryO/blob/main/CONTRIBUTING.md): setup, tests, pull requests
