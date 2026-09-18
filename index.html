@@ -1,0 +1,661 @@
+<!doctype html>
+<html lang="en" data-theme="">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EveryO — A neural network framework you can actually read</title>
+<meta name="description" content="EveryO is an open-source neural network framework written from scratch in Python on NumPy. Tensors, autograd, layers, optimizers, mixed precision, ONNX export and data-parallel training — every gradient verified against finite differences and TensorFlow.">
+<meta name="author" content="EveryO">
+<meta name="theme-color" content="#1a56c4" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#080d17" media="(prefers-color-scheme: dark)">
+<link rel="canonical" href="https://krishanth7.github.io/everyo-site/">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="EveryO — A neural network framework you can actually read">
+<meta property="og:description" content="Tensors, autograd, layers and optimizers written from scratch on NumPy. The gradient engine is 251 lines. Every gradient verified against finite differences and TensorFlow.">
+<meta property="og:url" content="https://krishanth7.github.io/everyo-site/">
+<meta property="og:image" content="https://krishanth7.github.io/everyo-site/assets/img/banner.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="EveryO — A neural network framework you can actually read">
+<meta name="twitter:description" content="Tensors, autograd, layers and optimizers written from scratch on NumPy. The gradient engine is 251 lines.">
+<meta name="twitter:image" content="https://krishanth7.github.io/everyo-site/assets/img/banner.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans+Code:ital,wght,MONO@0,300..800,1;1,300..800,1&display=swap" rel="stylesheet">
+
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%231a56c4'/><text y='.9em' x='50%' text-anchor='middle' font-size='62' font-family='monospace' font-weight='bold' fill='white'>E</text></svg>">
+<link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <nav class="nav" aria-label="Primary">
+      <a class="brand" href="#top">
+        <span class="brand__mark" aria-hidden="true">E</span>
+        <span>EveryO</span>
+      </a>
+
+      <ul class="nav__links" id="nav-links" data-open="false">
+        <li><a href="#what">What it is</a></li>
+        <li><a href="#capabilities">Capabilities</a></li>
+        <li><a href="#correctness">Correctness</a></li>
+        <li><a href="#results">Results</a></li>
+        <li><a href="#scaling">Scaling</a></li>
+        <li><a href="#start">Get started</a></li>
+        <li><a href="#governance">Governance</a></li>
+      </ul>
+
+      <div class="nav__actions">
+        <button class="icon-btn" id="theme-toggle" type="button" aria-label="Switch colour theme">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/>
+          </svg>
+        </button>
+        <button class="icon-btn nav__toggle" id="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <path d="M3 6h18M3 12h18M3 18h18"/>
+          </svg>
+        </button>
+        <a class="btn btn--primary btn--sm" href="https://github.com/krishanth7/EveryO">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17.3 4.7 18.3 5 18.3 5c.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .5Z"/></svg>
+          GitHub
+        </a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+<span id="top"></span>
+
+<!-- ============================ HERO ============================ -->
+<section class="hero">
+  <div class="wrap hero__inner">
+    <div class="hero__grid">
+      <div>
+        <span class="pill">
+          <span class="pill__tag">v0.1.0</span>
+          MIT licensed &middot; no accounts, no API keys, no telemetry
+        </span>
+
+        <h1>A neural network framework you can <span class="accent">actually read</span>.</h1>
+
+        <p class="hero__lede">
+          EveryO implements tensors, reverse-mode automatic differentiation, layers,
+          optimizers and the training loop from scratch in Python on NumPy. It is not a
+          wrapper around PyTorch, TensorFlow or JAX, and it does not call out to one at
+          runtime.
+        </p>
+
+        <div class="hero__cta">
+          <a class="btn btn--primary" href="#start">Get started</a>
+          <a class="btn btn--ghost" href="#what">What is EveryO?</a>
+        </div>
+
+        <p class="hero__note">
+          <span class="chip chip--ok">709 tests passing</span>
+          <span>Python 3.9 – 3.12 &middot; Linux, macOS, Windows</span>
+        </p>
+      </div>
+
+      <div class="code-card">
+        <div class="code-card__bar">
+          <span class="code-card__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="code-card__title">your_own_autograd.py</span>
+        </div>
+<pre><code><span class="tok-kw">import</span> everyo <span class="tok-kw">as</span> eo
+
+x = eo.<span class="tok-fn">tensor</span>([<span class="tok-num">2.0</span>], requires_grad=<span class="tok-kw">True</span>)
+y = x * x
+y.<span class="tok-fn">backward</span>()
+
+<span class="tok-fn">print</span>(x.grad)   <span class="tok-com"># [4.]</span>
+<span class="tok-com">#              ^ a gradient engine you can read,</span>
+<span class="tok-com">#                not a binding to someone else's</span></code></pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ STATS ============================ -->
+<section class="section" style="padding-top:0">
+  <div class="wrap">
+    <div class="stats">
+      <div class="stat">
+        <div class="stat__value mono-num">251</div>
+        <div class="stat__label">lines in the gradient engine &mdash; the whole thing</div>
+      </div>
+      <div class="stat">
+        <div class="stat__value mono-num">~11,500</div>
+        <div class="stat__label">lines across 65 focused modules</div>
+      </div>
+      <div class="stat">
+        <div class="stat__value mono-num">709</div>
+        <div class="stat__label">tests, running in about 17 seconds on CPU</div>
+      </div>
+      <div class="stat">
+        <div class="stat__value mono-num">0.000e+00</div>
+        <div class="stat__label">difference vs TensorFlow on matmul and conv2d</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ WHAT IS IT ============================ -->
+<section class="section section--alt" id="what">
+  <div class="wrap">
+    <div class="section__head">
+      <span class="eyebrow">What it is</span>
+      <h2>Every deep-learning tutorial ends at <code>model.fit()</code>. Every production framework starts a million lines below it.</h2>
+      <p class="lede">
+        There is almost nothing in between that you can read. EveryO is that middle: small
+        enough to follow end to end in an afternoon, and verified carefully enough to trust
+        the numbers it produces.
+      </p>
+    </div>
+
+    <div class="grid grid--3">
+      <article class="card">
+        <div class="card__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 16 4-4-4-4M6 8l-4 4 4 4M14.5 4l-5 16"/></svg>
+        </div>
+        <h3>Legible by design</h3>
+        <p>
+          You can follow one number from <code>loss.backward()</code> through the graph walk,
+          into a matrix multiply, and out to a hand-written CUDA kernel &mdash; reading real
+          code the entire way.
+        </p>
+      </article>
+
+      <article class="card">
+        <div class="card__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 12 2 2 4-4"/><path d="M12 3 4 6v6c0 5 3.4 8.6 8 9.9 4.6-1.3 8-4.9 8-9.9V6Z"/></svg>
+        </div>
+        <h3>Verified, not asserted</h3>
+        <p>
+          Every differentiable operation is checked against central finite differences, and
+          the numerical results against TensorFlow. Where the two disagree, the project
+          states by how much.
+        </p>
+      </article>
+
+      <article class="card">
+        <div class="card__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        </div>
+        <h3>Nothing to sign up for</h3>
+        <p>
+          No accounts, no API keys, no credentials, no telemetry and no network calls from
+          the core. Model loading is pickle-free by design &mdash; an <code>.evo</code>
+          archive cannot execute code.
+        </p>
+      </article>
+    </div>
+
+    <div class="grid grid--2" style="margin-top:20px">
+      <article class="card card--flat">
+        <h3>Who it is for</h3>
+        <ul class="card__list">
+          <li><strong>People learning how deep learning works</strong> &mdash; read the derivative of every operation you use, rather than only calling it.</li>
+          <li><strong>Engineers verifying a result</strong> &mdash; a small, deterministic, dependency-light reference you can step through in a debugger.</li>
+          <li><strong>Teachers and students</strong> &mdash; <code>pip install -e .</code> and everything runs, offline, on a laptop.</li>
+        </ul>
+      </article>
+
+      <article class="card card--flat">
+        <h3>What it is not</h3>
+        <p>
+          EveryO is <strong>not a production training runtime</strong>. It will not
+          out-perform a tuned framework on a large model, it has no GPU-resident tensors yet,
+          and its distributed training runs on a single machine.
+        </p>
+        <ul class="card__list">
+          <li>Those limits are stated where they apply, not left to be discovered after adoption.</li>
+          <li>The roadmap below marks what is genuinely unbuilt.</li>
+        </ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ CAPABILITIES ============================ -->
+<section class="section" id="capabilities">
+  <div class="wrap">
+    <div class="section__head">
+      <span class="eyebrow">Capabilities</span>
+      <h2>What ships today</h2>
+      <p class="lede">
+        Everything in this table is implemented and covered by the test suite. Items that are
+        experimental or planned are labelled as such rather than quietly listed alongside.
+      </p>
+    </div>
+
+    <div class="table-scroll">
+      <table>
+        <caption class="visually-hidden">EveryO capabilities by area, with status</caption>
+        <thead>
+          <tr><th scope="col">Area</th><th scope="col">What it covers</th><th scope="col">Status</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Tensors</td><td>dtypes, devices, broadcasting, indexing, reductions, NumPy interop</td><td><span class="chip chip--ok">Available</span></td></tr>
+          <tr><td>Autograd</td><td>reverse-mode gradients for 25+ operations, iterative graph walk, <code>no_grad</code></td><td><span class="chip chip--ok">Available</span></td></tr>
+          <tr><td>Layers</td><td><code>Linear</code>, <code>Conv2D</code>, <code>MaxPool2D</code>, <code>AvgPool2D</code>, <code>Embedding</code>, <code>Flatten</code>, <code>Dropout</code>, <code>Sequential</code></td><td><span class="chip chip--ok">Available</span></td></tr>
+          <tr><td>Normalization</td><td><code>BatchNorm1D</code>, <code>BatchNorm2D</code>, <code>LayerNorm</code> &mdash; running statistics survive save/load</td><td><span class="chip chip--ok">Available</span></td></tr>
+          <tr><td>Recurrent</td><td><code>RNN</code>, <code>LSTM</code> (unit forget bias), <code>GRU</code> &mdash; BPTT on the same autograd engine</td><td><span class="chip chip--ok">Available</span></td></tr>
+          <tr><td>Attention</td><td><code>MultiHeadAttention</code>, <code>PositionalEncoding</code>, <code>TransformerEncoder</code>, causal and padding masks</td><td><span class="chip chip--ok">Available</span></td></tr>
+          <tr><td>Losses</td><td>MSE, MAE, BCE, BCE-with-logits (numerically stable), cross-entropy</td><td><span class="chip chip--ok">Available</span></td></tr>
+          <tr><td>Optimizers</td><td>SGD, momentum, Nesterov, weight decay, Adam, AMSGrad</td><td><span class="chip chip--ok">Available</span></td></tr>
+          <tr><td>Training</td><td>validation, metrics, early stopping, checkpointing, LR scheduling, gradient clipping</td><td><span class="chip chip--ok">Available</span></td></tr>
+          <tr><td>Mixed precision</td><td><code>autocast</code> and <code>GradScaler</code>, fp32 master weights, dynamic loss scaling</td><td><span class="chip chip--ok">Available</span></td></tr>
+          <tr><td>ONNX export</td><td><code>export_onnx</code> &mdash; verified against ONNX Runtime, not only the schema checker</td><td><span class="chip chip--ok">Available</span></td></tr>
+          <tr><td>Distributed</td><td>single-machine data parallelism with shared-memory gradient all-reduce</td><td><span class="chip chip--ok">Available</span></td></tr>
+          <tr><td>Serialization</td><td><code>.evo</code> archives that cannot execute code on load</td><td><span class="chip chip--ok">Available</span></td></tr>
+          <tr><td>CUDA</td><td>5 hand-written kernels with pybind11 bindings and automatic CPU fallback</td><td><span class="chip chip--exp">Experimental</span></td></tr>
+          <tr><td>GPU-resident tensors</td><td>removing the per-call host&ndash;device copy</td><td><span class="chip chip--plan">Planned</span></td></tr>
+          <tr><td>Multi-node training</td><td>today's implementation is one machine only</td><td><span class="chip chip--plan">Planned</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout callout--warn" style="margin-top:22px">
+      <strong>On the experimental label:</strong> the CUDA kernels are correct and checked
+      against NumPy, but each call still copies to the device and back &mdash; so measure
+      before relying on them for speed.
+    </div>
+  </div>
+</section>
+
+<!-- ============================ CORRECTNESS ============================ -->
+<section class="section section--alt" id="correctness">
+  <div class="wrap">
+    <div class="section__head">
+      <span class="eyebrow">Correctness</span>
+      <h2>Correctness is the feature</h2>
+      <p class="lede">
+        Anyone can write something that <em>looks</em> like a framework. These are the numbers
+        the test suite produces, on CPU, with no GPU and no credentials required.
+      </p>
+    </div>
+
+    <div class="grid grid--2">
+      <div>
+<pre class="term"><code>gradients      vs finite differences ..... every differentiable op, float64
+matmul         vs TensorFlow ............. <span class="tok-out">0.000e+00</span>
+conv2d         vs TensorFlow ............. <span class="tok-out">0.000e+00</span>   (valid/same, strided)
+max/avg pool   vs TensorFlow ............. <span class="tok-out">0.000e+00</span>
+relu           vs TensorFlow ............. <span class="tok-out">0.000e+00</span>
+softmax        vs TensorFlow ............. <span class="tok-out">2.980e-08</span>
+cross-entropy  vs TensorFlow ............. exact to 6 decimals
+its GRADIENT   vs TensorFlow ............. <span class="tok-out">3.725e-09</span></code></pre>
+
+        <div class="callout" style="margin-top:18px">
+          CUDA tests skip themselves without a GPU. TensorFlow tests skip themselves without
+          TensorFlow. <strong>The core suite needs no network, no GPU and no credentials.</strong>
+        </div>
+      </div>
+
+      <div class="grid" style="gap:18px">
+        <article class="card card--flat">
+          <h3>Finite differences as the bar</h3>
+          <p>
+            Every gradient is compared against a central finite-difference approximation in
+            float64. A layer is not considered done because it trains &mdash; it is done when
+            its derivative matches the numerical one.
+          </p>
+        </article>
+        <article class="card card--flat">
+          <h3>TensorFlow as the referee</h3>
+          <p>
+            Tensors use the <code>NHWC</code> layout TensorFlow uses, so convolution results
+            compare against <code>tf.nn.conv2d</code> directly &mdash; no transposing, no
+            wiggle room.
+          </p>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ RESULTS ============================ -->
+<section class="section" id="results">
+  <div class="wrap">
+    <div class="section__head">
+      <span class="eyebrow">Results</span>
+      <h2>Produced by the code, not by a designer</h2>
+      <p class="lede">
+        Every image below came out of an actual run in the repository, rendered with EveryO's
+        own visualization module. Reproduce them with the bundled example scripts.
+      </p>
+    </div>
+
+    <div class="grid grid--2">
+      <figure>
+        <img src="assets/img/training-curves.png" alt="Training and validation loss and accuracy curves over 25 epochs" loading="lazy" width="1744" height="670">
+        <figcaption>Training and validation curves over 25 epochs &mdash; <code>examples/neural_network.py</code>.</figcaption>
+      </figure>
+      <figure>
+        <img src="assets/img/confusion-matrix.png" alt="Confusion matrix showing 99.3 percent accuracy on 600 held-out digits" loading="lazy" width="973" height="880">
+        <figcaption><strong>99.3%</strong> on 600 held-out digits, from a 17,226-parameter network that trains in 0.85 s.</figcaption>
+      </figure>
+      <figure>
+        <img src="assets/img/conv-features.png" alt="Learned 3 by 3 convolution kernels and the feature maps they produce" loading="lazy" width="1812" height="590">
+        <figcaption>A CNN reaches 99.2% with 1,898 parameters, beating a dense network of comparable size (98.5% with 2,410).</figcaption>
+      </figure>
+      <figure>
+        <img src="assets/img/decision-boundary.png" alt="A linear model at 88.5 percent next to an EveryO MLP at 99.7 percent on the two-moons dataset" loading="lazy" width="1826" height="700">
+        <figcaption>The thing a linear model simply cannot do &mdash; a curved decision boundary, learned: 88.5% against 99.7%.</figcaption>
+      </figure>
+      <figure>
+        <img src="assets/img/attention-heads.png" alt="Four transformer attention heads and their learned routing patterns" loading="lazy" width="1892" height="600">
+        <figcaption>Four attention heads in an EveryO <code>TransformerEncoder</code>, each having learned its own routing pattern.</figcaption>
+      </figure>
+    </div>
+
+    <div class="callout" style="margin-top:24px">
+      <strong>The LSTM's advantage is measured, not claimed.</strong> Gradient reaching the
+      first of 40 timesteps: RNN <code class="mono-num">1.38e-11</code>, LSTM
+      <code class="mono-num">7.71e-06</code> &mdash; roughly 560,000&times; larger.
+    </div>
+  </div>
+</section>
+
+<!-- ============================ SCALING ============================ -->
+<section class="section section--alt" id="scaling">
+  <div class="wrap">
+    <div class="section__head">
+      <span class="eyebrow">Scaling</span>
+      <h2>Mixed precision, ONNX and multi-core training</h2>
+      <p class="lede">
+        Three things a framework is supposed to grow into. All three are implemented, and all
+        three are measured rather than claimed &mdash; including where they do not help.
+      </p>
+    </div>
+
+    <div class="grid grid--3">
+      <article class="card">
+        <h3><code>autocast</code> + <code>GradScaler</code></h3>
+        <p>
+          <code>matmul</code> and <code>conv2d</code> run in float16; everything else stays in
+          float32 and the parameters never leave it. The backward pass genuinely runs in
+          float16, so gradients genuinely underflow &mdash; which is what loss scaling exists
+          to fix.
+        </p>
+        <ul class="card__list">
+          <li>Without a scaler: 192 of 193 gradient elements flush to zero.</li>
+          <li>With one: 1 of 193.</li>
+          <li>Final MSE 6.2983 unscaled vs 0.0474 scaled &mdash; matching float32's 0.0474.</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <h3>ONNX export</h3>
+        <p>
+          EveryO is <code>NHWC</code>; ONNX <code>Conv</code> is <code>NCHW</code>. Rather than
+          paper over that, every convolution is wrapped in a real pair of <code>Transpose</code>
+          nodes and <code>"same"</code> padding is written as explicit <code>pads</code>.
+        </p>
+        <ul class="card__list">
+          <li>A trained digit CNN re-run through ONNX Runtime agrees to 1.144e-05.</li>
+          <li>100% of predictions match.</li>
+          <li>Recurrent and attention layers raise an error rather than exporting wrongly.</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <h3>Data-parallel training</h3>
+        <p>
+          Processes, not threads, with a shared-memory gradient all-reduce. Averaging over
+          disjoint shards is the same arithmetic as one large batch &mdash; so the result
+          should match single-process training, and the example checks that.
+        </p>
+        <ul class="card__list">
+          <li>1 / 2 / 4 workers: 0.26 s, 0.16 s, 0.14 s.</li>
+          <li>Every rank ends bit-identical.</li>
+          <li>Largest drift from single-process training: 2.09e-07.</li>
+        </ul>
+      </article>
+    </div>
+
+    <div class="grid grid--2" style="margin-top:22px">
+      <div class="callout callout--warn">
+        <strong>Mixed precision on a CPU saves memory, not time.</strong> NumPy has no native
+        float16 arithmetic &mdash; it upcasts to compute &mdash; so the float16 path is usually
+        <em>slower</em> there. The speedup mixed precision is known for comes from GPU tensor
+        cores. The numerics are honest; the marketing is not borrowed.
+      </div>
+      <div class="callout callout--warn">
+        <strong>Distributed training is one machine only.</strong> No multi-node, no TCP
+        rendezvous, no NCCL. And set <code>OMP_NUM_THREADS=1</code> first: on the same 4-core
+        box, four workers took 1.8 s with it set and 11.0 s without &mdash; slower than not
+        parallelising at all.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ GET STARTED ============================ -->
+<section class="section" id="start">
+  <div class="wrap">
+    <div class="section__head">
+      <span class="eyebrow">Get started</span>
+      <h2>Running in about sixty seconds</h2>
+      <p class="lede">
+        One dependency for the core: NumPy. TensorFlow and CUDA are optional and the suite
+        skips their tests cleanly when they are absent.
+      </p>
+    </div>
+
+    <div class="grid grid--2">
+      <div class="steps">
+        <div class="step">
+          <span class="step__n" aria-hidden="true"></span>
+          <div>
+            <h4>Install</h4>
+            <p>Clone and install in editable mode.</p>
+<pre class="term"><code>git clone https://github.com/krishanth7/EveryO.git
+cd EveryO &amp;&amp; pip install -e .</code></pre>
+          </div>
+        </div>
+
+        <div class="step">
+          <span class="step__n" aria-hidden="true"></span>
+          <div>
+            <h4>Check the installation</h4>
+            <p><code>everyo doctor</code> reports what is present and what is optional.</p>
+<pre class="term"><code>everyo doctor
+everyo demo      <span class="tok-com"># trains a digit classifier end to end</span></code></pre>
+          </div>
+        </div>
+
+        <div class="step">
+          <span class="step__n" aria-hidden="true"></span>
+          <div>
+            <h4>Build and train</h4>
+            <p>The API is deliberately familiar, so the interesting part is the source beneath it.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="code-card">
+        <div class="code-card__bar">
+          <span class="code-card__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="code-card__title">train.py</span>
+        </div>
+<pre><code><span class="tok-kw">import</span> everyo <span class="tok-kw">as</span> eo
+
+model = eo.<span class="tok-fn">Sequential</span>(
+    eo.<span class="tok-fn">Conv2D</span>(<span class="tok-num">1</span>, <span class="tok-num">8</span>, <span class="tok-num">3</span>, padding=<span class="tok-str">"same"</span>),
+    eo.<span class="tok-fn">ReLU</span>(),
+    eo.<span class="tok-fn">MaxPool2D</span>(<span class="tok-num">2</span>),
+    eo.<span class="tok-fn">Flatten</span>(),
+    eo.<span class="tok-fn">Linear</span>(<span class="tok-num">4</span> * <span class="tok-num">4</span> * <span class="tok-num">8</span>, <span class="tok-num">10</span>),
+)
+
+trainer = eo.<span class="tok-fn">Trainer</span>(
+    model,
+    eo.<span class="tok-fn">Adam</span>(model.<span class="tok-fn">parameters</span>(), lr=<span class="tok-num">0.005</span>),
+    eo.<span class="tok-fn">CrossEntropyLoss</span>(),
+    metrics=[<span class="tok-str">"accuracy"</span>],
+)
+
+history = trainer.<span class="tok-fn">fit</span>(train_loader, epochs=<span class="tok-num">25</span>)
+
+<span class="tok-com"># Export it for any other runtime</span>
+model.<span class="tok-fn">eval</span>()
+eo.<span class="tok-fn">export_onnx</span>(model, <span class="tok-str">"model.onnx"</span>,
+               input_shape=(<span class="tok-num">1</span>, <span class="tok-num">8</span>, <span class="tok-num">8</span>, <span class="tok-num">1</span>))</code></pre>
+      </div>
+    </div>
+
+    <figure style="margin-top:28px">
+      <img src="assets/img/terminal.png" alt="Terminal showing everyo doctor and everyo demo running end to end" loading="lazy" width="2096" height="992">
+      <figcaption><code>everyo doctor</code> and <code>everyo demo</code>, running end to end on a machine with no GPU.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ============================ ROADMAP ============================ -->
+<section class="section section--alt" id="roadmap">
+  <div class="wrap">
+    <div class="section__head">
+      <span class="eyebrow">Roadmap</span>
+      <h2>Shipped, and honestly unbuilt</h2>
+      <p class="lede">
+        Contributions are welcome on any of the open items, and each one is self-contained.
+      </p>
+    </div>
+
+    <ul class="roadmap">
+      <li><span class="chip chip--ok">Shipped</span><span><strong>Convolution and pooling</strong> &mdash; <code>Conv2D</code>, <code>MaxPool2D</code>, <code>AvgPool2D</code></span></li>
+      <li><span class="chip chip--ok">Shipped</span><span><strong>Batch and layer normalization</strong> &mdash; <code>BatchNorm1D</code>, <code>BatchNorm2D</code>, <code>LayerNorm</code></span></li>
+      <li><span class="chip chip--ok">Shipped</span><span><strong>Recurrent layers, attention, transformers</strong> &mdash; <code>RNN</code>, <code>LSTM</code>, <code>GRU</code>, <code>TransformerEncoder</code></span></li>
+      <li><span class="chip chip--ok">Shipped</span><span><strong>Mixed-precision training</strong> &mdash; <code>autocast</code>, <code>GradScaler</code></span></li>
+      <li><span class="chip chip--ok">Shipped</span><span><strong>ONNX interoperability</strong> &mdash; <code>export_onnx</code>, verified against ONNX Runtime</span></li>
+      <li><span class="chip chip--ok">Shipped</span><span><strong>Distributed training</strong> &mdash; single-machine data parallelism</span></li>
+      <li><span class="chip chip--plan">Open</span><span><strong>GPU-resident tensors</strong>, removing per-call transfers</span></li>
+      <li><span class="chip chip--plan">Open</span><span><strong>Multi-node distributed training</strong></span></li>
+      <li><span class="chip chip--plan">Open</span><span><strong>Model quantization and profiling tools</strong></span></li>
+      <li><span class="chip chip--plan">Open</span><span><strong>A tracing ONNX exporter</strong>, so recurrent and attention layers can be exported too</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============================ GOVERNANCE ============================ -->
+<section class="section" id="governance">
+  <div class="wrap">
+    <div class="section__head">
+      <span class="eyebrow">Governance</span>
+      <h2>How the project is run</h2>
+      <p class="lede">
+        EveryO is independently maintained, and how it is run is written down rather than
+        implied. If you are deciding whether to depend on it, contribute to it or teach with
+        it, these documents say who decides what and what is expected of participants.
+      </p>
+    </div>
+
+    <div class="table-scroll">
+      <table>
+        <caption class="visually-hidden">Project governance and policy documents</caption>
+        <thead>
+          <tr><th scope="col">Document</th><th scope="col">Read it when you want to know</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><a href="https://github.com/krishanth7/EveryO/blob/main/GOVERNANCE.md">Governance</a></td><td>Who maintains EveryO, how technical decisions are made, and who approves a release</td></tr>
+          <tr><td><a href="https://github.com/krishanth7/EveryO/blob/main/PROJECT_POLICY.md">Project policy</a></td><td>Terms for using, contributing to, forking and referring to the project</td></tr>
+          <tr><td><a href="https://github.com/krishanth7/EveryO/blob/main/REPOSITORY_RULES.md">Repository rules</a></td><td>The standard an issue, discussion or pull request is held to</td></tr>
+          <tr><td><a href="https://github.com/krishanth7/EveryO/blob/main/CODE_OF_CONDUCT.md">Code of Conduct</a></td><td>Expected behaviour, and how to report a problem</td></tr>
+          <tr><td><a href="https://github.com/krishanth7/EveryO/blob/main/CONTRIBUTING.md">Contributing guide</a></td><td>Development setup, running the suite, and getting a change reviewed</td></tr>
+          <tr><td><a href="https://github.com/krishanth7/EveryO/blob/main/SUPPORT.md">Support</a></td><td>Where to ask a question, and what response to expect</td></tr>
+          <tr><td><a href="https://github.com/krishanth7/EveryO/security/policy">Security policy</a></td><td>How to report a vulnerability privately, and the threat model</td></tr>
+          <tr><td><a href="https://github.com/krishanth7/EveryO/blob/main/LICENSE">License</a></td><td>MIT &mdash; the legal terms the project policy supplements but never replaces</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout" style="margin-top:22px">
+      <strong>In short:</strong> the maintainer holds final technical decisions and release
+      approval; anyone may contribute through issues, discussions, review or pull requests;
+      and contributing does not by itself grant commit or release access. Security reports go
+      through the security policy and are not discussed publicly before coordinated disclosure.
+    </div>
+  </div>
+</section>
+
+<!-- ============================ CTA ============================ -->
+<section class="section section--alt">
+  <div class="wrap">
+    <div class="section__head section__head--center" style="margin-bottom:0">
+      <h2>Read the source. That is the whole idea.</h2>
+      <p class="lede">
+        The gradient engine is 251 lines. Start there, and follow a number until it stops
+        surprising you.
+      </p>
+      <div class="hero__cta" style="justify-content:center;margin-top:26px;margin-bottom:0">
+        <a class="btn btn--primary" href="https://github.com/krishanth7/EveryO">Browse the repository</a>
+        <a class="btn btn--ghost" href="https://github.com/krishanth7/EveryO/blob/main/docs/autograd.md">How autograd works</a>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer">
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <a class="brand" href="#top">
+          <span class="brand__mark" aria-hidden="true">E</span>
+          <span>EveryO</span>
+        </a>
+        <p>
+          An open-source neural computing framework built to be read. MIT licensed.
+          No accounts, no API keys, no telemetry.
+        </p>
+      </div>
+
+      <div>
+        <h4>Project</h4>
+        <ul>
+          <li><a href="https://github.com/krishanth7/EveryO">Repository</a></li>
+          <li><a href="https://github.com/krishanth7/EveryO/issues">Issues</a></li>
+          <li><a href="https://github.com/krishanth7/EveryO/discussions">Discussions</a></li>
+          <li><a href="https://github.com/krishanth7/EveryO/blob/main/CHANGELOG.md">Changelog</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Documentation</h4>
+        <ul>
+          <li><a href="https://github.com/krishanth7/EveryO/blob/main/docs/getting-started.md">Getting started</a></li>
+          <li><a href="https://github.com/krishanth7/EveryO/blob/main/docs/architecture.md">Architecture</a></li>
+          <li><a href="https://github.com/krishanth7/EveryO/blob/main/docs/autograd.md">Autograd</a></li>
+          <li><a href="https://github.com/krishanth7/EveryO/blob/main/docs/scaling.md">Scaling</a></li>
+          <li><a href="https://github.com/krishanth7/EveryO/blob/main/docs/api-reference.md">API reference</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Policies</h4>
+        <ul>
+          <li><a href="https://github.com/krishanth7/EveryO/blob/main/GOVERNANCE.md">Governance</a></li>
+          <li><a href="https://github.com/krishanth7/EveryO/blob/main/CONTRIBUTING.md">Contributing</a></li>
+          <li><a href="https://github.com/krishanth7/EveryO/blob/main/SUPPORT.md">Support</a></li>
+          <li><a href="https://github.com/krishanth7/EveryO/security/policy">Security</a></li>
+          <li><a href="https://github.com/krishanth7/EveryO/blob/main/LICENSE">License</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer__base">
+      <span>&copy; 2026 EveryO contributors &middot; Released under the MIT License.</span>
+      <span>This site collects nothing: no analytics, no cookies, no third-party scripts.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/site.js" defer></script>
+</body>
+</html>

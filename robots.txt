@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://krishanth7.github.io/everyo-site/sitemap.xml
