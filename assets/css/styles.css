@@ -204,6 +204,14 @@ code {
   border: 1px solid var(--border);
   border-radius: 5px;
   padding: 0.12em 0.4em;
+  /* API names such as init_tcp_process_group have no break opportunity, and a
+     single one of them is enough to push a 320px page into a horizontal
+     scroll. Prose code may break; code blocks below scroll instead. */
+  overflow-wrap: anywhere;
+}
+
+pre code {
+  overflow-wrap: normal;
 }
 
 pre {
@@ -328,6 +336,7 @@ pre code {
 }
 
 .nav__links a {
+  white-space: nowrap;
   display: block;
   padding: 8px 12px;
   border-radius: 7px;
@@ -360,7 +369,10 @@ pre code {
 
 .nav__toggle { display: none; }
 
-@media (max-width: 900px) {
+/* The inline nav collapses to a menu before its items run out of room, not at
+   a round number. Nine nowrap links plus the actions need ~1150px; below that
+   they would push the page wider than the viewport. */
+@media (max-width: 1150px) {
   .nav__links {
     position: fixed;
     inset: 64px 0 auto;
@@ -415,6 +427,13 @@ pre code {
 
 .btn--sm { padding: 8px 14px; font-size: 0.82rem; }
 
+/* Below ~360px the brand, two icon buttons and a labelled button no longer fit
+   across the header. The icon still says GitHub; the word is what gives way. */
+@media (max-width: 380px) {
+  .btn--sm .btn__label { display: none; }
+  .btn--sm { padding: 8px 10px; }
+}
+
 /* --------------------------------------------------------------------------
    Hero
    -------------------------------------------------------------------------- */
@@ -462,6 +481,7 @@ pre code {
   box-shadow: var(--shadow-sm);
 }
 .pill__tag {
+  white-space: nowrap;
   background: var(--accent-soft);
   color: var(--accent);
   border-radius: 999px;
@@ -700,6 +720,66 @@ tbody td:first-child { color: var(--text); font-weight: 600; white-space: nowrap
 
 .mono-num { font-variant-numeric: tabular-nums; }
 
+/* Numeric columns read as a column only when they are right-aligned and share
+   one digit width, so figures line up on the decimal point down the table. */
+th.num,
+td.num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* Rows are scannable when the eye has a resting line. Kept very low contrast:
+   this is a hairline, not a stripe. */
+tbody tr:hover td { background: color-mix(in srgb, var(--accent) 4%, transparent); }
+
+/* The verification matrix carries prose in its first column, so the global
+   nowrap on first cells would push the table far wider than the page. */
+.table--matrix tbody td:first-child { white-space: normal; }
+.table--matrix { min-width: 640px; }
+
+/* The matrix exists for its third column -- what was *not* verified. Letting
+   that column sit off-screen behind a horizontal scroll on a phone would hide
+   the one thing the table is for, so below 700px each row becomes a block and
+   every cell carries its own heading. */
+@media (max-width: 700px) {
+  .table--matrix,
+  .table--matrix thead,
+  .table--matrix tbody,
+  .table--matrix tr,
+  .table--matrix td {
+    display: block;
+    min-width: 0;
+  }
+  .table--matrix thead { display: none; }
+  .table--matrix tbody tr {
+    padding: 18px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .table--matrix tbody tr:last-child { border-bottom: 0; }
+  .table--matrix tbody td {
+    border-bottom: 0;
+    padding: 4px 18px;
+  }
+  .table--matrix tbody td:first-child {
+    font-size: 1rem;
+    padding-bottom: 10px;
+  }
+  .table--matrix tbody td[data-label]:not(:first-child)::before {
+    content: attr(data-label);
+    display: block;
+    margin-bottom: 4px;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+  }
+  .table--matrix tbody td[data-label="Not verified"] { padding-top: 12px; }
+  /* The container's own scroll is pointless once nothing overflows it. */
+  .table-scroll:has(.table--matrix) { overflow-x: visible; }
+}
+
 /* --------------------------------------------------------------------------
    Verified / status chips
    -------------------------------------------------------------------------- */
@@ -716,6 +796,43 @@ tbody td:first-child { color: var(--text); font-weight: 600; white-space: nowrap
 .chip--ok { background: var(--verify-100); color: var(--verify-600); }
 .chip--plan { background: var(--bg-inset); color: var(--text-faint); }
 .chip--exp { background: var(--warn-100); color: var(--warn-600); }
+
+/* --------------------------------------------------------------------------
+   Tally — a single figure stated once, for a claim the page then substantiates
+   -------------------------------------------------------------------------- */
+.tally {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-top: 26px;
+  padding: 20px 24px;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--verify-600);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+.tally__count {
+  font-size: clamp(1.6rem, 4vw, 2.1rem);
+  font-weight: 700;
+  line-height: 1;
+  color: var(--verify-600);
+  letter-spacing: -0.02em;
+}
+.tally__text {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* A heading that divides a section without starting a new one. */
+.subhead {
+  margin: clamp(40px, 6vw, 60px) 0 20px;
+  padding-top: clamp(28px, 4vw, 40px);
+  border-top: 1px solid var(--border);
+  font-size: clamp(1.05rem, 2.4vw, 1.3rem);
+}
 
 /* --------------------------------------------------------------------------
    Callout

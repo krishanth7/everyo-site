@@ -2,19 +2,22 @@
 
 > An open-source neural network framework written from scratch in Python on
 > NumPy. Tensors, reverse-mode automatic differentiation, layers, optimizers,
-> mixed precision, ONNX export and single-machine data-parallel training. It is
-> not a wrapper around PyTorch, TensorFlow or JAX and does not call one at
-> runtime.
+> mixed precision, int8 quantization, profiling, two ONNX exporters and
+> data-parallel training on one machine or across several. It is not a wrapper
+> around PyTorch, TensorFlow or JAX and does not call one at runtime.
 
-EveryO exists to be read. The gradient engine is 251 lines; the whole package is
-roughly 11,500 lines across 65 modules. Every differentiable operation is
+EveryO exists to be read. The gradient engine is 261 lines; the whole package is
+roughly 12,800 lines across 70 modules. Every differentiable operation is
 verified against central finite differences, and numerical results are compared
 against TensorFlow.
+
+Every item on the project roadmap is now implemented: 10 of 10 shipped.
 
 ## Facts worth quoting accurately
 
 - Licence: MIT. Version 0.1.0.
-- Tests: 709 passing, 8 skipped, about 17 seconds on CPU.
+- Tests: 791 passing, 9 skipped, about 35 seconds on CPU with the optional ONNX
+  extra installed; 712 passing without it, where the ONNX tests skip.
 - Python 3.9 to 3.12, on Linux, macOS and Windows.
 - Agreement with TensorFlow: matmul, conv2d, pooling and relu at 0.000e+00;
   softmax at 2.980e-08; cross-entropy gradient at 3.725e-09.
@@ -30,11 +33,20 @@ against TensorFlow.
 - Mixed precision on a CPU saves memory, not time: NumPy upcasts float16 to
   compute, so the reduced-precision path is usually slower there. The speedup
   comes from GPU tensor cores.
-- Distributed training is single-machine only. No multi-node, no NCCL.
-- CUDA support is experimental: the kernels are correct but each call still
-  copies to the device and back.
-- GPU-resident tensors, multi-node training, quantization and a tracing ONNX
-  exporter are unbuilt.
+- Multi-node training has been exercised across two separate OS processes over
+  real TCP sockets, NOT across two physical machines. No second host is
+  available in this project's CI. There is no NCCL and no encryption: the
+  protocol assumes a trusted network.
+- The CUDA kernels and GPU-resident tensors REQUIRE a GPU and the native
+  extension. Their tests exist and they SKIP in this project's CI, which has no
+  GPU, no CUDA toolkit and no driver. Nobody has run them there. What is
+  verified on CPU is only the transfer-counting claim: a ten-operation chain
+  crosses the host-device boundary 3 times rather than 30.
+- int8 quantization is a size and fidelity change, not a faster kernel: the
+  arithmetic still runs through NumPy in float. Largest output drift on the
+  documented example is 0.0222, with 100% argmax agreement against float32.
+- The tracing ONNX exporter flattens control flow. A model traced at 8 timesteps
+  is a graph for 8 timesteps, not a general-length model.
 
 ## Docs
 
@@ -51,3 +63,15 @@ against TensorFlow.
 - [Project policy](https://github.com/krishanth7/EveryO/blob/main/PROJECT_POLICY.md): use, contribution, branding
 - [Security policy](https://github.com/krishanth7/EveryO/security/policy): private vulnerability reporting
 - [Contributing](https://github.com/krishanth7/EveryO/blob/main/CONTRIBUTING.md): setup, tests, pull requests
+
+## The two ONNX exporters
+
+- `export_onnx` walks a model layer by layer. Precise, emits a real Conv node,
+  needs no example input. Cannot export recurrent or attention layers, and says
+  so by name rather than writing a wrong graph.
+- `export_onnx_traced` runs the model and exports the graph the run leaves
+  behind, so recurrent and attention models export. Measured agreement with
+  EveryO after re-running through ONNX Runtime: RNN 3.02e-07 over 45 traced
+  operations, LSTM 1.19e-07 over 141, GRU 1.19e-07 over 165,
+  MultiHeadAttention 4.77e-07 over 21, TransformerEncoderBlock 1.19e-06 over
+  46, and a two-layer TransformerEncoder 8.34e-07 over 101.
