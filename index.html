@@ -6,8 +6,8 @@
 <title>EveryO — Open neural computing, built to be understood</title>
 <meta name="description" content="EveryO is an open-source neural network framework written from scratch in Python on NumPy. Tensors, autograd, layers, optimizers, mixed precision, int8 quantization, profiling, multi-node training and a tracing ONNX exporter — every gradient verified against finite differences and TensorFlow.">
 <meta name="author" content="EveryO">
-<meta name="theme-color" content="#1a56c4" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#080d17" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#FAF7F0" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#111518" media="(prefers-color-scheme: dark)">
 <link rel="canonical" href="https://krishanth7.github.io/everyo-site/">
 
 <meta property="og:type" content="website">
@@ -21,11 +21,17 @@
 <meta name="twitter:image" content="https://krishanth7.github.io/everyo-site/assets/img/banner.png">
 
 <script>
-// Apply the saved preference before the first paint.
-try { var t = localStorage.getItem('everyo-theme'); if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t; } catch (_) {}
+// Resolve the theme and disclosure styling before the first paint.
+(function () {
+  var root = document.documentElement;
+  root.classList.add('js');
+  var saved;
+  try { saved = localStorage.getItem('everyo-theme'); } catch (_) {}
+  root.dataset.theme = saved === 'light' || saved === 'dark' ? saved : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+})();
 </script>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%231a56c4'/><text y='.9em' x='50%' text-anchor='middle' font-size='62' font-family='monospace' font-weight='bold' fill='white'>E</text></svg>">
-<link rel="stylesheet" href="everyo-corporate.css?v=final-footer-20261103">
+<link rel="stylesheet" href="everyo-corporate.css?v=header-engineering-20261103">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -67,11 +73,11 @@ try { var t = localStorage.getItem('everyo-theme'); if (t === 'light' || t === '
   <div class="wrap">
     <nav class="nav" aria-label="Primary">
       <a class="brand" href="#top" aria-label="EveryO home">
-        <svg class="orbit-logo" viewBox="0 0 84 64" fill="none" aria-hidden="true"><circle cx="42" cy="32" r="23" stroke="currentColor" stroke-width="6"/><ellipse cx="42" cy="32" rx="40" ry="10" transform="rotate(-25 42 32)" stroke="#a9f53b" stroke-width="2.6"/><circle cx="67" cy="12" r="5.5" fill="#a9f53b"/></svg>
+        <svg class="orbit-logo" viewBox="0 0 84 64" fill="none" aria-hidden="true"><circle cx="42" cy="32" r="23" stroke="currentColor" stroke-width="6"/><ellipse cx="42" cy="32" rx="40" ry="10" transform="rotate(-25 42 32)" stroke="var(--header-lime)" stroke-width="2.6"/><circle cx="67" cy="12" r="5.5" fill="var(--header-lime)"/></svg>
         <span>EveryO</span>
       </a>
-      <ul class="nav__links" id="nav-links" data-open="false">
-        <li><a href="#top"><svg class="mobile-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1Z"/></svg><span>Overview</span><span class="mobile-nav-chevron" aria-hidden="true">›</span></a></li>
+      <ul class="nav__links" id="nav-links" data-open="false" data-state="closed">
+        <li><a href="#top" aria-current="page"><svg class="mobile-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1Z"/></svg><span>Overview</span><span class="mobile-nav-chevron" aria-hidden="true">›</span></a></li>
         <li><a class="nav__documentation" href="https://github.com/krishanth7/EveryO/tree/main/docs"><svg class="mobile-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v16M12 5C8 2 4 3 2 4v15c3-1 6-1 10 2 4-3 7-3 10-2V4c-2-1-6-2-10 1Z"/></svg><span>Documentation</span><span class="mobile-nav-chevron" aria-hidden="true">›</span></a></li>
         <li><a href="#why-everyo"><svg class="mobile-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 2 10 5-10 5L2 7Zm-10 10 10 5 10-5M2 17l10 5 10-5"/></svg><span>Features</span><span class="mobile-nav-chevron" aria-hidden="true">›</span></a></li>
         <li><a href="https://github.com/krishanth7/EveryO/tree/main/examples"><svg class="mobile-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 6-6 6 6 6m10-12 6 6-6 6M14 3l-4 18"/></svg><span>Examples</span><span class="mobile-nav-chevron" aria-hidden="true">›</span></a></li>
@@ -83,7 +89,7 @@ try { var t = localStorage.getItem('everyo-theme'); if (t === 'light' || t === '
         <a class="nav__github" href="https://github.com/krishanth7/EveryO" aria-label="Star EveryO on GitHub"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17.3 4.7 18.3 5 18.3 5c.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .5Z"/></svg><span>Star</span></a>
         <button class="theme-switch" id="theme-toggle" type="button" aria-label="Switch colour theme" aria-pressed="false"><span class="theme-choice theme-choice--light"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg></span><span class="theme-choice theme-choice--dark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg></span></button>
         <a class="btn btn--primary btn--sm nav__start" href="#how-it-works">Get Started <span aria-hidden="true">→</span></a>
-        <button class="icon-btn nav__toggle" id="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links"><svg class="menu-hamburger" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg><svg class="menu-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="m5 5 14 14M19 5 5 19"/></svg></button>
+        <button class="icon-btn nav__toggle" id="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links"><svg class="menu-hamburger" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path class="menu-line menu-line--top" d="M4 6h16"/><path class="menu-line menu-line--middle" d="M4 12h16"/><path class="menu-line menu-line--bottom" d="M4 18h16"/></svg></button>
       </div>
     </nav>
   </div>
@@ -258,6 +264,7 @@ model = eo.Sequential(
  </div>
 </footer>
 <dialog class="footer-privacy" id="footer-privacy" aria-labelledby="privacy-title"><h2 id="privacy-title">Your privacy</h2><p>This site does not use analytics, tracking cookies, or third-party scripts. Your theme preference is stored locally in your browser.</p><p>External links take you to GitHub, where GitHub’s policies apply.</p><form method="dialog"><button>Close</button></form></dialog>
-<script src="everyo-corporate.js" defer></script>
+<script src="everyo-corporate.js?v=header-engineering-20261103" defer></script>
 </body>
 </html>
+

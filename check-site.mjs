@@ -1,0 +1,17 @@
+import {readFileSync} from 'node:fs';
+import {fileURLToPath} from 'node:url';
+import assert from 'node:assert/strict';
+const root=fileURLToPath(new URL('.',import.meta.url));
+const html=readFileSync(root+'index.html','utf8');
+const ids=[...html.matchAll(/\bid="([^"]+)"/g)].map(m=>m[1]);
+assert.equal(ids.length,new Set(ids).size,'Duplicate HTML IDs');
+for(const [,id] of html.matchAll(/href="#([^"]+)"/g))assert.ok(ids.includes(id),'Missing target '+id);
+for(const [,id] of html.matchAll(/aria-controls="([^"]+)"/g))assert.ok(ids.includes(id),'Missing controlled panel '+id);
+assert.equal((html.match(/aria-current="page"/g)||[]).length,1,'Exactly one initial active link');
+assert.equal((html.match(/<section\b/g)||[]).length,3,'Preserve three content sections');
+assert.equal((html.match(/<footer\b/g)||[]).length,1,'Preserve the footer');
+for(const file of ['everyo-corporate.css','everyo-corporate.js'])assert.ok(readFileSync(root+file).length>0,file);
+const css=readFileSync(root+'everyo-corporate.css','utf8');
+assert.ok(css.includes('(prefers-reduced-motion:reduce)'),'Reduced motion styles');
+assert.ok(css.includes('(max-width:1199px)'),'Shared responsive breakpoint');
+console.log('PASS: unique IDs, navigation targets, ARIA controls, active link, three sections, footer, local assets, reduced motion, breakpoint.');
