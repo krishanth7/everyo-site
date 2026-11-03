@@ -1774,3 +1774,64 @@ h2 { font-size: clamp(1.8rem,3.6vw,2.8rem); line-height:1.15; }
  .desktop-hero__badges li { font-size:.72rem; padding:7px 10px; gap:6px; }
  .desktop-hero__buttons a { padding-inline:22px; }
 }
+
+
+/* Mobile adaptation of the lime neural-stack hero. */
+@media(max-width:999px) {
+ .hero { --hero-bg:#faf7f0; --hero-ink:#202422; --hero-muted:#707370; --hero-lime:#a4e619; --glass-bright:#fafaf1a6; --glass-mid:#81897638; --glass-edge:#a1a69780; background:var(--hero-bg); padding:0; overflow:hidden; }
+ :root[data-theme="dark"] .hero { --hero-bg:#101718; --hero-ink:#f8faf7; --hero-muted:#c1c7c2; --hero-lime:#b4fb2c; --glass-bright:#d2dbbd50; --glass-mid:#aab98e22; --glass-edge:#e5edda70; }
+ .hero>.wrap { padding-inline:24px; max-width:760px; }
+ .hero .hero__grid,.hero .platform-strip { display:none; }
+ .desktop-hero { display:flex; flex-direction:column; gap:0; min-height:0; padding:36px 0 28px; }
+ .desktop-hero__copy { width:100%; position:relative; z-index:2; padding:0; }
+ .desktop-hero__eyebrow { color:var(--hero-lime); font-size:.76rem; line-height:1.4; letter-spacing:.01em; font-weight:750; margin:0 0 14px; }
+ .desktop-hero__eyebrow>span { color:var(--hero-ink); }
+ .hero .desktop-hero h1 { color:var(--hero-ink); font-size:clamp(2.55rem,8.8vw,4.2rem); line-height:1.05; font-weight:800; letter-spacing:-.055em; margin:0 0 18px; text-wrap:normal; }
+ .desktop-hero h1>span { color:var(--hero-lime); }
+ .desktop-hero__lede { color:var(--hero-muted); font-size:1rem; line-height:1.55; max-width:48ch; margin:0 0 22px; }
+ .desktop-hero__buttons { display:flex; gap:10px; align-items:stretch; margin:0 0 17px; }
+ .desktop-hero__buttons a { display:inline-flex; align-items:center; justify-content:center; gap:8px; flex:1; border-radius:99px; padding:12px 14px; min-height:48px; font-size:.88rem; font-weight:700; white-space:nowrap; text-decoration:none; }
+ .desktop-hero__primary { color:#111807; background:#b2f72b; border:1.5px solid #b2f72b; box-shadow:0 3px 7px #70980016; }
+ .desktop-hero__primary:hover { color:#111807; background:#c4ff50; }
+ .desktop-hero__primary span { font-size:1.3rem; line-height:1; }
+ .desktop-hero__secondary { color:var(--hero-ink); border:1.5px solid var(--hero-ink); background:transparent; }
+ .desktop-hero__secondary:hover { color:var(--hero-ink); background:color-mix(in srgb,var(--hero-ink) 6%,transparent); }
+ .desktop-hero__badges { list-style:none; display:flex; flex-wrap:wrap; gap:7px; padding:0; margin:0; }
+ .desktop-hero__badges li { display:flex; align-items:center; gap:5px; color:var(--hero-ink); font-size:.69rem; padding:7px 9px; border:1px solid color-mix(in srgb,var(--hero-ink) 13%,transparent); border-radius:99px; background:color-mix(in srgb,var(--hero-bg) 80%,transparent); box-shadow:0 2px 4px #00000008; }
+ .desktop-hero__badges svg { width:17px; height:17px; flex:none; }
+ .desktop-hero__art { width:100%; position:relative; height:330px; margin:2px 0 0; min-width:0; }
+ .neural-stack { position:absolute; width:116%; height:100%; top:-5px; left:-8%; overflow:visible; }
+ .desktop-hero__code { position:absolute; bottom:0; left:0; right:0; z-index:3; padding:14px 16px; background:color-mix(in srgb,var(--hero-bg) 90%,transparent); border:1px solid color-mix(in srgb,var(--hero-ink) 17%,transparent); border-radius:14px; backdrop-filter:blur(12px); box-shadow:0 10px 25px #0000001a; color:var(--hero-ink); }
+ .desktop-hero__code code { background:none; border:0; padding:0; color:inherit; font-size:clamp(.65rem,2.7vw,.88rem); line-height:1.85; overflow-wrap:anywhere; }
+ .desktop-hero__code code span { color:var(--hero-lime); font-weight:700; }
+}
+@media(max-width:999px) and (prefers-color-scheme:dark) {
+ :root:not([data-theme="light"]) .hero { --hero-bg:#101718; --hero-ink:#f8faf7; --hero-muted:#c1c7c2; --hero-lime:#b4fb2c; --glass-bright:#d2dbbd50; --glass-mid:#aab98e22; --glass-edge:#e5edda70; }
+}
+@media(min-width:600px) and (max-width:999px) {
+ .desktop-hero { padding-top:46px; }
+ .desktop-hero__buttons { max-width:420px; }
+ .desktop-hero__badges li { font-size:.82rem; padding:8px 13px; }
+ .desktop-hero__art { height:420px; max-width:630px; }
+ .desktop-hero__code { left:auto; min-width:360px; }
+ .desktop-hero__code code { font-size:.85rem; }
+}
+@media(max-width:360px) {
+ .hero>.wrap { padding-inline:20px; }
+ .desktop-hero { padding-top:30px; }
+ .hero .desktop-hero h1 { font-size:2.5rem; }
+ .desktop-hero__eyebrow { font-size:.68rem; }
+ .desktop-hero__lede { font-size:.92rem; }
+ .desktop-hero__buttons a { padding-inline:9px; font-size:.79rem; }
+ .desktop-hero__badges { gap:5px; }
+ .desktop-hero__badges li { font-size:.59rem; padding:7px; gap:4px; }
+ .desktop-hero__badges svg { width:15px; height:15px; }
+ .desktop-hero__art { height:290px; }
+ .desktop-hero__code { padding:12px; }
+}
+@media(max-width:999px) {
+ .hero .desktop-hero h1 br { display:initial; }
+ .desktop-hero__badges { flex-wrap:nowrap; gap:6px; }
+ .desktop-hero__badges li { font-size:clamp(.58rem,2.65vw,.73rem); padding:7px 6px; gap:4px; white-space:nowrap; }
+ .desktop-hero__badges svg { width:16px; height:16px; }
+}
