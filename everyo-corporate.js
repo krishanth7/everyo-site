@@ -28,7 +28,7 @@
   });
   var button = document.getElementById("nav-toggle");
   var links = document.getElementById("nav-links");
-  var mobile = window.matchMedia("(max-width: 1100px)");
+  var mobile = window.matchMedia("(max-width: 1250px)");
   function setNav(open, focusButton) {
     links.dataset.open = String(open);
     button.setAttribute("aria-expanded", String(open));
@@ -44,4 +44,33 @@
   function resized() { setNav(false); }
   if (mobile.addEventListener) mobile.addEventListener("change", resized);
   else if (mobile.addListener) mobile.addListener(resized);
+
+  var search = document.getElementById("site-search");
+  var searchInput = document.getElementById("site-search-input");
+  var results = document.getElementById("search-results");
+  var searchStatus = document.getElementById("search-status");
+  var searchOpen = document.getElementById("search-open");
+  var sections = Array.from(document.querySelectorAll("main section[id]"));
+  function showResults() {
+    var query = searchInput.value.trim().toLowerCase();
+    results.replaceChildren();
+    var matches = sections.filter(function (section) { return !query || section.textContent.toLowerCase().includes(query); });
+    matches.forEach(function (section) {
+      var heading = section.querySelector("h2, h3");
+      if (!heading) return;
+      var item = document.createElement("li");
+      var link = document.createElement("a");
+      link.href = "#" + section.id;
+      link.textContent = heading.textContent.trim();
+      link.addEventListener("click", function () { search.close(); });
+      item.appendChild(link);
+      results.appendChild(item);
+    });
+    searchStatus.textContent = results.children.length ? results.children.length + " sections found" : "No matching sections. Try another term.";
+  }
+  searchOpen.addEventListener("click", function () { setNav(false); search.showModal(); showResults(); searchInput.focus(); });
+  document.getElementById("search-close").addEventListener("click", function () { search.close(); });
+  search.addEventListener("close", function () { searchOpen.focus(); });
+  searchInput.addEventListener("input", showResults);
 })();
+

@@ -1623,3 +1623,71 @@ h2 { font-size: clamp(1.8rem,3.6vw,2.8rem); line-height:1.15; }
 .platform-strip { margin-top:48px; }
 .card__icon { border-radius:8px; }
 @media (prefers-reduced-motion:no-preference) { .btn:hover { transform:translateY(-1px); } }
+
+
+/* Reference header: orbital identity with a lime accent. */
+.reference-header { --header-bg:#faf8f3; --header-text:#0c1011; --header-muted:#484b4c; --header-rule:#d8d6d0; --header-lime:#a9f53b; background:var(--header-bg); border-bottom:1px solid var(--header-rule); box-shadow:0 7px 22px #00000009; }
+:root[data-theme="dark"] .reference-header { --header-bg:#0d1112; --header-text:#f7f8f6; --header-muted:#d1d4d3; --header-rule:#3b4041; }
+@media(prefers-color-scheme:dark) { :root:not([data-theme="light"]) .reference-header { --header-bg:#0d1112; --header-text:#f7f8f6; --header-muted:#d1d4d3; --header-rule:#3b4041; } }
+.reference-header>.wrap { max-width:1680px; padding-inline:clamp(20px,2.5vw,44px); }
+.reference-header .nav { height:100px; gap:clamp(16px,2vw,32px); }
+.reference-header .brand { color:var(--header-text); font-size:clamp(1.6rem,2.1vw,2.3rem); font-weight:800; letter-spacing:-.045em; gap:10px; margin-right:auto; }
+.orbit-logo { width:66px; height:54px; flex:none; }
+.reference-header .nav__links { gap:clamp(8px,1.5vw,25px); }
+.reference-header .nav__links a { font-size:clamp(.82rem,1.1vw,1rem); padding:14px 0; color:var(--header-text); border-radius:0; font-weight:500; }
+.reference-header .nav__links a:hover { background:none; text-decoration:none; }
+.reference-header .nav__links a::after { content:""; position:absolute; left:0; right:0; bottom:0; height:4px; background:var(--header-lime); border-radius:6px; transform:scaleX(0); transition:transform .16s ease; }
+.reference-header .nav__links a:hover::after,.reference-header .nav__links a:focus-visible::after,.reference-header .nav__links .nav__documentation::after { transform:scaleX(1); }
+.reference-header .nav__documentation { font-weight:700 !important; }
+.reference-header .nav__actions { gap:18px; }
+.header-search,.reference-header .nav__github { display:flex; gap:10px; align-items:center; color:var(--header-text); font:500 .95rem var(--font); border:0; border-left:1px solid var(--header-rule); padding:0 0 0 20px; background:none; cursor:pointer; height:32px; white-space:nowrap; text-decoration:none; }
+.header-search svg,.reference-header .nav__github svg { width:24px; height:24px; flex:none; }
+.reference-header .theme-switch { width:74px; height:36px; padding:2px; border:0; border-radius:40px; background:color-mix(in srgb,var(--header-text) 8%,var(--header-bg)); display:flex; align-items:center; cursor:pointer; color:var(--header-text); flex:none; }
+.theme-choice { display:grid; place-items:center; width:35px; height:32px; border-radius:50%; }
+.theme-choice svg { width:23px; height:23px; }
+.theme-choice--light { background:var(--header-lime); color:#101509; }
+.theme-switch[aria-pressed="true"] .theme-choice--light { background:none; color:var(--header-text); }
+.theme-switch[aria-pressed="true"] .theme-choice--dark { background:var(--header-lime); color:#101509; }
+.reference-header .nav__start { background:var(--header-lime); color:#0c1204; padding:13px 20px; border-radius:10px; font-size:1rem; font-weight:750; gap:15px; box-shadow:none; }
+.reference-header .nav__start:hover { background:#bafa58; color:#0c1204; }
+.reference-header .nav__start span { font-size:1.5rem; line-height:1; }
+.reference-header .nav__toggle { background:none; color:var(--header-text); border-color:var(--header-rule); }
+.site-search { width:min(620px,calc(100% - 32px)); max-height:80dvh; overflow:auto; background:var(--surface); color:var(--text); border:1px solid var(--border); border-radius:14px; padding:28px; box-shadow:0 24px 80px #0006; }
+.site-search::backdrop { background:#080d1799; backdrop-filter:blur(4px); }
+.search-heading { display:flex; justify-content:space-between; align-items:center; gap:20px; margin-bottom:20px; }
+.search-heading h2 { font-size:1.5rem; margin:0; }
+.search-heading button { background:var(--bg-alt); border:1px solid var(--border); color:var(--text); border-radius:6px; padding:8px 12px; cursor:pointer; }
+.site-search label { display:block; font-size:.85rem; color:var(--text-muted); margin-bottom:10px; }
+.site-search input { width:100%; font:inherit; color:var(--text); background:var(--bg-alt); border:1px solid var(--border-strong); border-radius:6px; padding:13px; }
+.search-status { font-size:.8rem; color:var(--text-muted); margin-top:16px; }
+#search-results { padding:0; margin:0; list-style:none; }
+#search-results a { display:block; padding:12px 0; border-bottom:1px solid var(--border); font-weight:600; }
+@media(max-width:1250px) {
+ .reference-header .nav { height:84px; }
+ .reference-header .nav__toggle { display:grid; }
+ .reference-header .nav__links { position:absolute; inset:84px 0 auto; display:none; flex-direction:column; align-items:stretch; gap:2px; padding:16px 24px 24px; max-height:calc(100dvh - 84px); overflow:auto; background:var(--header-bg); border-bottom:1px solid var(--header-rule); box-shadow:0 12px 20px #0002; }
+ .reference-header .nav__links[data-open="true"] { display:flex; }
+ .reference-header .nav__links a { display:block; padding:12px 0; font-size:1rem; }
+ .reference-header .nav__links a::after { right:auto; width:64px; }
+ .reference-header .brand { font-size:1.9rem; }
+}
+@media(max-width:700px) {
+ .reference-header .nav { height:76px; gap:12px; }
+ .reference-header .nav__links { top:76px; max-height:calc(100dvh - 76px); }
+ .reference-header .nav__actions { gap:12px; }
+ .header-search,.reference-header .nav__github { border:0; padding:0; }
+ .header-search span,.reference-header .nav__github span { display:none; }
+ .reference-header .brand { font-size:1.6rem; gap:5px; }
+ .orbit-logo { width:49px; height:44px; }
+ .reference-header .nav__start { display:none; }
+}
+@media(max-width:420px) {
+ .reference-header .nav__github { display:none; }
+ .reference-header .nav__actions { gap:9px; }
+ .reference-header .theme-switch { width:66px; height:34px; }
+ .theme-choice { width:31px; height:30px; }
+ .theme-choice svg { width:21px; height:21px; }
+ .reference-header .brand { font-size:1.35rem; }
+ .orbit-logo { width:43px; }
+}
+@media(max-width:1250px) { html:not(.js) .reference-header .nav { height:auto; flex-wrap:wrap; } html:not(.js) .reference-header .nav__links { display:flex; position:static; width:100%; max-height:none; box-shadow:none; border:0; } }
