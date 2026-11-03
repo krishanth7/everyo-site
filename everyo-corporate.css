@@ -1895,3 +1895,38 @@ h2 { font-size: clamp(1.8rem,3.6vw,2.8rem); line-height:1.15; }
  .why-card h3 { font-size:1.2rem; }
  .mini-editor__line { font-size:.56rem; }
 }
+
+/* Preserve desktop illustration order while reading card titles first. */
+.why-card { display:flex; flex-direction:column; }
+.why-card__visual { order:-1; }
+
+/* Mobile feature composition from the supplied reference. */
+@media(max-width:700px) {
+ .why-everyo { padding:34px 0 28px; }
+ .why-everyo>.wrap { max-width:500px; padding-inline:18px; }
+ .why-everyo__heading { text-align:left; margin:0 10px 24px; }
+ .why-everyo__eyebrow { font-size:.85rem; letter-spacing:.27em; margin-bottom:18px; }
+ .why-everyo h2 { font-size:clamp(2rem,9.1vw,2.65rem); line-height:1.12; letter-spacing:-.035em; max-width:13ch; margin-bottom:17px; text-wrap:normal; }
+ .why-everyo__heading>p:last-child { font-size:1rem; line-height:1.4; }
+ .why-everyo__grid { gap:15px; }
+ .why-card { padding:14px 18px 16px; border-radius:14px; }
+ .why-card h3 { font-size:clamp(1.4rem,6.1vw,1.8rem); line-height:1.13; letter-spacing:-.03em; max-width:13ch; margin:0 0 12px; }
+ .why-card__visual { order:0; height:auto; aspect-ratio:2.15; margin:0 0 14px; }
+ .why-card__editor { aspect-ratio:auto; padding:4px 0 0; }
+ .why-card>p { font-size:1rem; line-height:1.35; }
+ .why-card__chart { aspect-ratio:2.05; margin-bottom:17px; }
+ .why-card__illustration-note { bottom:-9px; font-size:.5rem; }
+ .mini-editor { max-width:none; color:#f6f8f4; background:#101718; border-color:#68716d; padding-bottom:8px; }
+ .mini-editor__bar { background:#ffffff12; border-color:#ffffff20; font-size:.7rem; height:27px; }
+ .mini-editor__bar>span:last-child { background:none; }
+ .mini-editor__dots i { background:#898c89; }
+ .mini-editor__dots i:first-child { background:#b7fa34; }
+ .mini-editor__line { font-size:clamp(.59rem,2.7vw,.8rem); line-height:1.8; }
+ .mini-editor__line>span { color:#b6bcb8; border-color:#ffffff15; width:25px; margin-right:8px; }
+ .mini-editor code { color:#f6f8f4; }
+ .mini-editor b { color:#b7fa34; }
+ .mini-editor .mini-editor__comment { color:#acb5ae; }
+ .why-everyo__more { margin:17px 10px 0; justify-content:flex-start; font-size:1rem; }
+}
+
+@media(max-width:700px) { .why-everyo h2 { max-width:none; } .why-everyo h2>span { display:block; } .why-card h3 { max-width:17ch; } }
