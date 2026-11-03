@@ -25,7 +25,7 @@
 try { var t = localStorage.getItem('everyo-theme'); if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t; } catch (_) {}
 </script>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%231a56c4'/><text y='.9em' x='50%' text-anchor='middle' font-size='62' font-family='monospace' font-weight='bold' fill='white'>E</text></svg>">
-<link rel="stylesheet" href="everyo-corporate.css?v=why-everyo-mobile-20261103">
+<link rel="stylesheet" href="everyo-corporate.css?v=three-steps-20261103">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -209,6 +209,36 @@ y.<span class="tok-fn">backward</span>()
     <a class="why-everyo__more" href="#capabilities">Explore all features <span aria-hidden="true">→</span></a>
   </div>
 </section>
+<section class="how-everyo" id="how-it-works" aria-labelledby="how-everyo-title">
+  <div class="wrap">
+    <div class="how-everyo__heading">
+      <p class="how-everyo__eyebrow">HOW IT WORKS</p>
+      <h2 id="how-everyo-title">From idea to intelligence in three steps.</h2>
+      <p>Install the framework, define your model, and explore the results.</p>
+    </div>
+    <ol class="how-everyo__steps">
+      <li class="how-step">
+        <div class="how-step__intro"><span class="how-step__number" aria-hidden="true">01</span><div><h3>Install EveryO</h3><p><a href="https://github.com/krishanth7/EveryO">Clone the repository</a>, then install from its root in a Python environment.</p></div></div>
+        <div class="how-terminal" aria-label="Install EveryO from the cloned repository"><div class="how-terminal__bar" aria-hidden="true"><i></i><i></i><i></i></div><pre><code><b>$</b> pip install -e .</code></pre></div>
+      </li>
+      <li class="how-step">
+        <div class="how-step__intro"><span class="how-step__number" aria-hidden="true">02</span><div><h3>Build your model</h3><p>Define and configure a neural network.</p></div></div>
+        <div class="how-terminal" aria-label="EveryO Python model example"><div class="how-terminal__bar" aria-hidden="true"><i></i><i></i><i></i></div><pre><code><b>import</b> everyo <b>as</b> eo
+model = eo.Sequential(
+    eo.Linear(8, 1))</code></pre></div>
+      </li>
+      <li class="how-step">
+        <div class="how-step__intro"><span class="how-step__number" aria-hidden="true">03</span><div><h3>Train and explore</h3><p>Run experiments and inspect training progress.</p></div></div>
+        <div class="how-step__results" role="img" aria-label="Illustrative training loss and neural network, not measured results">
+          <svg class="how-step__loss" viewBox="0 0 220 122" fill="none" aria-hidden="true"><text x="110" y="14" text-anchor="middle" fill="currentColor" font-size="11" font-weight="600">Training loss</text><path d="M32 27V98H207" stroke="currentColor" stroke-opacity=".55"/><path d="M32 62H207M75 27V98M119 27V98M163 27V98" stroke="currentColor" stroke-opacity=".08"/><g fill="currentColor" font-size="9"><text x="9" y="33">1.0</text><text x="9" y="66">0.5</text><text x="9" y="100">0.0</text><text x="31" y="110">0</text><text x="189" y="110">200</text><text x="113" y="119">Epochs</text></g><path d="M36 34C46 52 53 65 66 71S90 81 103 84 125 86 145 88 182 90 206 91" stroke="#b7fa34" stroke-width="3" stroke-linecap="round"/></svg>
+          <svg class="how-step__network" viewBox="0 0 126 122" fill="none" aria-hidden="true"><g stroke="#e4eadf" stroke-opacity=".65"><path d="m23 34 39-16M23 34l39 43M23 34l39 68M23 34l79 36M23 87l39-69M23 87l39-26M23 87l39 16M62 18l40 52M62 61l40 9M62 103l40-33"/></g><g fill="#b7fa34" stroke="#ddffa8" stroke-width="1.2"><circle cx="23" cy="34" r="7"/><circle cx="23" cy="87" r="7"/><circle cx="62" cy="18" r="7"/><circle cx="62" cy="61" r="7"/><circle cx="62" cy="103" r="7"/><circle cx="102" cy="70" r="8"/></g></svg>
+        </div><span class="how-step__note">Illustrative training view</span>
+      </li>
+    </ol>
+    <a class="how-everyo__guide" href="https://github.com/krishanth7/EveryO/blob/main/docs/getting-started.md">Read the quickstart guide <span aria-hidden="true">→</span></a>
+  </div>
+</section>
+
 <section class="foundation-strip" aria-label="Framework foundations">
   <div class="wrap stats">
     <div class="stat"><div class="stat__value">NumPy core</div><div class="stat__label">Readable tensors and automatic differentiation</div></div>
