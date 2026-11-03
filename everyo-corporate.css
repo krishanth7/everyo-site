@@ -1732,3 +1732,45 @@ h2 { font-size: clamp(1.8rem,3.6vw,2.8rem); line-height:1.15; }
  .mobile-nav-actions { padding-top:20px; }
 }
 @media(max-width:1250px) { html:not(.js) .reference-header .nav__links { position:static; max-height:none; } }
+
+
+/* Desktop hero based on the supplied glass neural-stack reference. */
+.desktop-hero { display:none; }
+@media(min-width:1000px) {
+ .hero { --hero-bg:#faf7f0; --hero-ink:#202422; --hero-muted:#707370; --hero-lime:#a4e619; --glass-bright:#fafaf1a6; --glass-mid:#81897638; --glass-edge:#a1a69780; background:var(--hero-bg); padding:0; overflow:hidden; }
+ :root[data-theme="dark"] .hero { --hero-bg:#101718; --hero-ink:#f8faf7; --hero-muted:#c1c7c2; --hero-lime:#b4fb2c; --glass-bright:#d2dbbd50; --glass-mid:#aab98e22; --glass-edge:#e5edda70; }
+ .hero>.wrap { max-width:1600px; padding-inline:clamp(42px,5vw,90px); }
+ .hero .hero__grid,.hero .platform-strip { display:none; }
+ .desktop-hero { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.25fr); align-items:center; min-height:550px; position:relative; gap:8px; }
+ .desktop-hero__copy { position:relative; z-index:2; padding:55px 0; }
+ .desktop-hero__eyebrow { color:var(--hero-lime); font-size:clamp(.9rem,1.3vw,1.15rem); font-weight:750; letter-spacing:.01em; margin:0 0 16px; }
+ .desktop-hero__eyebrow>span { color:var(--hero-ink); }
+ .hero .desktop-hero h1 { color:var(--hero-ink); font-size:clamp(3.1rem,4.4vw,4.9rem); line-height:1.04; font-weight:800; letter-spacing:-.055em; margin:0 0 20px; text-wrap:normal; }
+ .desktop-hero h1>span { color:var(--hero-lime); }
+ .desktop-hero__lede { color:var(--hero-muted); font-size:clamp(1rem,1.42vw,1.28rem); line-height:1.48; max-width:43ch; margin:0 0 24px; }
+ .desktop-hero__buttons { display:flex; gap:12px; align-items:center; flex-wrap:wrap; margin-bottom:20px; }
+ .desktop-hero__buttons a { border-radius:99px; padding:11px 28px; font-size:1rem; font-weight:700; display:inline-flex; align-items:center; justify-content:center; gap:12px; min-height:48px; text-decoration:none; }
+ .desktop-hero__primary { color:#111807; background:#b2f72b; border:1.5px solid #b2f72b; box-shadow:0 3px 7px #70980016; }
+ .desktop-hero__primary:hover { background:#c4ff50; color:#111807; }
+ .desktop-hero__primary span { font-size:1.4rem; line-height:1; }
+ .desktop-hero__secondary { color:var(--hero-ink); border:1.5px solid var(--hero-ink); background:transparent; }
+ .desktop-hero__secondary:hover { color:var(--hero-ink); background:color-mix(in srgb,var(--hero-ink) 6%,transparent); }
+ .desktop-hero__badges { display:flex; list-style:none; padding:0; margin:0; gap:10px; flex-wrap:wrap; }
+ .desktop-hero__badges li { display:flex; align-items:center; gap:8px; border:1px solid color-mix(in srgb,var(--hero-ink) 13%,transparent); border-radius:99px; padding:8px 13px; color:var(--hero-ink); font-size:.83rem; box-shadow:0 2px 4px #00000008; background:color-mix(in srgb,var(--hero-bg) 80%,transparent); }
+ .desktop-hero__badges svg { width:21px; height:21px; flex:none; }
+ .desktop-hero__art { position:relative; height:530px; min-width:0; margin-left:-50px; margin-right:-50px; }
+ .neural-stack { position:absolute; width:112%; height:100%; left:-5%; top:0; overflow:visible; }
+ .desktop-hero__code { position:absolute; right:-4px; bottom:42px; z-index:3; border:1px solid color-mix(in srgb,var(--hero-ink) 17%,transparent); background:color-mix(in srgb,var(--hero-bg) 89%,transparent); color:var(--hero-ink); padding:19px 23px; border-radius:18px; backdrop-filter:blur(12px); box-shadow:0 12px 28px #0000001c; max-width:100%; }
+ .desktop-hero__code code { background:none; border:0; padding:0; color:inherit; font-size:clamp(.7rem,1.05vw,.95rem); line-height:1.8; overflow-wrap:normal; white-space:nowrap; }
+ .desktop-hero__code code span { color:var(--hero-lime); font-weight:700; }
+}
+@media(min-width:1000px) and (prefers-color-scheme:dark) {
+ :root:not([data-theme="light"]) .hero { --hero-bg:#101718; --hero-ink:#f8faf7; --hero-muted:#c1c7c2; --hero-lime:#b4fb2c; --glass-bright:#d2dbbd50; --glass-mid:#aab98e22; --glass-edge:#e5edda70; }
+}
+@media(min-width:1000px) and (max-width:1150px) {
+ .desktop-hero { grid-template-columns:1fr 1fr; min-height:510px; }
+ .desktop-hero__art { margin-left:-35px; margin-right:-20px; height:490px; }
+ .desktop-hero__code { right:0; bottom:35px; padding:15px; }
+ .desktop-hero__badges li { font-size:.72rem; padding:7px 10px; gap:6px; }
+ .desktop-hero__buttons a { padding-inline:22px; }
+}
