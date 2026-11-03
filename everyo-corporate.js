@@ -34,6 +34,7 @@
     button.setAttribute("aria-expanded", String(open));
     button.setAttribute("aria-label", open ? "Close menu" : "Open menu");
     links.inert = mobile.matches && !open;
+    root.classList.toggle("mobile-menu-open", mobile.matches && open);
     if (focusButton) button.focus();
   }
   setNav(false);
@@ -41,6 +42,14 @@
   links.addEventListener("click", function (event) { if (event.target.closest("a")) setNav(false); });
   document.addEventListener("keydown", function (event) { if (event.key === "Escape" && links.dataset.open === "true") setNav(false, true); });
   document.addEventListener("click", function (event) { if (!event.target.closest(".nav")) setNav(false); });
+  document.addEventListener("keydown", function (event) {
+    if (event.key !== "Tab" || !mobile.matches || links.dataset.open !== "true") return;
+    var focusable = Array.from(document.querySelectorAll(".reference-header a, .reference-header button")).filter(function (el) { return el.getClientRects().length > 0 && !el.closest("[inert]"); });
+    var first = focusable[0];
+    var last = focusable[focusable.length - 1];
+    if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+    else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+  });
   function resized() { setNav(false); }
   if (mobile.addEventListener) mobile.addEventListener("change", resized);
   else if (mobile.addListener) mobile.addListener(resized);
@@ -73,4 +82,5 @@
   search.addEventListener("close", function () { searchOpen.focus(); });
   searchInput.addEventListener("input", showResults);
 })();
+
 

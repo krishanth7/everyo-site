@@ -1691,3 +1691,44 @@ h2 { font-size: clamp(1.8rem,3.6vw,2.8rem); line-height:1.15; }
  .orbit-logo { width:43px; }
 }
 @media(max-width:1250px) { html:not(.js) .reference-header .nav { height:auto; flex-wrap:wrap; } html:not(.js) .reference-header .nav__links { display:flex; position:static; width:100%; max-height:none; box-shadow:none; border:0; } }
+
+
+/* Mobile menu from the supplied open/closed reference. */
+.mobile-nav-icon,.mobile-nav-chevron,.mobile-nav-actions,.menu-close { display:none; }
+@media(max-width:1250px) {
+ html.mobile-menu-open { overflow:hidden; }
+ .reference-header .nav__toggle { border:0; border-radius:4px; width:38px; height:40px; }
+ .reference-header .nav__toggle svg { width:27px; height:27px; }
+ .nav__toggle[aria-expanded="true"] .menu-hamburger { display:none; }
+ .nav__toggle[aria-expanded="true"] .menu-close { display:block; }
+ .reference-header .nav__links { position:fixed; inset:84px 0 0; max-height:none; padding:14px max(24px,calc((100vw - 600px)/2)) 30px; box-shadow:none; border:0; overscroll-behavior:contain; }
+ .reference-header .nav__links>li:not(.mobile-nav-actions) { border-bottom:1px solid var(--header-rule); padding:6px 0; }
+ .reference-header .nav__links a { display:flex; align-items:center; gap:18px; min-height:56px; padding:12px 10px; font-size:1.1rem; font-weight:550; border-radius:9px; }
+ .reference-header .nav__links a::after { display:none; }
+ .reference-header .nav__links .nav__documentation { background:color-mix(in srgb,var(--header-lime) 43%,var(--header-bg)); }
+ .reference-header .nav__links a:hover { background:color-mix(in srgb,var(--header-lime) 14%,var(--header-bg)); }
+ .mobile-nav-icon { display:block; width:26px; height:26px; flex:none; }
+ .mobile-nav-chevron { display:block; margin-left:auto; font-size:1.9rem; font-weight:300; line-height:1; }
+ .mobile-nav-actions { display:block; padding-top:28px; }
+ .reference-header .nav__links .mobile-get-started { display:flex; justify-content:center; background:var(--header-lime); color:#101509; font-size:1.2rem; font-weight:750; border-radius:10px; gap:12px; min-height:56px; }
+ .mobile-get-started span { font-size:1.7rem; line-height:1; }
+ .reference-header .nav__links .mobile-github { justify-content:center; font-size:1rem; font-weight:600; gap:10px; padding-top:16px; }
+ .mobile-github svg { width:25px; height:25px; }
+ .mobile-github span { text-decoration:underline; text-underline-offset:4px; }
+}
+@media(max-width:700px) {
+ .reference-header .header-search,.reference-header .nav__github { display:none; }
+ .reference-header .nav__links { top:76px; padding:14px 20px max(24px,env(safe-area-inset-bottom)); }
+ .reference-header .nav__actions { gap:20px; }
+ .reference-header .brand { font-size:1.6rem; }
+ .reference-header .orbit-logo { width:48px; }
+}
+@media(max-width:360px) {
+ .reference-header .brand { font-size:1.35rem; }
+ .reference-header .orbit-logo { width:42px; }
+ .reference-header .nav__actions { gap:10px; }
+ .reference-header .nav__links { padding-inline:16px; }
+ .reference-header .nav__links a { font-size:1rem; min-height:50px; }
+ .mobile-nav-actions { padding-top:20px; }
+}
+@media(max-width:1250px) { html:not(.js) .reference-header .nav__links { position:static; max-height:none; } }
