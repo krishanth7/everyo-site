@@ -85,6 +85,57 @@ const { chromium } = require("playwright");
   await page.goto(
     (process.env.SITE_URL || "http://127.0.0.1:8000/") + "index.html",
   );
+  const learningLinks = page.locator("#why-everyo .card .text-link");
+  const destinations = [
+    "documentation.html#gradients",
+    "examples.html",
+    "features.html#validation",
+  ];
+  for (let index = 0; index < destinations.length; index++) {
+    const link = learningLinks.nth(index);
+    if (
+      (await link.getAttribute("target")) !== "_blank" ||
+      (await link.getAttribute("href")) !== destinations[index]
+    )
+      throw Error("learning card destination");
+    const [tab] = await Promise.all([page.waitForEvent("popup"), link.click()]);
+    await tab.waitForLoadState("domcontentloaded");
+    if (
+      !tab.url().endsWith(destinations[index]) ||
+      !(await tab
+        .locator('footer a[href="https://github.com/krishanth7/EveryO"]')
+        .count())
+    )
+      throw Error("local tab content and footer source link");
+    await tab.close();
+  }
+  await page.locator("[data-accuracy-card]").scrollIntoViewIfNeeded();
+  await page.waitForFunction(
+    () =>
+      document.querySelector("[data-accuracy-card]").dataset.animation ===
+      "complete",
+  );
+  if ((await page.locator("[data-accuracy-number]").textContent()) !== "99.3")
+    throw Error("final reported accuracy");
+  if (
+    !(await page.locator(".accuracy-accessible").textContent()).includes(
+      "99.3 percent",
+    )
+  )
+    throw Error("stable accessible metric");
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.reload();
+  if (
+    (await page
+      .locator("[data-accuracy-card]")
+      .getAttribute("data-animation")) !== "complete" ||
+    (await page.locator(".accuracy-card.is-counting").count())
+  )
+    throw Error("accuracy reduced motion");
+  await page.emulateMedia({ reducedMotion: "no-preference" });
+  console.log(
+    "PASS learning cards open local pages in new tabs with footer source links; accuracy settles at 99.3 and respects reduced motion",
+  );
   await page.locator("[data-example=networks]").click();
   if (
     !(await page.locator("#interactive-code").textContent()).includes(
@@ -216,6 +267,8 @@ const { chromium } = require("playwright");
   await simple.goto(
     (process.env.SITE_URL || "http://127.0.0.1:8000/") + "index.html",
   );
+  if ((await simple.locator("[data-accuracy-number]").textContent()) !== "99.3")
+    throw Error("no-JS reported accuracy");
   if (!(await simple.locator("#nav-links").isVisible()))
     throw Error("no-js menu");
   await simple.goto(

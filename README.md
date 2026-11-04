@@ -48,7 +48,7 @@ Set `CHROMIUM_PATH` for a different Chromium executable, and `SITE_URL` for a di
 
 ## Motion and documentation UX
 
-Entrance animations are progressive enhancements applied when content enters the viewport. Content is visible before scripts run, and the reduced-motion preference disables reveal animations, animated scrolling, and page transitions. Graph highlights stop after three short pulses. Search derives its index from the actual document, uses no network service, and supports Ctrl/Command+K, Enter, Tab, and Escape. Installation tabs support Left/Right arrows and Home/End; both instruction sets remain visible without JavaScript.
+Entrance animations are progressive enhancements applied when content enters the viewport. Content is visible before scripts run, and the reduced-motion preference disables reveal animations, animated scrolling, and page transitions. Graph highlights stop after three short pulses. The overview’s reported-accuracy card counts up once when it enters view, keeps a stable screen-reader value, and displays the final value immediately for reduced motion or without JavaScript. The three overview learning cards open local guides in new tabs; framework source links remain available in each page’s footer. Search derives its index from the actual document, uses no network service, and supports Ctrl/Command+K, Enter, Tab, and Escape. Installation tabs support Left/Right arrows and Home/End; both instruction sets remain visible without JavaScript.
 
 ## Search, social, and AI discovery
 

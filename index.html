@@ -178,6 +178,7 @@
         ]
       }
     </script>
+    <link rel="stylesheet" href="assets/css/overview-results.css" />
   </head>
   <body data-page="overview">
     <a class="skip" href="#main">Skip to content</a>
@@ -414,7 +415,10 @@
             </p>
             <a
               class="text-link"
-              href="https://github.com/krishanth7/EveryO/blob/main/everyo/core/autograd.py"
+              href="documentation.html#gradients"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Read autograd (opens in a new tab)"
               >Read autograd
               <span aria-hidden="true"
                 ><svg
@@ -435,7 +439,12 @@
               Generate datasets locally, set your seeds, and train small models
               without an account or API key.
             </p>
-            <a class="text-link" href="examples.html"
+            <a
+              class="text-link"
+              href="examples.html"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Find an experiment (opens in a new tab)"
               >Find an experiment
               <span aria-hidden="true"
                 ><svg
@@ -456,7 +465,12 @@
               Explore finite-difference tests and optional TensorFlow reference
               comparisons. Understand what was validated.
             </p>
-            <a class="text-link" href="features.html#validation"
+            <a
+              class="text-link"
+              href="features.html#validation"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="See validation (opens in a new tab)"
               >See validation
               <span aria-hidden="true"
                 ><svg
@@ -653,13 +667,29 @@ print(x.grad)  # [4.]
                 the framework’s own examples.
               </p>
             </div>
-            <div class="result-stat">
-              <strong>99.3<span>%</span></strong>
-              <p>
-                Accuracy on 600 held-out digits<br /><span
-                  >Reported example run · CPU · 17,226 parameters</span
-                >
-              </p>
+            <div class="accuracy-card" data-accuracy-card>
+              <div class="accuracy-card-heading">
+                <span>DOCUMENTED EXAMPLE RUN</span
+                ><span class="accuracy-platform">CPU</span>
+              </div>
+              <strong class="accuracy-value"
+                ><span class="accuracy-accessible"
+                  >99.3 percent held-out digit accuracy</span
+                ><span data-accuracy-number aria-hidden="true">99.3</span
+                ><span class="accuracy-unit" aria-hidden="true">%</span></strong
+              >
+              <p class="accuracy-label">Held-out digit accuracy</p>
+              <div class="accuracy-track" aria-hidden="true"><span></span></div>
+              <dl class="accuracy-context">
+                <div>
+                  <dt>Held-out samples</dt>
+                  <dd>600</dd>
+                </div>
+                <div>
+                  <dt>Trainable parameters</dt>
+                  <dd>17,226</dd>
+                </div>
+              </dl>
             </div>
             <p class="caption">
               An example-run measurement, not a benchmark or performance
@@ -911,5 +941,6 @@ print(x.grad)  # [4.]
     </footer>
     <script src="assets/js/developer-site.js" defer></script>
     <script src="assets/js/site-experience.js" defer></script>
+    <script src="assets/js/overview-results.js" defer></script>
   </body>
 </html>
