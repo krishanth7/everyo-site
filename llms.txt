@@ -4,8 +4,16 @@
 > teaching, and small-scale experiments. The code implements tensors, reverse-mode
 > differentiation, layers, optimizers, training, and serialization.
 
+## Why use EveryO?
+
+EveryO helps developers connect neural-network mathematics to readable Python,
+educators teach with executable examples, and experimenters inspect small CPU
+workflows. Use it to trace gradients, compose layers, compare models, and save
+experiments. Established frameworks remain appropriate for production and scale.
+
 ## Website
 
+- [Why EveryO, audiences, benefits, and FAQ](https://krishanth7.github.io/everyo-site/why-everyo.html)
 - [Overview](https://krishanth7.github.io/everyo-site/)
 - [Framework and validation limits](https://krishanth7.github.io/everyo-site/features.html)
 - [Developer quickstart](https://krishanth7.github.io/everyo-site/documentation.html)
@@ -13,6 +21,8 @@
 - [Community](https://krishanth7.github.io/everyo-site/community.html)
 
 ## Machine-readable documentation
+
+- [AI discovery summary](https://krishanth7.github.io/everyo-site/ai.txt)
 
 - [Markdown quickstart](https://krishanth7.github.io/everyo-site/documentation.md)
 - [Full AI reference](https://krishanth7.github.io/everyo-site/llms-full.txt): self-contained guide and API map

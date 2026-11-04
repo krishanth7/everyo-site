@@ -21,6 +21,7 @@ const { chromium } = require("playwright");
     "documentation.html",
     "examples.html",
     "community.html",
+    "why-everyo.html",
   ]) {
     await page.goto((process.env.SITE_URL || "http://127.0.0.1:8000/") + file);
     await page.waitForLoadState("networkidle");
@@ -192,6 +193,7 @@ const { chromium } = require("playwright");
   await page.emulateMedia({ reducedMotion: "no-preference" });
   for (const file of [
     "robots.txt",
+    "ai.txt",
     "llms.txt",
     "llms-full.txt",
     "llm.txt",

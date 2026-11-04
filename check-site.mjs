@@ -8,6 +8,7 @@ const files = [
   "features.html",
   "examples.html",
   "community.html",
+  "why-everyo.html",
 ];
 const docs = new Map(
   files.map((name) => {
@@ -52,15 +53,17 @@ for (const [name, { text, ids }] of docs) {
       links++;
     } else assets.add(path);
   }
+  const primary = text.match(/<nav id="nav-links"[^>]*>(.*?)<\/nav>/)[1];
+  for (const target of files)
+    assert.ok(
+      primary.includes('href="' + target + '"'),
+      name + ": primary navigation to " + target,
+    );
   assert.match(text, /<link rel="canonical"/);
   assert.match(text, /<meta name="description"/);
   assert.match(text, /<meta name="robots"/);
   assert.match(text, /property="og:image" content="[^\"]+social-card.png"/);
   assert.match(text, /name="twitter:card" content="summary_large_image"/);
-  const schema = JSON.parse(
-    text.match(/<script type="application\/ld\+json">([^<]+)<\/script>/)[1],
-  );
-  assert.equal(schema.codeRepository, "https://github.com/krishanth7/EveryO");
   const structured = [
     ...text.matchAll(/<script type="application\/ld\+json">([^<]+)<\/script>/g),
   ].map((match) => JSON.parse(match[1]));
@@ -68,6 +71,26 @@ for (const [name, { text, ids }] of docs) {
     "@graph"
   ];
   assert.ok(graph, name + ": page discovery graph");
+  const source = graph.find((item) => item["@type"] === "SoftwareSourceCode");
+  assert.equal(source.codeRepository, "https://github.com/krishanth7/EveryO");
+  const application = graph.find(
+    (item) => item["@type"] === "SoftwareApplication",
+  );
+  assert.equal(source.targetProduct["@id"], application["@id"]);
+  assert.equal(application.name, "EveryO");
+  const title = text.match(/<title>(.*?)<\/title>/)[1];
+  const description = text.match(
+    /<meta name="description" content="([^"]+)"/,
+  )[1];
+  assert.ok(
+    title.length >= 25 && title.length <= 85,
+    name + ": descriptive title",
+  );
+  assert.ok(
+    description.length >= 110 && description.length <= 180,
+    name + ": useful description",
+  );
+
   const page = graph.find(
     (item) =>
       item["@type"] ===
@@ -90,7 +113,7 @@ for (const [name, { text, ids }] of docs) {
   );
 }
 const sitemap = readFileSync(root + "sitemap.xml", "utf8");
-assert.equal((sitemap.match(/<loc>/g) || []).length, 5);
+assert.equal((sitemap.match(/<loc>/g) || []).length, files.length);
 for (const file of files)
   assert.ok(
     sitemap.includes(
@@ -111,6 +134,7 @@ for (const file of [
   "llms-full.txt",
   "llm.txt",
   "documentation.md",
+  "ai.txt",
 ]) {
   const content = readFileSync(root + file, "utf8");
   assert.ok(content.length > 100, file + ": readable machine documentation");
@@ -138,6 +162,47 @@ assert.equal(
   sitemapURLs.length,
   "unique sitemap URLs",
 );
+const titles = [...docs.values()].map(
+  (item) => item.text.match(/<title>(.*?)<\/title>/)[1],
+);
+assert.equal(new Set(titles).size, files.length, "distinct page titles");
+const descriptions = [...docs.values()].map(
+  (item) => item.text.match(/<meta name="description" content="([^"]+)"/)[1],
+);
+assert.equal(new Set(descriptions).size, files.length, "distinct descriptions");
+const why = docs.get("why-everyo.html").text;
+const whyGraph = JSON.parse(
+  why.match(/<script type="application\/ld\+json">([^<]+)<\/script>/)[1],
+)["@graph"];
+const faq = whyGraph.find((item) => item["@type"] === "FAQPage");
+const visibleFAQs = [
+  ...why.matchAll(
+    /<details>\s*<summary>(.*?)<\/summary>\s*<p>(.*?)<\/p>\s*<\/details>/g,
+  ),
+];
+assert.equal(
+  faq.mainEntity.length,
+  visibleFAQs.length,
+  "FAQ schema matches visible answer count",
+);
+assert.ok(visibleFAQs.length >= 5, "meaningful user questions");
+for (const [index, [, question, answer]] of visibleFAQs.entries()) {
+  assert.equal(faq.mainEntity[index].name, question.trim());
+  assert.equal(faq.mainEntity[index].acceptedAnswer.text, answer.trim());
+}
+for (const bot of [
+  "Googlebot",
+  "Bingbot",
+  "OAI-SearchBot",
+  "ChatGPT-User",
+  "PerplexityBot",
+  "Claude-SearchBot",
+]) {
+  assert.ok(
+    robotRules.includes("User-agent: " + bot),
+    bot + ": explicit crawler rule",
+  );
+}
 console.log(
   `PASS: ${docs.size} pages; ${links} internal links; ${assets.size} local assets; valid anchors, controls, landmarks, metadata, social previews, structured data, and sitemap.`,
 );

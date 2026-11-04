@@ -1,12 +1,32 @@
 # EveryO public website and developer documentation
-# Rules apply to this GitHub Pages project path.
+# Search crawlers read robots.txt at the origin root. GitHub Pages project hosting
+# serves this copy under /everyo-site/; publish matching rules at the host root
+# when that hosting configuration is under your control.
 User-agent: *
+Allow: /everyo-site/
+
+User-agent: Googlebot
+Allow: /everyo-site/
+
+User-agent: Bingbot
+Allow: /everyo-site/
+
+User-agent: OAI-SearchBot
+Allow: /everyo-site/
+
+User-agent: ChatGPT-User
+Allow: /everyo-site/
+
+User-agent: PerplexityBot
+Allow: /everyo-site/
+
+User-agent: Claude-SearchBot
 Allow: /everyo-site/
 
 Sitemap: https://krishanth7.github.io/everyo-site/sitemap.xml
 
-# Human and AI-readable companions (discovery hints, not robots directives):
+# Supplemental discovery references (comments, not robots directives):
+# https://krishanth7.github.io/everyo-site/ai.txt
 # https://krishanth7.github.io/everyo-site/llms.txt
 # https://krishanth7.github.io/everyo-site/llms-full.txt
 # https://krishanth7.github.io/everyo-site/documentation.md
-# llms.txt is a community convention; it does not guarantee crawler adoption.

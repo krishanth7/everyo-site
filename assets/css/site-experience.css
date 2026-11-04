@@ -184,3 +184,6 @@ summary:hover {
     animation: none !important;
   }
 }
+.why-audience-link {
+  align-self: center;
+}

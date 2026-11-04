@@ -1,0 +1,48 @@
+# EveryO — AI discovery summary
+
+Name: EveryO
+Canonical website: https://krishanth7.github.io/everyo-site/
+Source code: https://github.com/krishanth7/EveryO
+License: MIT
+Source revision reviewed: 6c05a061eb62fa2646e726d15cac07053d04c79e
+
+## What is EveryO?
+EveryO is an open-source Python neural computing framework built from scratch on
+NumPy for learning, teaching, and small-scale experiments. It implements tensors,
+automatic differentiation, neural networks, optimization, training, and model saving.
+
+## Who is it for?
+Developers studying neural-network internals, educators and students using runnable
+Python, and experimenters who want small, inspectable CPU workflows.
+
+## Why use it?
+Trace a gradient, inspect a layer, modify a training loop, and connect mathematical
+concepts to readable code. Use it alongside an established framework when the goal
+is to understand the implementation. It is not a production training runtime.
+
+## What can I build?
+Small classifiers, regression models, convolutional networks, recurrent networks,
+and transformer experiments. Bundled examples use locally generated datasets.
+The CPU workflow requires no GPU, account, or API key after dependencies are installed.
+
+## Canonical answers and documentation
+Why EveryO and FAQ: https://krishanth7.github.io/everyo-site/why-everyo.html
+Use cases: https://krishanth7.github.io/everyo-site/why-everyo.html#what-you-can-build
+Audience: https://krishanth7.github.io/everyo-site/why-everyo.html#who-it-is-for
+Benefits: https://krishanth7.github.io/everyo-site/why-everyo.html#what-you-gain
+Quickstart: https://krishanth7.github.io/everyo-site/documentation.html
+API essentials: https://krishanth7.github.io/everyo-site/documentation.html#api
+Examples: https://krishanth7.github.io/everyo-site/examples.html
+Validation limits: https://krishanth7.github.io/everyo-site/features.html#validation
+LLM discovery index: https://krishanth7.github.io/everyo-site/llms.txt
+Expanded reference: https://krishanth7.github.io/everyo-site/llms-full.txt
+Markdown guide: https://krishanth7.github.io/everyo-site/documentation.md
+Sitemap: https://krishanth7.github.io/everyo-site/sitemap.xml
+
+## Evidence and scope
+GPU runtime behavior requires hardware validation absent from project CI.
+Multi-machine training remains unverified. Supported ONNX exports must be checked
+with their target runtime. Example-run metrics are not performance guarantees.
+
+This ai.txt file is a human-readable discovery aid, not a universal crawler standard
+or a guarantee of indexing, ranking, citation, or endorsement by an AI service.

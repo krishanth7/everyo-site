@@ -16,7 +16,8 @@ Open `http://localhost:8000`. Python 3 serves the site; Node.js 24 runs the depe
 
 ## Pages and assets
 
-- `index.html`: overview, computation graph, switchable code examples, architecture, and reproducible results.
+- `index.html`: overview, why-use positioning, computation graph, switchable code examples, architecture, and reproducible results.
+- `why-everyo.html`: audience paths, use cases, practical benefits, fit guidance, and seven visible questions with matching FAQ structured data.
 - `features.html`: tensors, autograd, network modules, training tools, and validation limits.
 - `documentation.html`: searchable documentation workspace, keyboard-accessible platform tabs, reading progress, complete Python examples, serialization, troubleshooting, and API essentials.
 - `examples.html`: 12 filterable experiments linked to the framework's actual scripts, with copyable commands.
@@ -43,7 +44,7 @@ An optional real-browser regression runner is in `tests/browser.cjs`. With Playw
 node tests/browser.cjs
 ```
 
-Set `CHROMIUM_PATH` for a different Chromium executable, and `SITE_URL` for a different server URL (include a trailing slash). Screenshots go to the operating system's temporary directory. The runner checks all five pages at desktop and mobile sizes, image loading, overflow, JavaScript errors, clipboard contents, filtering, theme persistence, Escape behavior, and navigation without JavaScript. It also covers documentation search, empty results, result navigation, platform tabs and copy, reading position, machine-readable resources, and reduced-motion behavior.
+Set `CHROMIUM_PATH` for a different Chromium executable, and `SITE_URL` for a different server URL (include a trailing slash). Screenshots go to the operating system's temporary directory. The runner checks all six pages at desktop and mobile sizes, image loading, overflow, JavaScript errors, clipboard contents, filtering, theme persistence, Escape behavior, and navigation without JavaScript. It also covers documentation search, empty results, result navigation, platform tabs and copy, reading position, machine-readable resources, and reduced-motion behavior.
 
 ## Motion and documentation UX
 
@@ -51,7 +52,7 @@ Entrance animations are progressive enhancements applied when content enters the
 
 ## Search, social, and AI discovery
 
-Every page has a canonical URL, search directives, Open Graph and Twitter previews, descriptive metadata, and WebPage/TechArticle, WebSite, and BreadcrumbList structured data. `robots.txt` declares the project path and sitemap. `llms.txt` indexes authoritative sources; `llms-full.txt` includes the reviewed guide, API, architecture, autograd, diagnostics, and example catalog. `documentation.md` is the downloadable Markdown quickstart. `llm.txt` is a convenience pointer to the canonical index, not a separate standard.
+Every page has a canonical URL, distinct title and description, focused keywords, search directives, and Open Graph and Twitter previews. A connected JSON-LD graph describes the WebSite, SoftwareSourceCode, SoftwareApplication, WebPage/TechArticle, and BreadcrumbList entities. The Why EveryO page also has FAQPage markup matching its visible answers exactly. `robots.txt` declares the project path, sitemap, and explicit rules for Googlebot, Bingbot, OAI-SearchBot, ChatGPT-User, PerplexityBot, and Claude-SearchBot. Crawlers consult `/robots.txt` at the origin root; GitHub Pages serves this repository under `/everyo-site/`, so the project copy cannot override the domain-root policy. If the host-root site is managed separately, publish the matching rules there. The sitemap is also linked from every HTML head. `ai.txt` provides a concise purpose, audience, benefits, and documentation map; `llms.txt` indexes authoritative sources; `llms-full.txt` includes the reviewed guide, API, architecture, autograd, diagnostics, and example catalog. `documentation.md` is the downloadable Markdown quickstart. `llm.txt` is a convenience pointer to the canonical index, not a separate standard.
 
 Regenerate the expanded AI reference from the selected framework checkout:
 
@@ -60,7 +61,7 @@ python3 scripts/build-ai-docs.py --source ../EveryO
 python3 scripts/build-ai-docs.py --source ../EveryO --check
 ```
 
-The generator requires the checkout to match the reviewed revision in `llms.txt`, so upstream changes must be reviewed before updating provenance. It resolves upstream relative links to immutable source URLs. Metadata and LLM files improve discoverability; they do not guarantee crawler adoption or social reach.
+The generator requires the checkout to match the reviewed revision in `llms.txt`, so upstream changes must be reviewed before updating provenance. It resolves upstream relative links to immutable source URLs. Machine discovery uses canonical URLs, semantic content, source identity, linked text resources, and visible answers mirrored in schema. There is no universal “LLM Signal”, “LLM Scout”, or “AEO” meta tag, so the site does not invent provider endorsement tags or ranking instructions. Metadata and text resources do not guarantee indexing, AI citations, rich-result eligibility, rankings, or social reach.
 
 ## Content provenance
 
