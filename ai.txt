@@ -31,6 +31,11 @@ Use cases: https://krishanth7.github.io/everyo-site/why-everyo.html#what-you-can
 Audience: https://krishanth7.github.io/everyo-site/why-everyo.html#who-it-is-for
 Benefits: https://krishanth7.github.io/everyo-site/why-everyo.html#what-you-gain
 Quickstart: https://krishanth7.github.io/everyo-site/documentation.html
+Architecture: https://krishanth7.github.io/everyo-site/docs-architecture.html
+Complete API: https://krishanth7.github.io/everyo-site/docs-api-reference.html
+Autograd internals: https://krishanth7.github.io/everyo-site/docs-autograd.html
+Scaling and export: https://krishanth7.github.io/everyo-site/docs-scaling.html
+CUDA guide: https://krishanth7.github.io/everyo-site/docs-cuda.html
 API essentials: https://krishanth7.github.io/everyo-site/documentation.html#api
 Examples: https://krishanth7.github.io/everyo-site/examples.html
 Validation limits: https://krishanth7.github.io/everyo-site/features.html#validation

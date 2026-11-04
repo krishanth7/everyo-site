@@ -1,0 +1,635 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>EveryO Scaling &amp; export — Complete Developer Guide</title>
+    <meta name="description" content="Understand mixed precision, GradScaler, ONNX export, CPU data parallelism, and experimental TCP process groups with their limits." />
+    <meta
+      name="robots"
+      content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1"
+    />
+    <meta name="theme-color" content="#f5f4f0" />
+    <link rel="canonical" href="https://krishanth7.github.io/everyo-site/docs-scaling.html" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="EveryO Scaling &amp; export — Complete Developer Guide" />
+    <meta property="og:description" content="Understand mixed precision, GradScaler, ONNX export, CPU data parallelism, and experimental TCP process groups with their limits." />
+    <meta property="og:url" content="https://krishanth7.github.io/everyo-site/docs-scaling.html" />
+    <meta
+      property="og:image"
+      content="https://krishanth7.github.io/everyo-site/assets/img/social-card.png"
+    />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="EveryO — Understand the intelligence you build."
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="EveryO Scaling &amp; export — Complete Developer Guide" />
+    <meta name="twitter:description" content="Understand mixed precision, GradScaler, ONNX export, CPU data parallelism, and experimental TCP process groups with their limits." />
+    <meta
+      name="twitter:image"
+      content="https://krishanth7.github.io/everyo-site/assets/img/social-card.png"
+    />
+    <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg" />
+    <script>
+      try {
+        var t = localStorage.getItem("everyo-theme");
+        document.documentElement.dataset.theme =
+          t === "dark" || t === "light"
+            ? t
+            : matchMedia("(prefers-color-scheme: dark)").matches
+              ? "dark"
+              : "light";
+      } catch (_) {}
+    </script>
+    <link rel="stylesheet" href="assets/css/developer-site.css" />
+    <link rel="stylesheet" href="assets/css/documentation.css" />
+    <meta name="author" content="EveryO contributors" />
+    <meta
+      name="keywords"
+      content="EveryO documentation, Python quickstart, tensor API, autograd tutorial, train classifier, model serialization"
+    />
+    <meta
+      name="googlebot"
+      content="index,follow,max-image-preview:large,max-snippet:-1"
+    />
+    <meta property="og:site_name" content="EveryO" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:image:type" content="image/png" />
+    <meta
+      name="twitter:image:alt"
+      content="EveryO — Understand the intelligence you build."
+    />
+    <link
+      rel="alternate"
+      type="text/plain"
+      title="EveryO LLM index"
+      href="llms.txt"
+    />
+    <link
+      rel="alternate"
+      type="text/plain"
+      title="EveryO expanded AI reference"
+      href="llms-full.txt"
+    />
+    <link
+      rel="alternate"
+      type="text/markdown"
+      title="EveryO documentation in Markdown"
+      href="docs/scaling.md"
+    />
+    <link rel="stylesheet" href="assets/css/site-experience.css" />
+    <link
+      rel="sitemap"
+      type="application/xml"
+      title="EveryO sitemap"
+      href="sitemap.xml"
+    />
+    <link
+      rel="alternate"
+      type="text/plain"
+      title="EveryO AI discovery summary"
+      href="ai.txt"
+    />
+    <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://krishanth7.github.io/everyo-site/#website",
+      "url": "https://krishanth7.github.io/everyo-site/",
+      "name": "EveryO",
+      "inLanguage": "en",
+      "description": "Learn and inspect neural computing with a readable Python framework built on NumPy."
+    },
+    {
+      "@type": "SoftwareSourceCode",
+      "@id": "https://krishanth7.github.io/everyo-site/#source",
+      "name": "EveryO",
+      "url": "https://github.com/krishanth7/EveryO",
+      "codeRepository": "https://github.com/krishanth7/EveryO",
+      "programmingLanguage": "Python",
+      "runtimePlatform": "Python 3.9–3.12 with NumPy and Matplotlib",
+      "version": "0.2.0",
+      "license": "https://opensource.org/license/mit",
+      "description": "A neural computing framework built from scratch on NumPy for learning, teaching, and small-scale experiments.",
+      "isAccessibleForFree": true,
+      "targetProduct": {
+        "@id": "https://krishanth7.github.io/everyo-site/#software"
+      }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://krishanth7.github.io/everyo-site/#software",
+      "name": "EveryO",
+      "url": "https://krishanth7.github.io/everyo-site/",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "Linux, macOS, Windows",
+      "softwareVersion": "0.2.0",
+      "softwareRequirements": "Python 3.9–3.12, NumPy, Matplotlib",
+      "license": "https://opensource.org/license/mit",
+      "isAccessibleForFree": true,
+      "description": "A neural computing framework built from scratch on NumPy for learning, teaching, and small-scale experiments."
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://krishanth7.github.io/everyo-site/docs-scaling.html#page",
+      "url": "https://krishanth7.github.io/everyo-site/docs-scaling.html",
+      "name": "EveryO Scaling & export — Complete Developer Guide",
+      "description": "Understand mixed precision, GradScaler, ONNX export, CPU data parallelism, and experimental TCP process groups with their limits.",
+      "inLanguage": "en",
+      "isPartOf": {
+        "@id": "https://krishanth7.github.io/everyo-site/#website"
+      },
+      "about": {
+        "@id": "https://krishanth7.github.io/everyo-site/#source"
+      },
+      "breadcrumb": {
+        "@id": "https://krishanth7.github.io/everyo-site/docs-scaling.html#breadcrumbs"
+      },
+      "keywords": "EveryO documentation, Python quickstart, tensor API, autograd tutorial, train classifier, model serialization",
+      "citation": "https://github.com/krishanth7/EveryO/blob/6c05a061eb62fa2646e726d15cac07053d04c79e/docs/scaling.md"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://krishanth7.github.io/everyo-site/docs-scaling.html#breadcrumbs",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "EveryO",
+          "item": "https://krishanth7.github.io/everyo-site/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Documentation",
+          "item": "https://krishanth7.github.io/everyo-site/documentation.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Scaling & export",
+          "item": "https://krishanth7.github.io/everyo-site/docs-scaling.html"
+        }
+      ]
+    }
+  ]
+}</script>
+  <link rel="stylesheet" href="assets/css/reference-docs.css"></head>
+  <body data-page="documentation" class="reference-page">
+    <a class="skip" href="#main">Skip to content</a>
+    <div class="announcement">
+      <a href="https://github.com/krishanth7/EveryO/releases"
+        >Open source. Open to your next idea.
+        <span
+          >Explore EveryO 0.2.0
+          <svg
+            class="arrow"
+            viewBox="0 0 16 16"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.4"
+            aria-hidden="true"
+          >
+            <path d="M3 13 13 3M3 3h10v10" /></svg></span
+      ></a>
+    </div>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="brand" href="index.html" aria-label="EveryO home"
+          ><span class="brand-mark" aria-hidden="true">e<span>o</span></span
+          ><span>EveryO</span></a
+        >
+        <nav id="nav-links" aria-label="Primary">
+          <a data-page="overview" href="index.html">Overview</a
+          ><a data-page="why" href="why-everyo.html">Why EveryO</a
+          ><a data-page="features" href="features.html">Framework</a
+          ><a
+            data-page="documentation"
+            href="documentation.html"
+            aria-current="true"
+            >Documentation</a
+          ><a data-page="examples" href="examples.html">Examples</a
+          ><a data-page="community" href="community.html">Community</a>
+        </nav>
+        <div class="header-actions">
+          <button
+            id="theme-toggle"
+            class="icon-button"
+            aria-label="Switch colour theme"
+            aria-pressed="false"
+            type="button"
+          >
+            ◐</button
+          ><a class="github-link" href="https://github.com/krishanth7/EveryO"
+            >GitHub
+            <span aria-hidden="true"
+              ><svg
+                class="arrow"
+                viewBox="0 0 16 16"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.4"
+                aria-hidden="true"
+              >
+                <path d="M3 13 13 3M3 3h10v10" /></svg></span></a
+          ><button
+            id="nav-toggle"
+            class="icon-button menu-toggle"
+            type="button"
+            aria-expanded="false"
+            aria-controls="nav-links"
+            aria-label="Open menu"
+          >
+            ☰
+          </button>
+        </div>
+      </div>
+      <div class="page-progress" aria-hidden="true">
+        <span id="page-progress-fill"></span>
+      </div>
+    </header>
+    <main id="main"><section class="container docs-masthead" id="top"><div><nav class="docs-breadcrumb" aria-label="Breadcrumb"><a href="index.html">EveryO</a><span aria-hidden="true">/</span><a href="documentation.html">Documentation</a><span aria-hidden="true">/</span><span>Scaling &amp; export</span></nav><p class="eyebrow">ADVANCED / COMPLETE GUIDE <span class="version-pill">v0.2.0 source snapshot</span></p><h1>Scaling &amp; export<span class="accent-word">.</span></h1><p>Understand mixed precision, GradScaler, ONNX export, CPU data parallelism, and experimental TCP process groups with their limits.</p><div class="docs-hero-actions"><a class="button" href="#reading-this-guide">Read the guide ↓</a><a class="text-link" href="docs/scaling.md" download>Download original Markdown ↓</a></div></div><div class="docs-intro-card"><span class="eyebrow">READ WITH CONTEXT</span><p><strong>Complete upstream reference</strong>All source sections are preserved below, with added explanations and local guide links.</p><p>Some snippets require earlier definitions or optional integrations. Start with the complete CPU quickstart for a runnable baseline.</p><a href="documentation.html">Back to the quickstart →</a></div></section><div class="container docs-workspace"><aside class="docs-sidebar"><button type="button" class="docs-search-trigger" id="docs-search-open" aria-haspopup="dialog" aria-controls="docs-search"><span>Search all documentation</span><kbd>⌘ K</kbd></button><!-- DOC-LIBRARY:START --><details class="docs-library"><summary>Complete documentation library</summary><nav aria-label="Documentation library"><a href="documentation.html">Quickstart overview</a><a href="docs-getting-started.html">Getting started</a><a href="docs-architecture.html">Architecture</a><a href="docs-autograd.html">Automatic differentiation</a><a href="docs-api-reference.html">Full API reference</a><a href="docs-scaling.html" aria-current="page">Scaling &amp; export</a><a href="docs-cuda.html">CUDA &amp; devices</a><a href="docs-troubleshooting.html">Troubleshooting</a></nav></details><!-- DOC-LIBRARY:END --><details class="docs-page-toc" open><summary>On this page</summary><nav aria-label="On this page"><a href="#reading-this-guide">Reading this guide</a><a href="#mixed-precision">Mixed precision</a><a href="#onnx-export">ONNX export</a><a href="#data-parallel-training">Data-parallel training</a><a href="#running-the-examples">Running the examples</a><a href="#multi-node-tcp-process-groups">Multi-node TCP process groups</a></nav></details><div class="docs-sidebar-resources"><a href="docs/scaling.md" download>Original Markdown ↓</a><a href="llms-full.txt">Full AI reference →</a><a href="examples.html">Runnable examples →</a></div></aside><article class="docs-content reference-content"><div class="docs-source-note"><span class="eyebrow">READ THE FULL STORY</span><p>Source: EveryO <code>6c05a06</code>. This page preserves the reviewed upstream guide and adds learning context. Version-specific headings and historical wording remain visible; boundary notes explain newer APIs separately.</p></div><section id="reading-this-guide" data-doc-section><p class="eyebrow">BEFORE YOU BEGIN</p><h2>Scale the idea with context.</h2><p>Treat precision, export, and parallel execution as separate choices. Each has distinct prerequisites, numerical checks, and deployment boundaries.</p><div class="callout"><b>Read the validation boundary first</b><p>The shared-memory process groups in this guide are single-machine. The later TCP process-group API is separate and has been exercised across processes, not separate physical hosts. CUDA runtime behavior needs hardware validation; CPU stand-ins only check the resident-buffer transfer design.</p></div><h3>Choose one change to validate</h3><ul><li><strong>Mixed precision:</strong> check numerical behavior and which operations autocast.</li><li><strong>ONNX:</strong> check supported operations, input shapes, and agreement in your target runtime.</li><li><strong>Parallelism:</strong> control BLAS threads, keep collective order consistent, and compare with a one-process baseline.</li></ul></section><div class="reference-intro"><p>Three features that a framework tends to grow once the core is correct: running
+in fewer bits, leaving for another runtime, and using more than one core. This
+page covers all three, including what each one does <em>not</em> do.</p>
+<hr />
+</div><section id="mixed-precision" data-doc-section><h2>Mixed precision</h2>
+<h3 id="what-autocast-changes">What autocast changes</h3>
+<p>Inside an <code>eo.autocast()</code> block, exactly two operations change precision:
+<code>matmul</code> and <code>conv2d</code>. Everything else — reductions, exponentials,
+normalization statistics, losses — stays in float32, because summing thousands
+of values or exponentiating one is where 16 bits runs out of range.</p>
+<div class="codebox"><div class="codebar"><span>Python · reference snippet</span><button class="copy-button" type="button">Copy code</button></div><pre><code>import everyo as eo
+
+model = eo.Sequential(eo.Linear(8, 4, seed=0), eo.ReLU(), eo.Linear(4, 1, seed=1))
+
+with eo.autocast():
+    output = model(eo.ones(3, 8))
+
+output.dtype  # &#x27;float16&#x27;
+model[0].weight.dtype  # &#x27;float32&#x27;
+</code></pre><span class="copy-status" role="status"></span></div>
+<p>The mechanism is a cast node, not a flag. When autocast is on, each floating
+operand of an allowlisted operation is routed through a differentiable cast; the
+forward pass then runs in float16, and the cast's backward pass converts the
+incoming gradient back to the operand's own dtype. A float32 parameter therefore
+keeps a float32 gradient — the &quot;fp32 master weights&quot; arrangement — while
+activations, and the gradients flowing through them, genuinely stay in float16.</p>
+<p>That last part matters more than it sounds. If the backward pass quietly ran in
+float32, nothing would ever underflow, and loss scaling would be theatre.</p>
+<p><code>autocast</code> also works as a decorator and nests:</p>
+<div class="codebox"><div class="codebar"><span>Python · reference snippet</span><button class="copy-button" type="button">Copy code</button></div><pre><code>@eo.autocast()
+def forward(model, batch):
+    return model(batch)
+
+
+with eo.autocast():
+    with eo.autocast(False):  # a float32 island inside a float16 block
+        logits = sensitive_head(features)
+</code></pre><span class="copy-status" role="status"></span></div>
+<h3 id="why-gradscaler-exists">Why GradScaler exists</h3>
+<p>float16's smallest normal value is about <code>6.1e-5</code> and its smallest subnormal
+about <code>6e-8</code>. Real gradients are routinely below both, so they flush to zero and
+the weights never move. <code>GradScaler</code> multiplies the loss by a large constant
+before <code>backward()</code>, which shifts the whole gradient distribution into
+representable range, and divides it back out before the optimizer steps.</p>
+<p>Measured on a small MLP whose loss has been scaled down into that regime:</p>
+<div class="codebox"><div class="codebar"><span>Reference / output</span><button class="copy-button" type="button">Copy code</button></div><pre><code>Gradient elements flushed to zero (193 total)
+  no GradScaler ........ 192 / 193
+  with GradScaler ......   1 / 193
+
+Final MSE after 400 steps
+  autocast, no scaler .. 6.2983
+  autocast + scaler .... 0.0474      float32 reference: 0.0474
+</code></pre><span class="copy-status" role="status"></span></div>
+<p>The scale is chosen dynamically: it grows after <code>growth_interval</code> successful
+steps and halves the moment a gradient overflows to infinity — and that step is
+skipped rather than applied, because an infinite gradient would destroy the
+weights.</p>
+<div class="codebox"><div class="codebar"><span>Python · reference snippet</span><button class="copy-button" type="button">Copy code</button></div><pre><code>scaler = eo.GradScaler()
+
+for batch, targets in loader:
+    optimizer.zero_grad()
+    with eo.autocast():
+        predictions = model(batch)
+    loss = criterion(predictions, targets)
+
+    scaler.backward(loss)  # scale, then backward
+    applied = scaler.step(optimizer)  # False when the step was skipped
+    scaler.update()  # grow or shrink the scale
+</code></pre><span class="copy-status" role="status"></span></div>
+<p><code>scaler.backward(loss)</code> is <code>scaler.scale(loss).backward()</code> with NumPy's overflow
+warnings suppressed — an overflow there is the signal <code>step()</code> acts on, not a
+condition worth printing. Use <code>scaler.scale(loss).backward()</code> if you want to see
+them.</p>
+<p><code>scaler.state_dict()</code> and <code>load_state_dict()</code> round-trip the scale, so resuming
+from a checkpoint does not restart the search.</p>
+<h3 id="the-honest-caveat">The honest caveat</h3>
+<blockquote>
+<p>On a CPU, mixed precision saves <strong>memory, not time</strong>. NumPy has no native
+float16 arithmetic: it upcasts to float32 to compute and casts back, so the
+float16 path is usually <em>slower</em> here. The speedup mixed precision is known for
+comes from GPU tensor cores. EveryO implements the numerics so the behaviour is
+right; it does not pretend to make your CPU faster.</p>
+</blockquote>
+<hr />
+</section><section id="onnx-export" data-doc-section><h2>ONNX export</h2>
+<div class="codebox"><div class="codebar"><span>Python · reference snippet</span><button class="copy-button" type="button">Copy code</button></div><pre><code>model.eval()
+eo.export_onnx(model, &quot;model.onnx&quot;, input_shape=(1, 8, 8, 1), output_name=&quot;logits&quot;)
+</code></pre><span class="copy-status" role="status"></span></div>
+<p>The batch dimension is exported as a symbolic dimension, so the graph accepts
+any batch size regardless of what <code>input_shape</code> said.</p>
+<h3 id="supported-layers">Supported layers</h3>
+<p><code>Sequential</code>, <code>Linear</code>, <code>Conv2D</code>, <code>MaxPool2D</code>, <code>AvgPool2D</code>, <code>Flatten</code>,
+<code>Dropout</code>, <code>BatchNorm1D</code>, <code>BatchNorm2D</code>, <code>LayerNorm</code>, <code>ReLU</code>, <code>Sigmoid</code>, <code>Tanh</code>,
+<code>Softmax</code>, <code>LogSoftmax</code>.</p>
+<p><strong>Not supported</strong>: <code>RNN</code>, <code>LSTM</code>, <code>GRU</code>, <code>Embedding</code>, <code>MultiHeadAttention</code>,
+<code>PositionalEncoding</code> and the transformer blocks. These unroll into long chains
+of primitives that need a tracing exporter rather than a layer-by-layer one, and
+a half-correct translation would be worse than none. Passing one raises
+<code>EveryOSerializationError</code> naming the layer.</p>
+<h3 id="two-decisions-worth-knowing">Two decisions worth knowing</h3>
+<p><strong>Layout.</strong> EveryO uses <code>NHWC</code>; ONNX's <code>Conv</code>, <code>MaxPool</code> and <code>AveragePool</code> are
+defined on <code>NCHW</code>. Every convolution and pooling node is therefore wrapped in a
+pair of real <code>Transpose</code> nodes, and the kernel is permuted from
+<code>(kh, kw, in, out)</code> to ONNX's <code>(out, in, kh, kw)</code>. ONNX Runtime's optimizer
+usually cancels adjacent transposes, but the exported graph is faithful first
+and fast second.</p>
+<p><strong>Padding.</strong> <code>&quot;same&quot;</code> is written out as an explicit <code>pads</code> attribute computed by
+EveryO's own padding resolver, not as <code>auto_pad</code>. TensorFlow's <code>&quot;same&quot;</code> rule is
+asymmetric on odd inputs, and <code>auto_pad</code> would not reproduce it exactly.</p>
+<p>Batch normalization is folded into a single scale-and-shift on the channel axis,
+which is numerically identical to ONNX's <code>BatchNormalization</code> and sidesteps the
+layout question entirely. A layer built with <code>track_running_stats=False</code> has no
+inference-time statistics to export and is refused rather than guessed at.</p>
+<h3 id="verifying-an-export">Verifying an export</h3>
+<div class="codebox"><div class="codebar"><span>Python · reference snippet</span><button class="copy-button" type="button">Copy code</button></div><pre><code>import numpy as np
+
+expected = np.asarray(model(eo.tensor(batch)).data)
+actual = eo.run_onnx(&quot;model.onnx&quot;, batch)
+np.abs(expected - actual).max()
+</code></pre><span class="copy-status" role="status"></span></div>
+<p>A trained digit CNN exported and re-run through ONNX Runtime agrees to
+<code>1.1e-05</code> — float32 rounding from a different order of operations — and every
+prediction matches. <code>everyo</code>'s own test suite makes this comparison for each
+supported layer rather than checking that a file was written.</p>
+<p>Both packages are optional:</p>
+<div class="codebox"><div class="codebar"><span>Terminal</span><button class="copy-button" type="button">Copy code</button></div><pre><code>pip install everyo[onnx]
+</code></pre><span class="copy-status" role="status"></span></div>
+<p><code>eo.onnx_available()</code> reports whether <code>onnx</code> is importable, and <code>run_onnx</code>
+raises with an install hint when <code>onnxruntime</code> is not.</p>
+<hr />
+</section><section id="data-parallel-training" data-doc-section><h2>Data-parallel training</h2>
+<p>Give every worker a copy of the model and a different slice of the batch, then
+average the gradients before each optimizer step. Averaging over disjoint shards
+is the same arithmetic as one large batch, so the result matches single-process
+training.</p>
+<div class="codebox"><div class="codebar"><span>Python · reference snippet</span><button class="copy-button" type="button">Copy code</button></div><pre><code>import everyo as eo
+from everyo.distributed import average_gradients, shard_indices, spawn
+
+
+def worker(group, inputs, targets):
+    model = build_model()  # same seeds on every rank
+    optimizer = eo.SGD(model.parameters(), lr=0.05)
+    rows = shard_indices(len(inputs), group.rank, group.world_size)
+    xs, ys = eo.tensor(inputs[rows]), eo.tensor(targets[rows])
+
+    for _ in range(steps):
+        optimizer.zero_grad()
+        residual = model(xs) - ys
+        eo.mean(residual * residual).backward()
+        average_gradients(model.parameters(), group)
+        optimizer.step()
+
+    return [p.data for p in model.parameters()]
+
+
+results = spawn(worker, world_size=4, args=(inputs, targets))
+</code></pre><span class="copy-status" role="status"></span></div>
+<p>Measured on a 4-core container, 60 steps of a three-layer MLP over 4096 samples:</p>
+<div class="codebox"><div class="codebar"><span>Reference / output</span><button class="copy-button" type="button">Copy code</button></div><pre><code> workers   rows/worker    seconds    max drift   ranks agree
+--------------------------------------------------------------
+       1          4096       0.26     0.00e+00          True
+       2          2048       0.16     1.79e-07          True
+       4          1024       0.14     2.09e-07          True
+</code></pre><span class="copy-status" role="status"></span></div>
+<p><code>max drift</code> is the largest weight difference from single-process training;
+<code>ranks agree</code> says whether every worker ended bit-identical.</p>
+<h3 id="the-pieces">The pieces</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>spawn(fn, world_size, args=...)</code></td>
+<td>Launches the workers, returns their results ordered by rank</td>
+</tr>
+<tr>
+<td><code>ProcessGroup</code></td>
+<td>Passed to each worker: <code>rank</code>, <code>world_size</code>, <code>is_main</code>, <code>barrier()</code>, <code>all_reduce_mean()</code>, <code>broadcast()</code></td>
+</tr>
+<tr>
+<td><code>average_gradients(params, group)</code></td>
+<td>The one line a training loop adds</td>
+</tr>
+<tr>
+<td><code>shard_indices(count, rank, world_size)</code></td>
+<td>Splits a dataset; <code>drop_last=True</code> keeps every rank's batch the same size</td>
+</tr>
+<tr>
+<td><code>available_workers()</code></td>
+<td>Usable core count, respecting cgroup and affinity limits</td>
+</tr>
+</tbody>
+</table></div>
+<p>Workers are processes, not threads: NumPy releases the GIL for large array
+operations but holds it for the graph bookkeeping around them, so threads would
+contend on exactly the part of training that is pure Python.</p>
+<p>The collective itself flattens every gradient into one vector, stages it in a
+POSIX shared-memory buffer with one slot per rank, and takes two barriers — one
+after the write, one after the read, so nobody overwrites a slot a peer is still
+reading. Reduction happens in float64 so summing float32 gradients across
+workers does not lose a bit to the reduction.</p>
+<h3 id="two-caveats-both-load-bearing">Two caveats, both load-bearing</h3>
+<blockquote>
+<p><strong>One machine only.</strong> There is no multi-node support, no TCP rendezvous and no
+NCCL. Workers communicate through shared memory, which means they share
+hardware. Anything else would be untested.</p>
+</blockquote>
+<blockquote>
+<p><strong>Set <code>OMP_NUM_THREADS=1</code> before launching Python.</strong> NumPy's BLAS starts a
+thread pool per process. On the same 4-core box, four workers took <strong>1.8s</strong>
+with the variable set and <strong>11.0s</strong> without — slower than not parallelising at
+all, because sixteen threads were fighting over four cores. The variable has to
+be set before NumPy loads its backend, so EveryO warns rather than pretending
+it can fix it for you.</p>
+</blockquote>
+<p>If <code>spawn</code> times out, the usual cause is a rank that took a different path
+through the loop: every rank must call the same collectives the same number of
+times, or the ones that reached the barrier wait forever for the one that did
+not.</p>
+<hr />
+</section><section id="running-the-examples" data-doc-section><h2>Running the examples</h2>
+<div class="codebox"><div class="codebar"><span>Terminal</span><button class="copy-button" type="button">Copy code</button></div><pre><code>python examples/mixed_precision.py
+python examples/onnx_export.py
+OMP_NUM_THREADS=1 python examples/distributed_training.py
+</code></pre><span class="copy-status" role="status"></span></div>
+</section><section id="multi-node-tcp-process-groups" data-doc-section><h2>Multi-node TCP process groups</h2>
+<p><code>everyo.distributed_tcp</code> extends gradient collectives beyond one machine. Start
+a <code>TCPRendezvousServer</code> on rank zero, then call <code>init_tcp_process_group()</code> on
+every worker with a unique rank. The returned group's <code>all_reduce_mean()</code> is
+compatible with <code>average_gradients()</code>.</p>
+<p>The initial backend is CPU and synchronous. It is intended for trusted private
+networks and correctness-oriented experiments; traffic is not encrypted and
+there is no NCCL/RDMA acceleration. Put it behind a VPN or private cluster
+network, never expose the rendezvous port publicly.</p>
+</section><div class="guide-pagination"><a href="docs-api-reference.html"><small>PREVIOUS</small><span>Full API reference</span></a><a href="docs-cuda.html"><small>NEXT</small><span>CUDA &amp; devices</span></a></div><div class="reference-provenance"><p>Original guide reproduced under the project’s MIT license. Upstream source remains authoritative.</p><a href="https://github.com/krishanth7/EveryO/blob/6c05a061eb62fa2646e726d15cac07053d04c79e/docs/scaling.md">View the reviewed source on GitHub ↗</a></div></article><aside class="docs-reading" aria-label="Reading guide"><p class="eyebrow">YOUR PROGRESS</p><div class="reading-track" aria-hidden="true"><span id="docs-reading-fill"></span></div><p class="reading-position" id="docs-reading-label">Reading this guide</p><p class="eyebrow">KEEP EXPLORING</p><a href="documentation.html">Quickstart overview</a><a href="docs-architecture.html">Architecture</a><a href="docs-api-reference.html">Complete API map</a><a class="back-top" href="#top">Back to top ↑</a></aside></div><dialog
+        id="docs-search"
+        class="docs-search-dialog"
+        aria-labelledby="docs-search-title"
+      >
+        <div class="docs-search-heading">
+          <h2 id="docs-search-title">Search documentation</h2>
+          <button
+            type="button"
+            id="docs-search-close"
+            aria-label="Close documentation search"
+          >
+            Esc
+          </button>
+        </div>
+        <label for="docs-search-input"
+          >Find an API, concept, or setup step</label
+        ><input
+          id="docs-search-input"
+          type="search"
+          placeholder="Try gradients, Windows, or save…"
+          autocomplete="off"
+          maxlength="100"
+        />
+        <p id="docs-search-status" role="status" aria-live="polite"></p>
+        <ul id="docs-search-results"></ul>
+        <p class="search-hint">
+          Enter opens the first result · Tab moves through links · Esc closes
+        </p>
+      </dialog></main>
+    <footer>
+      <div class="container">
+        <div class="footer-top">
+          <div>
+            <a class="brand" href="index.html"
+              ><span class="brand-mark" aria-hidden="true">e<span>o</span></span
+              ><span>EveryO</span></a
+            >
+            <p>
+              Small enough to understand.<br />Open enough to make your own.
+            </p>
+            <span class="mono">PYTHON · NUMPY · MIT LICENSE</span>
+          </div>
+          <nav aria-label="Explore">
+            <h2>Explore</h2>
+            <a href="why-everyo.html">Why EveryO</a>
+            <a href="features.html">Framework</a
+            ><a href="documentation.html">Documentation</a
+            ><a href="examples.html">Examples</a>
+          </nav>
+          <nav aria-label="Open source">
+            <h2>Open source</h2>
+            <a href="https://github.com/krishanth7/EveryO"
+              >Source code
+              <svg
+                class="arrow"
+                viewBox="0 0 16 16"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.4"
+                aria-hidden="true"
+              >
+                <path d="M3 13 13 3M3 3h10v10" /></svg></a
+            ><a href="https://github.com/krishanth7/EveryO/issues"
+              >Issues
+              <svg
+                class="arrow"
+                viewBox="0 0 16 16"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.4"
+                aria-hidden="true"
+              >
+                <path d="M3 13 13 3M3 3h10v10" /></svg></a
+            ><a
+              href="https://github.com/krishanth7/EveryO/blob/main/CONTRIBUTING.md"
+              >Contribute
+              <svg
+                class="arrow"
+                viewBox="0 0 16 16"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.4"
+                aria-hidden="true"
+              >
+                <path d="M3 13 13 3M3 3h10v10" /></svg
+            ></a>
+          </nav>
+          <nav aria-label="Project">
+            <h2>Project</h2>
+            <a href="llms.txt">AI documentation</a>
+            <a href="community.html">Community</a
+            ><a
+              href="https://github.com/krishanth7/EveryO/blob/main/CHANGELOG.md"
+              >Changelog
+              <svg
+                class="arrow"
+                viewBox="0 0 16 16"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.4"
+                aria-hidden="true"
+              >
+                <path d="M3 13 13 3M3 3h10v10" /></svg></a
+            ><a
+              href="https://github.com/krishanth7/EveryO/blob/main/SECURITY.md"
+              >Security
+              <svg
+                class="arrow"
+                viewBox="0 0 16 16"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.4"
+                aria-hidden="true"
+              >
+                <path d="M3 13 13 3M3 3h10v10" /></svg
+            ></a>
+          </nav>
+        </div>
+        <div class="footer-bottom">
+          <span>© 2026 EveryO. Built in the open.</span
+          ><span
+            >No analytics. No tracking cookies. Theme saved on your
+            device.</span
+          ><a href="https://github.com/krishanth7/EveryO/blob/main/LICENSE"
+            >MIT License
+            <svg
+              class="arrow"
+              viewBox="0 0 16 16"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.4"
+              aria-hidden="true"
+            >
+              <path d="M3 13 13 3M3 3h10v10" /></svg
+          ></a>
+        </div>
+      </div>
+    </footer>
+    <script src="assets/js/developer-site.js" defer></script>
+    <script src="assets/js/docs-search-data.js" defer></script><script src="assets/js/site-experience.js" defer></script>
+  </body>
+</html>

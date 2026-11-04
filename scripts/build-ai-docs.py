@@ -18,7 +18,7 @@ if head != revision:
     parser.error('Source checkout differs from the reviewed revision in llms.txt. Review upstream changes before updating the provenance.')
 repo = 'https://github.com/krishanth7/EveryO/blob/' + revision + '/'
 result = index + '\n\n---\n\n' + (ROOT / 'documentation.md').read_text()
-for name in ['docs/api-reference.md', 'docs/architecture.md', 'docs/autograd.md', 'docs/troubleshooting.md', 'examples/README.md']:
+for name in ['docs/getting-started.md', 'docs/architecture.md', 'docs/autograd.md', 'docs/api-reference.md', 'docs/scaling.md', 'docs/cuda.md', 'docs/troubleshooting.md', 'examples/README.md']:
     source = args.source / name
     text = source.read_text()
     base = urljoin(repo, name)

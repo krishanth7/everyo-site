@@ -127,7 +127,7 @@
     const input = document.getElementById("docs-search-input");
     const list = document.getElementById("docs-search-results");
     const status = document.getElementById("docs-search-status");
-    const index = sections.map((section) => ({
+    const localIndex = sections.map((section) => ({
       id: section.id,
       title: section.querySelector("h2").textContent.trim(),
       excerpt:
@@ -137,6 +137,9 @@
           .trim() || "",
       text: section.textContent.toLowerCase().replace(/\s+/g, " "),
     }));
+    const index = Array.isArray(window.EVERYO_DOC_INDEX)
+      ? window.EVERYO_DOC_INDEX
+      : localIndex;
     function renderResults() {
       const query = input.value.trim().toLowerCase();
       const words = query.split(/\s+/).filter(Boolean);
@@ -149,7 +152,7 @@
       results.forEach((item) => {
         const li = document.createElement("li");
         const anchor = document.createElement("a");
-        anchor.href = "#" + item.id;
+        anchor.href = item.href || "#" + item.id;
         const title = document.createElement("strong");
         title.textContent = item.title;
         const excerpt = document.createElement("span");
@@ -157,15 +160,27 @@
           item.excerpt.length > 160
             ? item.excerpt.slice(0, 157) + "…"
             : item.excerpt;
+        if (item.guide) {
+          const guide = document.createElement("small");
+          guide.className = "search-guide-label";
+          guide.textContent = item.guide;
+          anchor.append(guide);
+        }
         anchor.append(title, excerpt);
         li.append(anchor);
         list.append(li);
         anchor.addEventListener("click", () => {
           dialog.close();
           // Focus the destination for keyboard and screen-reader users.
-          const heading = document.getElementById(item.id).querySelector("h2");
-          heading.tabIndex = -1;
-          heading.focus({ preventScroll: true });
+          if (anchor.pathname === location.pathname) {
+            const heading = document
+              .getElementById(item.id)
+              ?.querySelector("h2");
+            if (heading) {
+              heading.tabIndex = -1;
+              heading.focus({ preventScroll: true });
+            }
+          }
         });
       });
       status.textContent = results.length

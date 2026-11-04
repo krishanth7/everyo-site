@@ -3,11 +3,8 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>EveryO Documentation — Install, Learn &amp; Train</title>
-    <meta
-      name="description"
-      content="Install EveryO, understand tensors and gradients, train a classifier, and save your model. Search the Python quickstart, API essentials, and troubleshooting."
-    />
+    <title>EveryO Documentation — Quickstart &amp; Complete Guides</title>
+    <meta name="description" content="Install EveryO, train your first model, and explore detailed guides to architecture, autograd, APIs, CUDA, export, and troubleshooting." />
     <meta
       name="robots"
       content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1"
@@ -18,14 +15,8 @@
       href="https://krishanth7.github.io/everyo-site/documentation.html"
     />
     <meta property="og:type" content="website" />
-    <meta
-      property="og:title"
-      content="EveryO Documentation — Install, Learn &amp; Train"
-    />
-    <meta
-      property="og:description"
-      content="Install EveryO, understand tensors and gradients, train a classifier, and save your model. Search the Python quickstart, API essentials, and troubleshooting."
-    />
+    <meta property="og:title" content="EveryO Documentation — Quickstart &amp; Complete Guides" />
+    <meta property="og:description" content="Install EveryO, train your first model, and explore detailed guides to architecture, autograd, APIs, CUDA, export, and troubleshooting." />
     <meta
       property="og:url"
       content="https://krishanth7.github.io/everyo-site/documentation.html"
@@ -41,14 +32,8 @@
       content="EveryO — Understand the intelligence you build."
     />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta
-      name="twitter:title"
-      content="EveryO Documentation — Install, Learn &amp; Train"
-    />
-    <meta
-      name="twitter:description"
-      content="Install EveryO, understand tensors and gradients, train a classifier, and save your model. Search the Python quickstart, API essentials, and troubleshooting."
-    />
+    <meta name="twitter:title" content="EveryO Documentation — Quickstart &amp; Complete Guides" />
+    <meta name="twitter:description" content="Install EveryO, train your first model, and explore detailed guides to architecture, autograd, APIs, CUDA, export, and troubleshooting." />
     <meta
       name="twitter:image"
       content="https://krishanth7.github.io/everyo-site/assets/img/social-card.png"
@@ -114,87 +99,108 @@
       title="EveryO AI discovery summary"
       href="ai.txt"
     />
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@graph": [
-          {
-            "@type": "WebSite",
-            "@id": "https://krishanth7.github.io/everyo-site/#website",
-            "url": "https://krishanth7.github.io/everyo-site/",
-            "name": "EveryO",
-            "inLanguage": "en",
-            "description": "Learn and inspect neural computing with a readable Python framework built on NumPy."
-          },
-          {
-            "@type": "SoftwareSourceCode",
-            "@id": "https://krishanth7.github.io/everyo-site/#source",
-            "name": "EveryO",
-            "url": "https://github.com/krishanth7/EveryO",
-            "codeRepository": "https://github.com/krishanth7/EveryO",
-            "programmingLanguage": "Python",
-            "runtimePlatform": "Python 3.9–3.12 with NumPy and Matplotlib",
-            "version": "0.2.0",
-            "license": "https://opensource.org/license/mit",
-            "description": "A neural computing framework built from scratch on NumPy for learning, teaching, and small-scale experiments.",
-            "isAccessibleForFree": true,
-            "targetProduct": {
-              "@id": "https://krishanth7.github.io/everyo-site/#software"
-            }
-          },
-          {
-            "@type": "SoftwareApplication",
-            "@id": "https://krishanth7.github.io/everyo-site/#software",
-            "name": "EveryO",
-            "url": "https://krishanth7.github.io/everyo-site/",
-            "applicationCategory": "DeveloperApplication",
-            "operatingSystem": "Linux, macOS, Windows",
-            "softwareVersion": "0.2.0",
-            "softwareRequirements": "Python 3.9–3.12, NumPy, Matplotlib",
-            "license": "https://opensource.org/license/mit",
-            "isAccessibleForFree": true,
-            "description": "A neural computing framework built from scratch on NumPy for learning, teaching, and small-scale experiments."
-          },
-          {
-            "@type": "TechArticle",
-            "@id": "https://krishanth7.github.io/everyo-site/documentation.html#page",
-            "url": "https://krishanth7.github.io/everyo-site/documentation.html",
-            "name": "EveryO Documentation — Install, Learn & Train",
-            "description": "Install EveryO, understand tensors and gradients, train a classifier, and save your model. Search the Python quickstart, API essentials, and troubleshooting.",
-            "inLanguage": "en",
-            "isPartOf": {
-              "@id": "https://krishanth7.github.io/everyo-site/#website"
-            },
-            "about": {
-              "@id": "https://krishanth7.github.io/everyo-site/#source"
-            },
-            "breadcrumb": {
-              "@id": "https://krishanth7.github.io/everyo-site/documentation.html#breadcrumbs"
-            },
-            "keywords": "EveryO documentation, Python quickstart, tensor API, autograd tutorial, train classifier, model serialization"
-          },
-          {
-            "@type": "BreadcrumbList",
-            "@id": "https://krishanth7.github.io/everyo-site/documentation.html#breadcrumbs",
-            "itemListElement": [
-              {
-                "@type": "ListItem",
-                "position": 1,
-                "name": "EveryO",
-                "item": "https://krishanth7.github.io/everyo-site/"
-              },
-              {
-                "@type": "ListItem",
-                "position": 2,
-                "name": "Documentation",
-                "item": "https://krishanth7.github.io/everyo-site/documentation.html"
-              }
-            ]
-          }
-        ]
+    <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://krishanth7.github.io/everyo-site/#website",
+      "url": "https://krishanth7.github.io/everyo-site/",
+      "name": "EveryO",
+      "inLanguage": "en",
+      "description": "Learn and inspect neural computing with a readable Python framework built on NumPy."
+    },
+    {
+      "@type": "SoftwareSourceCode",
+      "@id": "https://krishanth7.github.io/everyo-site/#source",
+      "name": "EveryO",
+      "url": "https://github.com/krishanth7/EveryO",
+      "codeRepository": "https://github.com/krishanth7/EveryO",
+      "programmingLanguage": "Python",
+      "runtimePlatform": "Python 3.9–3.12 with NumPy and Matplotlib",
+      "version": "0.2.0",
+      "license": "https://opensource.org/license/mit",
+      "description": "A neural computing framework built from scratch on NumPy for learning, teaching, and small-scale experiments.",
+      "isAccessibleForFree": true,
+      "targetProduct": {
+        "@id": "https://krishanth7.github.io/everyo-site/#software"
       }
-    </script>
-  </head>
+    },
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://krishanth7.github.io/everyo-site/#software",
+      "name": "EveryO",
+      "url": "https://krishanth7.github.io/everyo-site/",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "Linux, macOS, Windows",
+      "softwareVersion": "0.2.0",
+      "softwareRequirements": "Python 3.9–3.12, NumPy, Matplotlib",
+      "license": "https://opensource.org/license/mit",
+      "isAccessibleForFree": true,
+      "description": "A neural computing framework built from scratch on NumPy for learning, teaching, and small-scale experiments."
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://krishanth7.github.io/everyo-site/documentation.html#page",
+      "url": "https://krishanth7.github.io/everyo-site/documentation.html",
+      "name": "EveryO Documentation — Quickstart & Complete Guides",
+      "description": "Install EveryO, train your first model, and explore detailed guides to architecture, autograd, APIs, CUDA, export, and troubleshooting.",
+      "inLanguage": "en",
+      "isPartOf": {
+        "@id": "https://krishanth7.github.io/everyo-site/#website"
+      },
+      "about": {
+        "@id": "https://krishanth7.github.io/everyo-site/#source"
+      },
+      "breadcrumb": {
+        "@id": "https://krishanth7.github.io/everyo-site/documentation.html#breadcrumbs"
+      },
+      "keywords": "EveryO documentation, Python quickstart, tensor API, autograd tutorial, train classifier, model serialization",
+      "hasPart": [
+        {
+          "@id": "https://krishanth7.github.io/everyo-site/docs-getting-started.html#page"
+        },
+        {
+          "@id": "https://krishanth7.github.io/everyo-site/docs-architecture.html#page"
+        },
+        {
+          "@id": "https://krishanth7.github.io/everyo-site/docs-autograd.html#page"
+        },
+        {
+          "@id": "https://krishanth7.github.io/everyo-site/docs-api-reference.html#page"
+        },
+        {
+          "@id": "https://krishanth7.github.io/everyo-site/docs-scaling.html#page"
+        },
+        {
+          "@id": "https://krishanth7.github.io/everyo-site/docs-cuda.html#page"
+        },
+        {
+          "@id": "https://krishanth7.github.io/everyo-site/docs-troubleshooting.html#page"
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://krishanth7.github.io/everyo-site/documentation.html#breadcrumbs",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "EveryO",
+          "item": "https://krishanth7.github.io/everyo-site/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Documentation",
+          "item": "https://krishanth7.github.io/everyo-site/documentation.html"
+        }
+      ]
+    }
+  ]
+}</script>
+  <link rel="stylesheet" href="assets/css/reference-docs.css"></head>
   <body data-page="documentation">
     <a class="skip" href="#main">Skip to content</a>
     <div class="announcement">
@@ -291,7 +297,7 @@
             ><a class="text-link" href="documentation.md" download
               >Download Markdown ↓</a
             >
-          </div>
+          <a class="text-link" href="#guides">Explore the complete guides →</a></div>
         </div>
         <div class="docs-intro-card">
           <span class="eyebrow">YOUR DEVELOPMENT TOOLKIT</span>
@@ -356,7 +362,7 @@
             ><a href="#troubleshooting"><span>08</span>Troubleshooting</a
             ><a href="#guides"><span>09</span>Further reading</a>
           </nav>
-          <div class="docs-sidebar-resources">
+          <!-- DOC-LIBRARY:START --><details class="docs-library"><summary>Complete documentation library</summary><nav aria-label="Documentation library"><a href="documentation.html" aria-current="true">Quickstart overview</a><a href="docs-getting-started.html">Getting started</a><a href="docs-architecture.html">Architecture</a><a href="docs-autograd.html">Automatic differentiation</a><a href="docs-api-reference.html">Full API reference</a><a href="docs-scaling.html">Scaling &amp; export</a><a href="docs-cuda.html">CUDA &amp; devices</a><a href="docs-troubleshooting.html">Troubleshooting</a></nav></details><!-- DOC-LIBRARY:END --><div class="docs-sidebar-resources">
             <p class="eyebrow">FOR YOUR TOOLS</p>
             <a href="documentation.md"
               >Markdown guide
@@ -533,7 +539,7 @@ python -m pip install -e &quot;.[tensorflow]&quot;</code></pre>
                 CUDA requires compatible hardware and a separate native
                 extension build. Follow the
                 <a
-                  href="https://github.com/krishanth7/EveryO/blob/main/docs/cuda.md"
+                  href="docs-cuda.html"
                   >CUDA setup guide</a
                 >. GPU runtime tests are not validated in project CI.
               </p>
@@ -574,7 +580,7 @@ print(eo.matmul(x, y))
             </div>
             <a
               class="text-link"
-              href="https://github.com/krishanth7/EveryO/blob/main/docs/api-reference.md#tensors"
+              href="docs-api-reference.html#tensors"
               >Explore the tensor API
               <svg
                 class="arrow"
@@ -612,7 +618,7 @@ print(x.grad)  # [4.]
             </div>
             <a
               class="text-link"
-              href="https://github.com/krishanth7/EveryO/blob/main/docs/autograd.md"
+              href="docs-autograd.html"
               >Understand graph traversal and accumulation
               <svg
                 class="arrow"
@@ -795,7 +801,7 @@ print(predictions.shape)  # (3, 3)</code></pre>
             </div>
             <a
               class="text-link"
-              href="https://github.com/krishanth7/EveryO/blob/main/docs/api-reference.md"
+              href="docs-api-reference.html"
               >Open the complete API map
               <svg
                 class="arrow"
@@ -847,7 +853,7 @@ print(predictions.shape)  # (3, 3)</code></pre>
                 The CPU workflow still works. CUDA requires the native extension
                 and compatible NVIDIA hardware. Review the
                 <a
-                  href="https://github.com/krishanth7/EveryO/blob/main/docs/cuda.md"
+                  href="docs-cuda.html"
                   >CUDA guide</a
                 >
                 and optional-component report from <code>everyo doctor</code>.
@@ -867,7 +873,7 @@ print(predictions.shape)  # (3, 3)</code></pre>
             </details>
             <a
               class="text-link"
-              href="https://github.com/krishanth7/EveryO/blob/main/docs/troubleshooting.md"
+              href="docs-troubleshooting.html"
               >Read the full troubleshooting guide
               <svg
                 class="arrow"
@@ -890,7 +896,7 @@ print(predictions.shape)  # (3, 3)</code></pre>
                 <p>Follow the dependency layers from NumPy to Trainer.</p>
                 <a
                   class="text-link"
-                  href="https://github.com/krishanth7/EveryO/blob/main/docs/architecture.md"
+                  href="docs-architecture.html"
                   >Read the guide
                   <span aria-hidden="true"
                     ><svg
@@ -912,7 +918,7 @@ print(predictions.shape)  # (3, 3)</code></pre>
                 </p>
                 <a
                   class="text-link"
-                  href="https://github.com/krishanth7/EveryO/blob/main/docs/scaling.md"
+                  href="docs-scaling.html"
                   >Read the guide
                   <span aria-hidden="true"
                     ><svg
@@ -935,7 +941,7 @@ print(predictions.shape)  # (3, 3)</code></pre>
                 </p>
                 <a
                   class="text-link"
-                  href="https://github.com/krishanth7/EveryO/blob/main/docs/troubleshooting.md"
+                  href="docs-troubleshooting.html"
                   >Find help
                   <span aria-hidden="true"
                     ><svg
@@ -967,7 +973,7 @@ print(predictions.shape)  # (3, 3)</code></pre>
                       <path d="M3 13 13 3M3 3h10v10" /></svg></span
                 ></a>
               </article>
-            </div>
+            <!-- DOC-CARDS:START --><article class="card"><span class="card-index">FOUNDATIONS</span><h3>Getting started</h3><p>The complete installation and first-model guide, including tensors, gradients, CNNs, charts, and model saving.</p><a class="text-link" href="docs-getting-started.html">Read the complete guide →</a></article><article class="card"><span class="card-index">INTERNALS</span><h3>Automatic differentiation</h3><p>Trace computation graphs, the reverse-mode backward pass, gradient accumulation, broadcasting, and finite-difference verification.</p><a class="text-link" href="docs-autograd.html">Read the complete guide →</a></article><article class="card"><span class="card-index">REFERENCE</span><h3>Full API reference</h3><p>Explore the complete public API: tensors, layers, losses, optimizers, training, callbacks, serialization, profiling, and command-line tools.</p><a class="text-link" href="docs-api-reference.html">Read the complete guide →</a></article><article class="card"><span class="card-index">ADVANCED</span><h3>CUDA &amp; devices</h3><p>Build the optional CUDA extension, understand fallback and strict mode, inspect kernels, and distinguish host-backed tensors from resident buffers.</p><a class="text-link" href="docs-cuda.html">Read the complete guide →</a></article><!-- DOC-CARDS:END --></div>
           </section>
           <div class="docs-end">
             <p class="eyebrow">YOU HAVE THE FOUNDATIONS.</p>
@@ -1162,6 +1168,6 @@ print(predictions.shape)  # (3, 3)</code></pre>
       </div>
     </footer>
     <script src="assets/js/developer-site.js" defer></script>
-    <script src="assets/js/site-experience.js" defer></script>
+    <script src="assets/js/docs-search-data.js" defer></script><script src="assets/js/site-experience.js" defer></script>
   </body>
 </html>

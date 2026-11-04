@@ -1,0 +1,3 @@
+# Build-time only; generated pages need no Python packages or runtime services.
+markdown-it-py==4.0.0
+mdurl==0.1.2

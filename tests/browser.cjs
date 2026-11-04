@@ -259,6 +259,71 @@ const { chromium } = require("playwright");
   console.log(
     "PASS docs search, keyboard navigation, OS tabs and copy, reduced motion, reading progress, machine-readable resources",
   );
+  const guides = require("../docs/manifest.json").guides;
+  for (const guide of guides) {
+    await page.goto(
+      (process.env.SITE_URL || "http://127.0.0.1:8000/") + guide.page,
+    );
+    await page.waitForLoadState("networkidle");
+    if (
+      (await page.locator("h1").count()) !== 1 ||
+      !(await page.locator(".reference-content section").count())
+    )
+      throw Error("full guide content: " + guide.page);
+    if (
+      (await page
+        .locator('.docs-library a[aria-current="page"]')
+        .getAttribute("href")) !== guide.page
+    )
+      throw Error("current guide navigation");
+    for (const width of [1440, 390, 320]) {
+      await page.setViewportSize({ width, height: 900 });
+      if (
+        await page.evaluate(
+          () => document.documentElement.scrollWidth > innerWidth,
+        )
+      )
+        throw Error(guide.page + " overflow at " + width);
+    }
+    await page.setViewportSize({ width: 1440, height: 1000 });
+    await page.screenshot({
+      path: path.join(
+        os.tmpdir(),
+        "everyo-" + guide.page.replace(".html", "") + ".png",
+      ),
+      fullPage: true,
+    });
+    const response = await page.request.get(
+      (process.env.SITE_URL || "http://127.0.0.1:8000/") + guide.source,
+    );
+    if (response.status() !== 200) throw Error("original Markdown download");
+    console.log("PASS complete guide:", guide.page);
+  }
+  await page.goto(
+    (process.env.SITE_URL || "http://127.0.0.1:8000/") + "documentation.html",
+  );
+  await page.locator("#docs-search-open").click();
+  await page.locator("#docs-search-input").fill("unbroadcast");
+  const result = page.locator("#docs-search-results a").first();
+  if (!(await result.getAttribute("href")).includes("docs-autograd.html"))
+    throw Error("cross-guide search index");
+  await result.click();
+  await page.waitForURL("**/docs-autograd.html#*");
+  if (
+    (await page.locator("h1").textContent()).trim() !==
+    "Automatic differentiation."
+  )
+    throw Error("cross-guide result destination");
+  await page.locator(".reference-content .copy-button").first().click();
+  if (
+    !(await page.evaluate(() => navigator.clipboard.readText())).includes(
+      "requires_grad=True",
+    )
+  )
+    throw Error("reference example copy");
+  console.log(
+    "PASS cross-guide search, local result navigation, source downloads, reference code copying, and 320px layouts",
+  );
   const nojs = await browser.newContext({
     javaScriptEnabled: false,
     viewport: { width: 390, height: 844 },

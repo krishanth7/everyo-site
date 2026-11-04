@@ -27,6 +27,20 @@ experiments. Established frameworks remain appropriate for production and scale.
 - [Markdown quickstart](https://krishanth7.github.io/everyo-site/documentation.md)
 - [Full AI reference](https://krishanth7.github.io/everyo-site/llms-full.txt): self-contained guide and API map
 
+## Complete website guides
+
+- [Full getting-started guide](https://krishanth7.github.io/everyo-site/docs-getting-started.html)
+- [Architecture and design decisions](https://krishanth7.github.io/everyo-site/docs-architecture.html)
+- [Autograd and numerical verification](https://krishanth7.github.io/everyo-site/docs-autograd.html)
+- [Complete API reference](https://krishanth7.github.io/everyo-site/docs-api-reference.html)
+- [Mixed precision, export, and distributed execution](https://krishanth7.github.io/everyo-site/docs-scaling.html)
+- [CUDA and device boundaries](https://krishanth7.github.io/everyo-site/docs-cuda.html)
+- [Installation and diagnostics](https://krishanth7.github.io/everyo-site/docs-troubleshooting.html)
+
+The complete reviewed Markdown files are available under `docs/`. Each local
+HTML guide preserves all upstream sections and adds contextual explanations.
+Search spans the quickstart and the complete guide library.
+
 ## Authoritative sources
 
 - [Repository](https://github.com/krishanth7/EveryO)

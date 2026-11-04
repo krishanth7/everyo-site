@@ -1,14 +1,22 @@
 import { readFileSync, existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
+import { createHash } from "node:crypto";
 import assert from "node:assert/strict";
 const root = fileURLToPath(new URL(".", import.meta.url));
-const files = [
+const primaryFiles = [
   "index.html",
   "documentation.html",
   "features.html",
   "examples.html",
   "community.html",
   "why-everyo.html",
+];
+const referenceManifest = JSON.parse(
+  readFileSync(root + "docs/manifest.json", "utf8"),
+);
+const files = [
+  ...primaryFiles,
+  ...referenceManifest.guides.map((guide) => guide.page),
 ];
 const docs = new Map(
   files.map((name) => {
@@ -54,7 +62,7 @@ for (const [name, { text, ids }] of docs) {
     } else assets.add(path);
   }
   const primary = text.match(/<nav id="nav-links"[^>]*>(.*?)<\/nav>/)[1];
-  for (const target of files)
+  for (const target of primaryFiles)
     assert.ok(
       primary.includes('href="' + target + '"'),
       name + ": primary navigation to " + target,
@@ -94,7 +102,9 @@ for (const [name, { text, ids }] of docs) {
   const page = graph.find(
     (item) =>
       item["@type"] ===
-      (name === "documentation.html" ? "TechArticle" : "WebPage"),
+      (name === "documentation.html" || name.startsWith("docs-")
+        ? "TechArticle"
+        : "WebPage"),
   );
   const canonical = text.match(/<link rel="canonical" href="([^"]+)"/)[1];
   assert.equal(page.url, canonical, name + ": structured canonical URL");
@@ -201,6 +211,23 @@ for (const bot of [
   assert.ok(
     robotRules.includes("User-agent: " + bot),
     bot + ": explicit crawler rule",
+  );
+}
+for (const guide of referenceManifest.guides) {
+  const markdown = readFileSync(root + guide.source, "utf8");
+  assert.equal(
+    createHash("sha256").update(markdown).digest("hex"),
+    guide.sha256,
+    guide.source + ": intact original source",
+  );
+  for (const section of guide.sections)
+    assert.ok(
+      docs.get(guide.page).ids.includes(section),
+      guide.page + ": preserved section " + section,
+    );
+  assert.ok(
+    docs.get(guide.page).text.includes("docs-search-data.js"),
+    guide.page + ": cross-guide search data",
   );
 }
 console.log(

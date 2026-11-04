@@ -1,0 +1,519 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>EveryO Getting started — Complete Developer Guide</title>
+    <meta name="description" content="The complete installation and first-model guide, including tensors, gradients, CNNs, charts, and model saving." />
+    <meta
+      name="robots"
+      content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1"
+    />
+    <meta name="theme-color" content="#f5f4f0" />
+    <link rel="canonical" href="https://krishanth7.github.io/everyo-site/docs-getting-started.html" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="EveryO Getting started — Complete Developer Guide" />
+    <meta property="og:description" content="The complete installation and first-model guide, including tensors, gradients, CNNs, charts, and model saving." />
+    <meta property="og:url" content="https://krishanth7.github.io/everyo-site/docs-getting-started.html" />
+    <meta
+      property="og:image"
+      content="https://krishanth7.github.io/everyo-site/assets/img/social-card.png"
+    />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="EveryO — Understand the intelligence you build."
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="EveryO Getting started — Complete Developer Guide" />
+    <meta name="twitter:description" content="The complete installation and first-model guide, including tensors, gradients, CNNs, charts, and model saving." />
+    <meta
+      name="twitter:image"
+      content="https://krishanth7.github.io/everyo-site/assets/img/social-card.png"
+    />
+    <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg" />
+    <script>
+      try {
+        var t = localStorage.getItem("everyo-theme");
+        document.documentElement.dataset.theme =
+          t === "dark" || t === "light"
+            ? t
+            : matchMedia("(prefers-color-scheme: dark)").matches
+              ? "dark"
+              : "light";
+      } catch (_) {}
+    </script>
+    <link rel="stylesheet" href="assets/css/developer-site.css" />
+    <link rel="stylesheet" href="assets/css/documentation.css" />
+    <meta name="author" content="EveryO contributors" />
+    <meta
+      name="keywords"
+      content="EveryO documentation, Python quickstart, tensor API, autograd tutorial, train classifier, model serialization"
+    />
+    <meta
+      name="googlebot"
+      content="index,follow,max-image-preview:large,max-snippet:-1"
+    />
+    <meta property="og:site_name" content="EveryO" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:image:type" content="image/png" />
+    <meta
+      name="twitter:image:alt"
+      content="EveryO — Understand the intelligence you build."
+    />
+    <link
+      rel="alternate"
+      type="text/plain"
+      title="EveryO LLM index"
+      href="llms.txt"
+    />
+    <link
+      rel="alternate"
+      type="text/plain"
+      title="EveryO expanded AI reference"
+      href="llms-full.txt"
+    />
+    <link
+      rel="alternate"
+      type="text/markdown"
+      title="EveryO documentation in Markdown"
+      href="docs/getting-started.md"
+    />
+    <link rel="stylesheet" href="assets/css/site-experience.css" />
+    <link
+      rel="sitemap"
+      type="application/xml"
+      title="EveryO sitemap"
+      href="sitemap.xml"
+    />
+    <link
+      rel="alternate"
+      type="text/plain"
+      title="EveryO AI discovery summary"
+      href="ai.txt"
+    />
+    <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://krishanth7.github.io/everyo-site/#website",
+      "url": "https://krishanth7.github.io/everyo-site/",
+      "name": "EveryO",
+      "inLanguage": "en",
+      "description": "Learn and inspect neural computing with a readable Python framework built on NumPy."
+    },
+    {
+      "@type": "SoftwareSourceCode",
+      "@id": "https://krishanth7.github.io/everyo-site/#source",
+      "name": "EveryO",
+      "url": "https://github.com/krishanth7/EveryO",
+      "codeRepository": "https://github.com/krishanth7/EveryO",
+      "programmingLanguage": "Python",
+      "runtimePlatform": "Python 3.9–3.12 with NumPy and Matplotlib",
+      "version": "0.2.0",
+      "license": "https://opensource.org/license/mit",
+      "description": "A neural computing framework built from scratch on NumPy for learning, teaching, and small-scale experiments.",
+      "isAccessibleForFree": true,
+      "targetProduct": {
+        "@id": "https://krishanth7.github.io/everyo-site/#software"
+      }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://krishanth7.github.io/everyo-site/#software",
+      "name": "EveryO",
+      "url": "https://krishanth7.github.io/everyo-site/",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "Linux, macOS, Windows",
+      "softwareVersion": "0.2.0",
+      "softwareRequirements": "Python 3.9–3.12, NumPy, Matplotlib",
+      "license": "https://opensource.org/license/mit",
+      "isAccessibleForFree": true,
+      "description": "A neural computing framework built from scratch on NumPy for learning, teaching, and small-scale experiments."
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://krishanth7.github.io/everyo-site/docs-getting-started.html#page",
+      "url": "https://krishanth7.github.io/everyo-site/docs-getting-started.html",
+      "name": "EveryO Getting started — Complete Developer Guide",
+      "description": "The complete installation and first-model guide, including tensors, gradients, CNNs, charts, and model saving.",
+      "inLanguage": "en",
+      "isPartOf": {
+        "@id": "https://krishanth7.github.io/everyo-site/#website"
+      },
+      "about": {
+        "@id": "https://krishanth7.github.io/everyo-site/#source"
+      },
+      "breadcrumb": {
+        "@id": "https://krishanth7.github.io/everyo-site/docs-getting-started.html#breadcrumbs"
+      },
+      "keywords": "EveryO documentation, Python quickstart, tensor API, autograd tutorial, train classifier, model serialization",
+      "citation": "https://github.com/krishanth7/EveryO/blob/6c05a061eb62fa2646e726d15cac07053d04c79e/docs/getting-started.md"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://krishanth7.github.io/everyo-site/docs-getting-started.html#breadcrumbs",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "EveryO",
+          "item": "https://krishanth7.github.io/everyo-site/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Documentation",
+          "item": "https://krishanth7.github.io/everyo-site/documentation.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Getting started",
+          "item": "https://krishanth7.github.io/everyo-site/docs-getting-started.html"
+        }
+      ]
+    }
+  ]
+}</script>
+  <link rel="stylesheet" href="assets/css/reference-docs.css"></head>
+  <body data-page="documentation" class="reference-page">
+    <a class="skip" href="#main">Skip to content</a>
+    <div class="announcement">
+      <a href="https://github.com/krishanth7/EveryO/releases"
+        >Open source. Open to your next idea.
+        <span
+          >Explore EveryO 0.2.0
+          <svg
+            class="arrow"
+            viewBox="0 0 16 16"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.4"
+            aria-hidden="true"
+          >
+            <path d="M3 13 13 3M3 3h10v10" /></svg></span
+      ></a>
+    </div>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="brand" href="index.html" aria-label="EveryO home"
+          ><span class="brand-mark" aria-hidden="true">e<span>o</span></span
+          ><span>EveryO</span></a
+        >
+        <nav id="nav-links" aria-label="Primary">
+          <a data-page="overview" href="index.html">Overview</a
+          ><a data-page="why" href="why-everyo.html">Why EveryO</a
+          ><a data-page="features" href="features.html">Framework</a
+          ><a
+            data-page="documentation"
+            href="documentation.html"
+            aria-current="true"
+            >Documentation</a
+          ><a data-page="examples" href="examples.html">Examples</a
+          ><a data-page="community" href="community.html">Community</a>
+        </nav>
+        <div class="header-actions">
+          <button
+            id="theme-toggle"
+            class="icon-button"
+            aria-label="Switch colour theme"
+            aria-pressed="false"
+            type="button"
+          >
+            ◐</button
+          ><a class="github-link" href="https://github.com/krishanth7/EveryO"
+            >GitHub
+            <span aria-hidden="true"
+              ><svg
+                class="arrow"
+                viewBox="0 0 16 16"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.4"
+                aria-hidden="true"
+              >
+                <path d="M3 13 13 3M3 3h10v10" /></svg></span></a
+          ><button
+            id="nav-toggle"
+            class="icon-button menu-toggle"
+            type="button"
+            aria-expanded="false"
+            aria-controls="nav-links"
+            aria-label="Open menu"
+          >
+            ☰
+          </button>
+        </div>
+      </div>
+      <div class="page-progress" aria-hidden="true">
+        <span id="page-progress-fill"></span>
+      </div>
+    </header>
+    <main id="main"><section class="container docs-masthead" id="top"><div><nav class="docs-breadcrumb" aria-label="Breadcrumb"><a href="index.html">EveryO</a><span aria-hidden="true">/</span><a href="documentation.html">Documentation</a><span aria-hidden="true">/</span><span>Getting started</span></nav><p class="eyebrow">FOUNDATIONS / COMPLETE GUIDE <span class="version-pill">v0.2.0 source snapshot</span></p><h1>Getting started<span class="accent-word">.</span></h1><p>The complete installation and first-model guide, including tensors, gradients, CNNs, charts, and model saving.</p><div class="docs-hero-actions"><a class="button" href="#reading-this-guide">Read the guide ↓</a><a class="text-link" href="docs/getting-started.md" download>Download original Markdown ↓</a></div></div><div class="docs-intro-card"><span class="eyebrow">READ WITH CONTEXT</span><p><strong>Complete upstream reference</strong>All source sections are preserved below, with added explanations and local guide links.</p><p>Some snippets require earlier definitions or optional integrations. Start with the complete CPU quickstart for a runnable baseline.</p><a href="documentation.html">Back to the quickstart →</a></div></section><div class="container docs-workspace"><aside class="docs-sidebar"><button type="button" class="docs-search-trigger" id="docs-search-open" aria-haspopup="dialog" aria-controls="docs-search"><span>Search all documentation</span><kbd>⌘ K</kbd></button><!-- DOC-LIBRARY:START --><details class="docs-library"><summary>Complete documentation library</summary><nav aria-label="Documentation library"><a href="documentation.html">Quickstart overview</a><a href="docs-getting-started.html" aria-current="page">Getting started</a><a href="docs-architecture.html">Architecture</a><a href="docs-autograd.html">Automatic differentiation</a><a href="docs-api-reference.html">Full API reference</a><a href="docs-scaling.html">Scaling &amp; export</a><a href="docs-cuda.html">CUDA &amp; devices</a><a href="docs-troubleshooting.html">Troubleshooting</a></nav></details><!-- DOC-LIBRARY:END --><details class="docs-page-toc" open><summary>On this page</summary><nav aria-label="On this page"><a href="#reading-this-guide">Reading this guide</a><a href="#install">Install</a><a href="#your-first-tensor">Your first tensor</a><a href="#gradients">Gradients</a><a href="#a-small-network">A small network</a><a href="#training-it">Training it</a><a href="#a-convolutional-network">A convolutional network</a><a href="#charts-saving-and-loading">Charts, saving and loading</a><a href="#where-to-go-next">Where to go next</a></nav></details><div class="docs-sidebar-resources"><a href="docs/getting-started.md" download>Original Markdown ↓</a><a href="llms-full.txt">Full AI reference →</a><a href="examples.html">Runnable examples →</a></div></aside><article class="docs-content reference-content"><div class="docs-source-note"><span class="eyebrow">READ THE FULL STORY</span><p>Source: EveryO <code>6c05a06</code>. This page preserves the reviewed upstream guide and adds learning context. Version-specific headings and historical wording remain visible; boundary notes explain newer APIs separately.</p></div><section id="reading-this-guide" data-doc-section><p class="eyebrow">BEFORE YOU BEGIN</p><h2>Install, understand, and train.</h2><p>Work through the CPU workflow before adding optional integrations. The full upstream guide below includes the first tensor, gradient, neural network, convolution, and saved model.</p><div class="callout"><b>What should be working when you finish?</b><p>You should be able to run the installation check, create tensors, inspect a gradient, train and evaluate a small classifier, and save its model. Code snippets build on earlier definitions; the overview quickstart also provides a self-contained classifier script.</p></div></section><div class="reference-intro"><p>This guide takes about five minutes and assumes Python 3.9 or newer.</p>
+</div><section id="install" data-doc-section><h2>Install</h2>
+<div class="codebox"><div class="codebar"><span>Terminal</span><button class="copy-button" type="button">Copy code</button></div><pre><code>git clone https://github.com/krishanth7/EveryO.git
+cd EveryO
+python -m venv .venv
+</code></pre><span class="copy-status" role="status"></span></div>
+<p>Activate the environment — on Linux/macOS:</p>
+<div class="codebox"><div class="codebar"><span>Terminal</span><button class="copy-button" type="button">Copy code</button></div><pre><code>source .venv/bin/activate
+</code></pre><span class="copy-status" role="status"></span></div>
+<p>On Windows (PowerShell):</p>
+<div class="codebox"><div class="codebar"><span>PowerShell</span><button class="copy-button" type="button">Copy code</button></div><pre><code>.venv\Scripts\Activate.ps1
+</code></pre><span class="copy-status" role="status"></span></div>
+<p>Then install EveryO in editable mode:</p>
+<div class="codebox"><div class="codebar"><span>Terminal</span><button class="copy-button" type="button">Copy code</button></div><pre><code>pip install -e .
+</code></pre><span class="copy-status" role="status"></span></div>
+<p>Check that everything works:</p>
+<div class="codebox"><div class="codebar"><span>Terminal</span><button class="copy-button" type="button">Copy code</button></div><pre><code>everyo info
+everyo doctor
+</code></pre><span class="copy-status" role="status"></span></div>
+<p><code>doctor</code> verifies that the numerics are correct (it runs a real gradient check)
+and reports which optional components are present. Neither command sends
+anything anywhere; EveryO collects no telemetry.</p>
+</section><section id="your-first-tensor" data-doc-section><h2>Your first tensor</h2>
+<div class="codebox"><div class="codebar"><span>Python · reference snippet</span><button class="copy-button" type="button">Copy code</button></div><pre><code>import everyo as eo
+
+x = eo.tensor([[1.0, 2.0]])
+y = eo.tensor([[3.0], [4.0]])
+
+print(eo.matmul(x, y))
+# Tensor([[11.]], shape=(1, 1), dtype=float32)
+</code></pre><span class="copy-status" role="status"></span></div>
+<p>Tensors expose the properties you would expect:</p>
+<div class="codebox"><div class="codebar"><span>Python · reference snippet</span><button class="copy-button" type="button">Copy code</button></div><pre><code>x.shape  # (1, 2)
+x.ndim  # 2
+x.dtype  # &#x27;float32&#x27;
+x.device  # device(&#x27;cpu&#x27;)
+x.size  # 2
+</code></pre><span class="copy-status" role="status"></span></div>
+</section><section id="gradients" data-doc-section><h2>Gradients</h2>
+<p>Mark a tensor with <code>requires_grad=True</code> and EveryO records every operation
+applied to it. Calling <code>.backward()</code> on a scalar result fills in <code>.grad</code>:</p>
+<div class="codebox"><div class="codebar"><span>Python · reference snippet</span><button class="copy-button" type="button">Copy code</button></div><pre><code>x = eo.tensor([2.0], requires_grad=True)
+y = x * x
+y.backward()
+
+print(x.grad)  # [4.]   because d(x^2)/dx = 2x
+</code></pre><span class="copy-status" role="status"></span></div>
+<p>Wrap inference in <code>eo.no_grad()</code> to skip graph construction entirely:</p>
+<div class="codebox"><div class="codebar"><span>Python · reference snippet</span><button class="copy-button" type="button">Copy code</button></div><pre><code>with eo.no_grad():
+    predictions = model(features)
+</code></pre><span class="copy-status" role="status"></span></div>
+</section><section id="a-small-network" data-doc-section><h2>A small network</h2>
+<div class="codebox"><div class="codebar"><span>Python · reference snippet</span><button class="copy-button" type="button">Copy code</button></div><pre><code>import everyo as eo
+
+model = eo.Sequential(
+    eo.Linear(4, 16),
+    eo.ReLU(),
+    eo.Linear(16, 3),
+)
+
+print(model.summary())
+</code></pre><span class="copy-status" role="status"></span></div>
+</section><section id="training-it" data-doc-section><h2>Training it</h2>
+<div class="codebox"><div class="codebar"><span>Python · reference snippet</span><button class="copy-button" type="button">Copy code</button></div><pre><code>import everyo as eo
+from everyo.datasets import make_blobs
+
+features, labels = make_blobs(n_samples=600, n_features=4, centers=3, seed=0)
+x_train, x_test, y_train, y_test = eo.stratified_split(features, labels, test_size=0.2, seed=0)
+
+model = eo.Sequential(eo.Linear(4, 16, seed=0), eo.ReLU(), eo.Linear(16, 3, seed=1))
+
+trainer = eo.Trainer(
+    model=model,
+    optimizer=eo.Adam(model.parameters(), lr=0.01),
+    loss_fn=eo.CrossEntropyLoss(),
+    metrics=[&quot;accuracy&quot;],
+)
+
+history = trainer.fit(
+    eo.DataLoader(eo.ArrayDataset(x_train, y_train), batch_size=32, shuffle=True, seed=0),
+    epochs=20,
+    validation_loader=eo.DataLoader(eo.ArrayDataset(x_test, y_test), batch_size=64),
+)
+
+print(trainer.evaluate(eo.DataLoader(eo.ArrayDataset(x_test, y_test), batch_size=64)))
+</code></pre><span class="copy-status" role="status"></span></div>
+</section><section id="a-convolutional-network" data-doc-section><h2>A convolutional network</h2>
+<p>Images are <code>NHWC</code> — <code>(batch, height, width, channels)</code> — so a single-channel
+8x8 image batch has shape <code>(n, 8, 8, 1)</code>:</p>
+<p>This separate architecture is named <code>cnn</code> so the trained <code>model</code> above remains
+available for evaluation and saving.</p>
+<div class="codebox"><div class="codebar"><span>Python · reference snippet</span><button class="copy-button" type="button">Copy code</button></div><pre><code>cnn = eo.Sequential(
+    eo.Conv2D(1, 8, 3, padding=&quot;same&quot;),
+    eo.ReLU(),
+    eo.MaxPool2D(2),
+    eo.Conv2D(8, 16, 3, padding=&quot;same&quot;),
+    eo.ReLU(),
+    eo.MaxPool2D(2),
+    eo.Flatten(),
+    eo.Linear(2 * 2 * 16, 10),
+)
+</code></pre><span class="copy-status" role="status"></span></div>
+<p><code>padding</code> accepts <code>&quot;valid&quot;</code>, <code>&quot;same&quot;</code> or an int, and <code>stride</code> accepts an int or
+a <code>(height, width)</code> pair. See <code>examples/convolutional_network.py</code>.</p>
+</section><section id="charts-saving-and-loading" data-doc-section><h2>Charts, saving and loading</h2>
+<div class="codebox"><div class="codebar"><span>Python · reference snippet</span><button class="copy-button" type="button">Copy code</button></div><pre><code>from pathlib import Path
+
+Path(&quot;artifacts&quot;).mkdir(exist_ok=True)
+eo.plot_history(history, save_path=&quot;artifacts/history.png&quot;)
+
+eo.save(model, &quot;artifacts/model.evo&quot;)
+restored = eo.load(&quot;artifacts/model.evo&quot;)
+</code></pre><span class="copy-status" role="status"></span></div>
+<p>Charts work without a display: on a headless machine EveryO selects the
+non-interactive Agg backend automatically.</p>
+</section><section id="where-to-go-next" data-doc-section><h2>Where to go next</h2>
+<ul>
+<li><a href="docs-architecture.html">Architecture</a> — how the package fits together.</li>
+<li><a href="docs-autograd.html">Autograd</a> — how the gradient engine works.</li>
+<li><a href="docs-cuda.html">CUDA</a> — building and using the optional GPU kernels.</li>
+<li><code>examples/</code> — runnable scripts covering every feature.</li>
+</ul>
+</section><div class="guide-pagination"><a href="documentation.html"><small>PREVIOUS</small><span>Quickstart overview</span></a><a href="docs-architecture.html"><small>NEXT</small><span>Architecture</span></a></div><div class="reference-provenance"><p>Original guide reproduced under the project’s MIT license. Upstream source remains authoritative.</p><a href="https://github.com/krishanth7/EveryO/blob/6c05a061eb62fa2646e726d15cac07053d04c79e/docs/getting-started.md">View the reviewed source on GitHub ↗</a></div></article><aside class="docs-reading" aria-label="Reading guide"><p class="eyebrow">YOUR PROGRESS</p><div class="reading-track" aria-hidden="true"><span id="docs-reading-fill"></span></div><p class="reading-position" id="docs-reading-label">Reading this guide</p><p class="eyebrow">KEEP EXPLORING</p><a href="documentation.html">Quickstart overview</a><a href="docs-architecture.html">Architecture</a><a href="docs-api-reference.html">Complete API map</a><a class="back-top" href="#top">Back to top ↑</a></aside></div><dialog
+        id="docs-search"
+        class="docs-search-dialog"
+        aria-labelledby="docs-search-title"
+      >
+        <div class="docs-search-heading">
+          <h2 id="docs-search-title">Search documentation</h2>
+          <button
+            type="button"
+            id="docs-search-close"
+            aria-label="Close documentation search"
+          >
+            Esc
+          </button>
+        </div>
+        <label for="docs-search-input"
+          >Find an API, concept, or setup step</label
+        ><input
+          id="docs-search-input"
+          type="search"
+          placeholder="Try gradients, Windows, or save…"
+          autocomplete="off"
+          maxlength="100"
+        />
+        <p id="docs-search-status" role="status" aria-live="polite"></p>
+        <ul id="docs-search-results"></ul>
+        <p class="search-hint">
+          Enter opens the first result · Tab moves through links · Esc closes
+        </p>
+      </dialog></main>
+    <footer>
+      <div class="container">
+        <div class="footer-top">
+          <div>
+            <a class="brand" href="index.html"
+              ><span class="brand-mark" aria-hidden="true">e<span>o</span></span
+              ><span>EveryO</span></a
+            >
+            <p>
+              Small enough to understand.<br />Open enough to make your own.
+            </p>
+            <span class="mono">PYTHON · NUMPY · MIT LICENSE</span>
+          </div>
+          <nav aria-label="Explore">
+            <h2>Explore</h2>
+            <a href="why-everyo.html">Why EveryO</a>
+            <a href="features.html">Framework</a
+            ><a href="documentation.html">Documentation</a
+            ><a href="examples.html">Examples</a>
+          </nav>
+          <nav aria-label="Open source">
+            <h2>Open source</h2>
+            <a href="https://github.com/krishanth7/EveryO"
+              >Source code
+              <svg
+                class="arrow"
+                viewBox="0 0 16 16"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.4"
+                aria-hidden="true"
+              >
+                <path d="M3 13 13 3M3 3h10v10" /></svg></a
+            ><a href="https://github.com/krishanth7/EveryO/issues"
+              >Issues
+              <svg
+                class="arrow"
+                viewBox="0 0 16 16"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.4"
+                aria-hidden="true"
+              >
+                <path d="M3 13 13 3M3 3h10v10" /></svg></a
+            ><a
+              href="https://github.com/krishanth7/EveryO/blob/main/CONTRIBUTING.md"
+              >Contribute
+              <svg
+                class="arrow"
+                viewBox="0 0 16 16"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.4"
+                aria-hidden="true"
+              >
+                <path d="M3 13 13 3M3 3h10v10" /></svg
+            ></a>
+          </nav>
+          <nav aria-label="Project">
+            <h2>Project</h2>
+            <a href="llms.txt">AI documentation</a>
+            <a href="community.html">Community</a
+            ><a
+              href="https://github.com/krishanth7/EveryO/blob/main/CHANGELOG.md"
+              >Changelog
+              <svg
+                class="arrow"
+                viewBox="0 0 16 16"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.4"
+                aria-hidden="true"
+              >
+                <path d="M3 13 13 3M3 3h10v10" /></svg></a
+            ><a
+              href="https://github.com/krishanth7/EveryO/blob/main/SECURITY.md"
+              >Security
+              <svg
+                class="arrow"
+                viewBox="0 0 16 16"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.4"
+                aria-hidden="true"
+              >
+                <path d="M3 13 13 3M3 3h10v10" /></svg
+            ></a>
+          </nav>
+        </div>
+        <div class="footer-bottom">
+          <span>© 2026 EveryO. Built in the open.</span
+          ><span
+            >No analytics. No tracking cookies. Theme saved on your
+            device.</span
+          ><a href="https://github.com/krishanth7/EveryO/blob/main/LICENSE"
+            >MIT License
+            <svg
+              class="arrow"
+              viewBox="0 0 16 16"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.4"
+              aria-hidden="true"
+            >
+              <path d="M3 13 13 3M3 3h10v10" /></svg
+          ></a>
+        </div>
+      </div>
+    </footer>
+    <script src="assets/js/developer-site.js" defer></script>
+    <script src="assets/js/docs-search-data.js" defer></script><script src="assets/js/site-experience.js" defer></script>
+  </body>
+</html>

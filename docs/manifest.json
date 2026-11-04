@@ -1,0 +1,187 @@
+{
+  "revision": "6c05a061eb62fa2646e726d15cac07053d04c79e",
+  "guides": [
+    {
+      "source": "docs/getting-started.md",
+      "page": "docs-getting-started.html",
+      "title": "Getting started",
+      "sha256": "930e282aa4e6137260d02de3423f13aa1c000948d453bffce71ab003608f2230",
+      "sourceHeadings": [
+        "Install",
+        "Your first tensor",
+        "Gradients",
+        "A small network",
+        "Training it",
+        "A convolutional network",
+        "Charts, saving and loading",
+        "Where to go next"
+      ],
+      "sections": [
+        "install",
+        "your-first-tensor",
+        "gradients",
+        "a-small-network",
+        "training-it",
+        "a-convolutional-network",
+        "charts-saving-and-loading",
+        "where-to-go-next"
+      ]
+    },
+    {
+      "source": "docs/architecture.md",
+      "page": "docs-architecture.html",
+      "title": "Architecture",
+      "sha256": "6cfa1e5cbb413771d559136884fefd99de6b784fa374a2904d817b742f2f6e91",
+      "sourceHeadings": [
+        "Layers",
+        "Design decisions",
+        "Extending EveryO"
+      ],
+      "sections": [
+        "layers",
+        "design-decisions",
+        "extending-everyo"
+      ]
+    },
+    {
+      "source": "docs/autograd.md",
+      "page": "docs-autograd.html",
+      "title": "Automatic differentiation",
+      "sha256": "2e3203d03239a42fc0066bf8efc19743625f50e6ca4540fa59eeec60996f3ff2",
+      "sourceHeadings": [
+        "The computation graph",
+        "The backward pass",
+        "Broadcasting",
+        "Only leaves keep gradients",
+        "Turning it off",
+        "Supported operations",
+        "How correctness is verified",
+        "What is not implemented in v0.1.0"
+      ],
+      "sections": [
+        "the-computation-graph",
+        "the-backward-pass",
+        "broadcasting",
+        "only-leaves-keep-gradients",
+        "turning-it-off",
+        "supported-operations",
+        "how-correctness-is-verified",
+        "what-is-not-implemented-in-v0-1-0"
+      ]
+    },
+    {
+      "source": "docs/api-reference.md",
+      "page": "docs-api-reference.html",
+      "title": "Full API reference",
+      "sha256": "bdc5a3bbff6b22e17d233d57fb9c060d0369b11bb271164ba6b5e8350a1b4d91",
+      "sourceHeadings": [
+        "Tensors",
+        "Operations",
+        "Gradient mode",
+        "Layers and models",
+        "Losses",
+        "Optimizers",
+        "Data",
+        "Training",
+        "Serialization",
+        "Visualization",
+        "Devices and CUDA",
+        "Datasets",
+        "Configuration and logging",
+        "Mixed precision",
+        "ONNX export",
+        "Distributed training",
+        "Exceptions",
+        "Quantization",
+        "Profiling",
+        "Command line"
+      ],
+      "sections": [
+        "tensors",
+        "operations",
+        "gradient-mode",
+        "layers-and-models",
+        "losses",
+        "optimizers",
+        "data",
+        "training",
+        "serialization",
+        "visualization",
+        "devices-and-cuda",
+        "datasets",
+        "configuration-and-logging",
+        "mixed-precision",
+        "onnx-export",
+        "distributed-training",
+        "exceptions",
+        "quantization",
+        "profiling",
+        "command-line"
+      ]
+    },
+    {
+      "source": "docs/scaling.md",
+      "page": "docs-scaling.html",
+      "title": "Scaling & export",
+      "sha256": "ea2585162c9ef681778005b5a072137c436b0dfb30a40f9758966dec51f59f2e",
+      "sourceHeadings": [
+        "Mixed precision",
+        "ONNX export",
+        "Data-parallel training",
+        "Running the examples",
+        "Multi-node TCP process groups"
+      ],
+      "sections": [
+        "mixed-precision",
+        "onnx-export",
+        "data-parallel-training",
+        "running-the-examples",
+        "multi-node-tcp-process-groups"
+      ]
+    },
+    {
+      "source": "docs/cuda.md",
+      "page": "docs-cuda.html",
+      "title": "CUDA & devices",
+      "sha256": "2964820b09b25870c701040d639ba78fc400be2c3f72e8a6733add8324353a88",
+      "sourceHeadings": [
+        "Status",
+        "Checking availability",
+        "Building the extension",
+        "Using it",
+        "Fallback rules",
+        "The kernels",
+        "Performance",
+        "Verifying correctness"
+      ],
+      "sections": [
+        "status",
+        "checking-availability",
+        "building-the-extension",
+        "using-it",
+        "fallback-rules",
+        "the-kernels",
+        "performance",
+        "verifying-correctness"
+      ]
+    },
+    {
+      "source": "docs/troubleshooting.md",
+      "page": "docs-troubleshooting.html",
+      "title": "Troubleshooting",
+      "sha256": "9871711e40aaceb99a5a5abb014955ec73129a148f4e1979666d601a2949c286",
+      "sourceHeadings": [
+        "Verify the environment",
+        "Common problems",
+        "Machine-readable reports",
+        "Report a reproducible problem"
+      ],
+      "sections": [
+        "verify-the-environment",
+        "common-problems",
+        "machine-readable-reports",
+        "report-a-reproducible-problem"
+      ]
+    }
+  ]
+}
