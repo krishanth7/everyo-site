@@ -1,15 +1,34 @@
-const {test}=require('node:test');const assert=require('node:assert/strict');
-const {examples,concepts}=require('./everyo-overview.js');
-test('documented examples keep complete copyable Python and accurate expected outputs',()=>{
- assert.deepEqual(Object.keys(examples),['tensors','gradients','networks']);
- for(const e of Object.values(examples)){assert.match(e.code,/^import everyo as eo\n/);assert.ok(e.explanation.length>40);assert.ok(e.output.length);}
- assert.equal(examples.tensors.result,String(1*3+2*4));
- assert.equal(examples.gradients.result,String(2*2));
- assert.equal(examples.networks.output,String(4*16+16+16*3+3));
- assert.match(examples.gradients.code,/y\.backward\(\)/);
- assert.match(examples.networks.code,/model\.num_parameters\(\)/);
+const { test } = require("node:test");
+const assert = require("node:assert/strict");
+const { setup } = require("./tests/site-fixture.cjs");
+test("example switching updates actual copyable code, label and parameter explanation", async () => {
+  const x = setup();
+  await x.sampleButtons[1].fire("click");
+  assert.match(x.code.textContent, /import everyo as eo/);
+  assert.match(x.code.textContent, /eo.Linear\(4, 16, seed=0\)/);
+  assert.match(x.code.textContent, /num_parameters\(\)/);
+  assert.equal(x.codebar.textContent, "first_network.py");
+  assert.match(x.ids["example-caption"].textContent, /131/);
+  assert.equal(x.sampleButtons[1].getAttribute("aria-pressed"), "true");
+  assert.equal(x.sampleButtons[0].getAttribute("aria-pressed"), "false");
+  await x.sampleButtons[0].fire("click");
+  assert.match(x.code.textContent, /y.backward\(\)/);
 });
-test('all interactive concepts have distinct explanations and authentic public APIs',()=>{
- assert.equal(Object.keys(concepts).length,3);assert.equal(new Set(Object.values(concepts).map(c=>c.text)).size,3);
- assert.match(concepts.tensor.code,/eo\.tensor/);assert.match(concepts.gradient.code,/backward/);assert.match(concepts.network.code,/eo\.Sequential/);
+test("filtering hides unrelated experiments and reports the visible count", async () => {
+  const x = setup();
+  await x.filterButtons[1].fire("click");
+  assert.equal(x.cards.filter((card) => !card.hidden).length, 2);
+  assert.match(x.ids["filter-status"].textContent, /Showing 2 experiments/);
+  await x.filterButtons[2].fire("click");
+  assert.match(x.ids["filter-status"].textContent, /Showing 1 experiment\./);
+  await x.filterButtons[0].fire("click");
+  assert.equal(x.cards.filter((card) => !card.hidden).length, 4);
+});
+test("project sharing copies the canonical URL with feedback when native sharing is absent", async () => {
+  const x = setup();
+  await x.ids["copy-project"].fire("click");
+  assert.equal(x.clipboard(), "https://krishanth7.github.io/everyo-site/");
+  assert.equal(x.ids["share-status"].textContent, "Copied to clipboard.");
+  await x.ids["share-project"].fire("click");
+  assert.equal(x.clipboard(), "https://krishanth7.github.io/everyo-site/");
 });

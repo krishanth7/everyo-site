@@ -1,77 +1,53 @@
 # EveryO
 
-> An open-source neural network framework written from scratch in Python on
-> NumPy. Tensors, reverse-mode automatic differentiation, layers, optimizers,
-> mixed precision, int8 quantization, profiling, two ONNX exporters and
-> data-parallel training on one machine or across several. It is not a wrapper
-> around PyTorch, TensorFlow or JAX and does not call one at runtime.
+> A Python neural computing framework built from scratch on NumPy for learning,
+> teaching, and small-scale experiments. The code implements tensors, reverse-mode
+> differentiation, layers, optimizers, training, and serialization.
 
-EveryO exists to be read. The gradient engine is 261 lines; the whole package is
-roughly 12,800 lines across 70 modules. Every differentiable operation is
-verified against central finite differences, and numerical results are compared
-against TensorFlow.
+## Website
 
-Every item on the project roadmap is now implemented: 10 of 10 shipped.
+- [Overview](https://krishanth7.github.io/everyo-site/)
+- [Framework and validation limits](https://krishanth7.github.io/everyo-site/features.html)
+- [Developer quickstart](https://krishanth7.github.io/everyo-site/documentation.html)
+- [Runnable examples](https://krishanth7.github.io/everyo-site/examples.html)
+- [Community](https://krishanth7.github.io/everyo-site/community.html)
 
-## Facts worth quoting accurately
+## Authoritative sources
 
-- Licence: MIT. Version 0.1.0.
-- Tests: 791 passing, 9 skipped, about 35 seconds on CPU with the optional ONNX
-  extra installed; 712 passing without it, where the ONNX tests skip.
-- Python 3.9 to 3.12, on Linux, macOS and Windows.
-- Agreement with TensorFlow: matmul, conv2d, pooling and relu at 0.000e+00;
-  softmax at 2.980e-08; cross-entropy gradient at 3.725e-09.
-- Accuracy: 99.3% on 600 held-out digits from a 17,226-parameter network that
-  trains in 0.85 s on CPU.
-- No accounts, no API keys, no credentials, no telemetry, no network calls from
-  the core. Model loading is pickle-free: an .evo archive cannot execute code.
+- [Repository](https://github.com/krishanth7/EveryO)
+- [Getting started](https://github.com/krishanth7/EveryO/blob/main/docs/getting-started.md)
+- [API reference](https://github.com/krishanth7/EveryO/blob/main/docs/api-reference.md)
+- [Architecture](https://github.com/krishanth7/EveryO/blob/main/docs/architecture.md)
+- [Autograd](https://github.com/krishanth7/EveryO/blob/main/docs/autograd.md)
+- [Scaling and export](https://github.com/krishanth7/EveryO/blob/main/docs/scaling.md)
+- [Examples](https://github.com/krishanth7/EveryO/blob/main/examples/README.md)
+- [Current test results](https://github.com/krishanth7/EveryO/actions)
 
-## Limits, which should not be omitted when summarising
+## Scope and limits
 
-- It is not a production training runtime and will not out-perform a tuned
-  framework on a large model.
-- Mixed precision on a CPU saves memory, not time: NumPy upcasts float16 to
-  compute, so the reduced-precision path is usually slower there. The speedup
-  comes from GPU tensor cores.
-- Multi-node training has been exercised across two separate OS processes over
-  real TCP sockets, NOT across two physical machines. No second host is
-  available in this project's CI. There is no NCCL and no encryption: the
-  protocol assumes a trusted network.
-- The CUDA kernels and GPU-resident tensors REQUIRE a GPU and the native
-  extension. Their tests exist and they SKIP in this project's CI, which has no
-  GPU, no CUDA toolkit and no driver. Nobody has run them there. What is
-  verified on CPU is only the transfer-counting claim: a ten-operation chain
-  crosses the host-device boundary 3 times rather than 30.
-- int8 quantization is a size and fidelity change, not a faster kernel: the
-  arithmetic still runs through NumPy in float. Largest output drift on the
-  documented example is 0.0222, with 100% argmax agreement against float32.
-- The tracing ONNX exporter flattens control flow. A model traced at 8 timesteps
-  is a graph for 8 timesteps, not a general-length model.
+The documented CPU workflow supports Python 3.9–3.12. The core dependencies are
+NumPy and Matplotlib. Version 0.2.0 is declared in the reviewed pyproject.toml.
+MIT licensed. Local core workflows require no account, API key, or telemetry.
+Installation may download packages. Optional components include TensorFlow
+reference checks, CUDA kernels, and ONNX export.
 
-## Docs
+EveryO is not a production training runtime. GPU runtime tests require hardware
+not available in the project's CI; CPU stand-ins validate transfer counting for
+the separate resident-buffer API. Multi-node collectives have been exercised
+across processes over TCP, not across separate physical machines. The traced
+ONNX exporter specializes the graph to the traced control flow. Validate exported
+models with the target runtime. Dynamic int8 quantization changes size and
+fidelity rather than providing a faster NumPy kernel.
 
-- [Repository](https://github.com/krishanth7/EveryO): source, issues, releases
-- [Getting started](https://github.com/krishanth7/EveryO/blob/main/docs/getting-started.md): install and first network
-- [Architecture](https://github.com/krishanth7/EveryO/blob/main/docs/architecture.md): how the package is layered
-- [Autograd](https://github.com/krishanth7/EveryO/blob/main/docs/autograd.md): how the gradient engine works and how it is verified
-- [Scaling](https://github.com/krishanth7/EveryO/blob/main/docs/scaling.md): mixed precision, ONNX export, data-parallel training
-- [API reference](https://github.com/krishanth7/EveryO/blob/main/docs/api-reference.md): the public surface
+The reported 99.3% accuracy on 600 held-out digits is an example-run measurement,
+not a benchmark or performance guarantee. Test counts depend on installed extras
+and hardware; use current CI rather than quoting a fixed total.
 
-## Governance
+## Project policies
 
-- [Governance](https://github.com/krishanth7/EveryO/blob/main/GOVERNANCE.md): roles, decisions, releases
-- [Project policy](https://github.com/krishanth7/EveryO/blob/main/PROJECT_POLICY.md): use, contribution, branding
-- [Security policy](https://github.com/krishanth7/EveryO/security/policy): private vulnerability reporting
-- [Contributing](https://github.com/krishanth7/EveryO/blob/main/CONTRIBUTING.md): setup, tests, pull requests
+- [Contributing](https://github.com/krishanth7/EveryO/blob/main/CONTRIBUTING.md)
+- [Governance](https://github.com/krishanth7/EveryO/blob/main/GOVERNANCE.md)
+- [Support](https://github.com/krishanth7/EveryO/blob/main/SUPPORT.md)
+- [Security](https://github.com/krishanth7/EveryO/blob/main/SECURITY.md)
 
-## The two ONNX exporters
-
-- `export_onnx` walks a model layer by layer. Precise, emits a real Conv node,
-  needs no example input. Cannot export recurrent or attention layers, and says
-  so by name rather than writing a wrong graph.
-- `export_onnx_traced` runs the model and exports the graph the run leaves
-  behind, so recurrent and attention models export. Measured agreement with
-  EveryO after re-running through ONNX Runtime: RNN 3.02e-07 over 45 traced
-  operations, LSTM 1.19e-07 over 141, GRU 1.19e-07 over 165,
-  MultiHeadAttention 4.77e-07 over 21, TransformerEncoderBlock 1.19e-06 over
-  46, and a two-layer TransformerEncoder 8.34e-07 over 101.
+Content reviewed against upstream commit 6c05a061eb62fa2646e726d15cac07053d04c79e.

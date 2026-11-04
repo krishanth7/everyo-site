@@ -1,166 +1,774 @@
 <!doctype html>
-<html lang="en" data-theme="">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>EveryO — Open-Source AI &amp; Neural Computing Framework</title>
-<meta name="description" content="Explore EveryO, an open-source Python framework for numerical computing, automatic differentiation, neural networks, and machine learning experimentation.">
-<meta name="author" content="EveryO">
-<meta name="theme-color" content="#FAF7F0" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#111518" media="(prefers-color-scheme: dark)">
-<link rel="canonical" href="https://krishanth7.github.io/everyo-site/">
-
-<meta property="og:type" content="website">
-<meta property="og:title" content="EveryO — Open-Source AI &amp; Neural Computing Framework">
-<meta property="og:description" content="Explore EveryO, an open-source Python framework for numerical computing, automatic differentiation, neural networks, and machine learning experimentation.">
-<meta property="og:url" content="https://krishanth7.github.io/everyo-site/">
-<meta property="og:image" content="https://krishanth7.github.io/everyo-site/assets/img/banner.png">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="EveryO — Open-Source AI &amp; Neural Computing Framework">
-<meta name="twitter:description" content="Explore EveryO, an open-source Python framework for numerical computing, automatic differentiation, neural networks, and machine learning experimentation.">
-<meta name="twitter:image" content="https://krishanth7.github.io/everyo-site/assets/img/banner.png">
-
-<script>
-// Resolve the theme and disclosure styling before the first paint.
-(function () {
-  var root = document.documentElement;
-  root.classList.add('js');
-  var saved;
-  try { saved = localStorage.getItem('everyo-theme'); } catch (_) {}
-  root.dataset.theme = saved === 'light' || saved === 'dark' ? saved : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-})();
-</script>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%231a56c4'/><text y='.9em' x='50%' text-anchor='middle' font-size='62' font-family='monospace' font-weight='bold' fill='white'>E</text></svg>">
-<link rel="stylesheet" href="everyo-corporate.css?v=overview-20261104">
-<link rel="stylesheet" href="everyo-overview.css?v=overview-20261104">
-<meta name="robots" content="index,follow">
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "SoftwareSourceCode", "name": "EveryO", "description": "A Python neural computing framework written from scratch on NumPy for learning, teaching, and small-scale experimentation.", "url": "https://krishanth7.github.io/everyo-site/", "codeRepository": "https://github.com/krishanth7/EveryO", "programmingLanguage": "Python", "license": "https://opensource.org/license/mit", "isAccessibleForFree": true}</script>
-</head>
-<body class="overview-site" data-page="overview">
-<a class="skip-link" href="#main">Skip to content</a>
-
-<header class="site-header reference-header">
-  <div class="wrap">
-    <nav class="nav" aria-label="Primary">
-      <a class="brand" href="./#top" aria-label="EveryO home">
-        <svg class="orbit-logo" viewBox="0 0 84 64" fill="none" aria-hidden="true"><circle cx="42" cy="32" r="23" stroke="currentColor" stroke-width="6"/><ellipse cx="42" cy="32" rx="40" ry="10" transform="rotate(-25 42 32)" stroke="var(--header-lime)" stroke-width="2.6"/><circle cx="67" cy="12" r="5.5" fill="var(--header-lime)"/></svg>
-        <span>EveryO</span>
-      </a>
-      <ul class="nav__links" id="nav-links" data-open="false" data-state="closed">
-        <li><a aria-current="page" data-page="overview" href="./#top"><svg class="mobile-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1Z"/></svg><span>Overview</span><span class="mobile-nav-chevron" aria-hidden="true">›</span></a></li>
-        <li><a data-page="documentation" class="nav__documentation" href="documentation.html"><svg class="mobile-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v16M12 5C8 2 4 3 2 4v15c3-1 6-1 10 2 4-3 7-3 10-2V4c-2-1-6-2-10 1Z"/></svg><span>Documentation</span><span class="mobile-nav-chevron" aria-hidden="true">›</span></a></li>
-        <li><a data-page="features" href="features.html"><svg class="mobile-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 2 10 5-10 5L2 7Zm-10 10 10 5 10-5M2 17l10 5 10-5"/></svg><span>Features</span><span class="mobile-nav-chevron" aria-hidden="true">›</span></a></li>
-        <li><a data-page="examples" href="examples.html"><svg class="mobile-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 6-6 6 6 6m10-12 6 6-6 6M14 3l-4 18"/></svg><span>Examples</span><span class="mobile-nav-chevron" aria-hidden="true">›</span></a></li>
-        <li><a data-page="community" href="community.html"><svg class="mobile-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2m20 0v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/><circle cx="9" cy="7" r="4"/></svg><span>Community</span><span class="mobile-nav-chevron" aria-hidden="true">›</span></a></li>
-      <li class="mobile-nav-actions"><a class="mobile-get-started" href="documentation.html#install">Get Started <span aria-hidden="true">→</span></a><a class="mobile-github" href="https://github.com/krishanth7/EveryO"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17.3 4.7 18.3 5 18.3 5c.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .5Z"/></svg><span>Star on GitHub</span></a></li>
-      </ul>
-      <div class="nav__actions">
-        <button class="header-search" id="search-open" type="button" aria-label="Search EveryO" aria-haspopup="dialog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="10.5" cy="10.5" r="7.5"/><path d="m16 16 5 5"/></svg><span>Search</span></button>
-        <a class="nav__github" href="https://github.com/krishanth7/EveryO" aria-label="Star EveryO on GitHub"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17.3 4.7 18.3 5 18.3 5c.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .5Z"/></svg><span>Star</span></a>
-        <button class="theme-switch" id="theme-toggle" type="button" aria-label="Switch colour theme" aria-pressed="false"><span class="theme-choice theme-choice--light"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg></span><span class="theme-choice theme-choice--dark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg></span></button>
-        <a class="btn btn--primary btn--sm nav__start" href="documentation.html#install">Get Started <span aria-hidden="true">→</span></a>
-        <button class="icon-btn nav__toggle" id="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links"><svg class="menu-hamburger" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path class="menu-line menu-line--top" d="M4 6h16"/><path class="menu-line menu-line--middle" d="M4 12h16"/><path class="menu-line menu-line--bottom" d="M4 18h16"/></svg></button>
-      </div>
-    </nav>
-  </div>
-</header>
-<dialog class="site-search" id="site-search" aria-labelledby="search-title">
-  <div class="search-heading"><h2 id="search-title">Search EveryO</h2><button type="button" id="search-close" aria-label="Close search">✕</button></div>
-  <label for="site-search-input">Find a feature, guide, or example</label>
-  <input id="site-search-input" type="search" placeholder="Try autograd, ONNX, or installation…" autocomplete="off">
-  <p class="search-status" id="search-status" role="status"></p>
-  <ul id="search-results"></ul>
-</dialog>
-<main id="main"><section class="hero ov-hero" id="top" aria-labelledby="overview-title">
-  <div class="wrap hero__inner">
-    <div class="desktop-hero">
-      <div class="desktop-hero__copy">
-        <p class="desktop-hero__eyebrow">OPEN-SOURCE <span>AI</span> FRAMEWORK</p>
-        <h1 id="overview-title">Build <span>intelligence,</span><br>your way.</h1>
-        <p class="desktop-hero__lede">An open-source Python framework for exploring machine learning, neural networks, automatic differentiation, and numerical computing.</p>
-        <div class="desktop-hero__buttons"><a class="desktop-hero__primary" href="documentation.html#install">Get Started <span aria-hidden="true">→</span></a><a class="desktop-hero__secondary" href="https://github.com/krishanth7/EveryO">Explore GitHub</a></div>
-        <ul class="desktop-hero__badges" aria-label="Framework principles">
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m7 6-6 6 6 6m10-12 6 6-6 6M14 3l-4 18"/></svg>Open Source</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m12 2 10 5-10 5L2 7Zm-10 10 10 5 10-5M2 17l10 5 10-5"/></svg>Developer First</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m12 2 8 4v10l-8 5-8-5V6Zm0 9v10M4 6l8 5 8-5M8 4l8 5v5"/></svg>Extensible</li>
-        </ul>
-      </div>
-      <div class="desktop-hero__art"><svg class="neural-stack" viewBox="0 0 760 530" fill="none" aria-hidden="true">
-<defs>
- <linearGradient id="glass-fill" x1="140" y1="0" x2="500" y2="280" gradientUnits="userSpaceOnUse"><stop stop-color="var(--glass-bright)"/><stop offset=".52" stop-color="var(--glass-mid)"/><stop offset="1" stop-color="var(--glass-bright)"/></linearGradient>
- <linearGradient id="base-fill" x1="180" y1="350" x2="520" y2="460" gradientUnits="userSpaceOnUse"><stop stop-color="#a4eb24" stop-opacity=".2"/><stop offset=".65" stop-color="#c8ff3d" stop-opacity=".85"/><stop offset="1" stop-color="#93d719" stop-opacity=".3"/></linearGradient>
- <radialGradient id="node-fill"><stop stop-color="#f1ffb0"/><stop offset=".5" stop-color="#d5ff54"/><stop offset="1" stop-color="#a3ef18"/></radialGradient>
- <radialGradient id="ground-glow"><stop stop-color="#a8f52d" stop-opacity=".4"/><stop offset="1" stop-color="#a8f52d" stop-opacity="0"/></radialGradient>
- <filter id="node-glow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="5"/></filter>
- <filter id="layer-shadow" x="-30%" y="-50%" width="160%" height="220%"><feDropShadow dx="0" dy="12" stdDeviation="12" flood-color="#385000" flood-opacity=".2"/></filter>
-</defs>
-<ellipse cx="390" cy="433" rx="280" ry="77" fill="url(#ground-glow)"/>
-<g transform="rotate(-17 390 260)"><ellipse cx="390" cy="260" rx="366" ry="110" stroke="#a9ef29" stroke-width="1.3"/><ellipse cx="390" cy="268" rx="366" ry="110" stroke="#a9ef29" stroke-opacity=".2" stroke-width=".7"/><circle cx="56" cy="215" r="6" fill="url(#node-fill)"/><circle cx="692" cy="320" r="7" fill="url(#node-fill)"/><circle cx="680" cy="190" r="6" fill="url(#node-fill)"/></g>
-<path d="m155 365 300-97q12-4 24 0l191 66q18 6 0 13L370 448q-12 4-24 0l-191-66q-18-8 0-17Z" fill="url(#base-fill)" stroke="#c7ff42" stroke-width="1.5"/>
-<path d="m146 375 202 72q10 4 22 0l309-104v16q0 7-10 10L371 470q-12 4-24 0l-191-66q-10-3-10-12Z" fill="url(#base-fill)" stroke="#b3f22d" stroke-opacity=".6"/>
-<g filter="url(#layer-shadow)"><path d="M130 330 429 233q12-4 24 0l190 65q18 7 0 14L344 410q-12 4-24 0l-190-65q-18-8 0-15Z" fill="url(#glass-fill)" stroke="var(--glass-edge)" stroke-width="1.5"/></g><path d="M260 316 344 284" stroke="#b7f73b" stroke-width="1.2" stroke-opacity=".85"/><path d="M260 316 347 356" stroke="#b7f73b" stroke-width="1.2" stroke-opacity=".85"/><path d="M344 284 432 305" stroke="#b7f73b" stroke-width="1.2" stroke-opacity=".85"/><path d="M344 284 347 356" stroke="#b7f73b" stroke-width="1.2" stroke-opacity=".85"/><path d="M344 284 423 387" stroke="#b7f73b" stroke-width="1.2" stroke-opacity=".85"/><path d="M432 305 514 328" stroke="#b7f73b" stroke-width="1.2" stroke-opacity=".85"/><path d="M432 305 347 356" stroke="#b7f73b" stroke-width="1.2" stroke-opacity=".85"/><path d="M432 305 423 387" stroke="#b7f73b" stroke-width="1.2" stroke-opacity=".85"/><path d="M514 328 531 371" stroke="#b7f73b" stroke-width="1.2" stroke-opacity=".85"/><path d="M347 356 423 387" stroke="#b7f73b" stroke-width="1.2" stroke-opacity=".85"/><path d="M423 387 531 371" stroke="#b7f73b" stroke-width="1.2" stroke-opacity=".85"/><path d="M347 356 531 371" stroke="#b7f73b" stroke-width="1.2" stroke-opacity=".85"/><circle cx="260" cy="316" r="11" fill="#b9ff32" opacity=".45" filter="url(#node-glow)"/><circle cx="260" cy="316" r="7" fill="url(#node-fill)"/><circle cx="344" cy="284" r="11" fill="#b9ff32" opacity=".45" filter="url(#node-glow)"/><circle cx="344" cy="284" r="7" fill="url(#node-fill)"/><circle cx="432" cy="305" r="11" fill="#b9ff32" opacity=".45" filter="url(#node-glow)"/><circle cx="432" cy="305" r="7" fill="url(#node-fill)"/><circle cx="514" cy="328" r="11" fill="#b9ff32" opacity=".45" filter="url(#node-glow)"/><circle cx="514" cy="328" r="7" fill="url(#node-fill)"/><circle cx="347" cy="356" r="11" fill="#b9ff32" opacity=".45" filter="url(#node-glow)"/><circle cx="347" cy="356" r="7" fill="url(#node-fill)"/><circle cx="423" cy="387" r="11" fill="#b9ff32" opacity=".45" filter="url(#node-glow)"/><circle cx="423" cy="387" r="7" fill="url(#node-fill)"/><circle cx="531" cy="371" r="11" fill="#b9ff32" opacity=".45" filter="url(#node-glow)"/><circle cx="531" cy="371" r="7" fill="url(#node-fill)"/><g filter="url(#layer-shadow)"><path d="M130 250 429 153q12-4 24 0l190 65q18 7 0 14L344 330q-12 4-24 0l-190-65q-18-8 0-15Z" fill="url(#glass-fill)" stroke="var(--glass-edge)" stroke-width="1.5"/></g><path d="M260 236 344 204" stroke="#b7f73b" stroke-width="1.2" stroke-opacity=".85"/><path d="M260 236 347 276" stroke="#b7f73b" stroke-width="1.2" stroke-opacity=".85"/><path d="M344 204 432 225" stroke="#b7f73b" stroke-width="1.2" stroke-opacity=".85"/><path d="M344 204 347 276" stroke="#b7f73b" stroke-width="1.2" stroke-opacity=".85"/><path d="M344 204 423 307" stroke="#b7f73b" stroke-width="1.2" stroke-opacity=".85"/><path d="M432 225 514 248" stroke="#b7f73b" stroke-width="1.2" stroke-opacity=".85"/><path d="M432 225 347 276" stroke="#b7f73b" stroke-width="1.2" stroke-opacity=".85"/><path d="M432 225 423 307" stroke="#b7f73b" stroke-width="1.2" stroke-opacity=".85"/><path d="M514 248 531 291" stroke="#b7f73b" stroke-width="1.2" stroke-opacity=".85"/><path d="M347 276 423 307" stroke="#b7f73b" stroke-width="1.2" stroke-opacity=".85"/><path d="M423 307 531 291" stroke="#b7f73b" stroke-width="1.2" stroke-opacity=".85"/><path d="M347 276 531 291" stroke="#b7f73b" stroke-width="1.2" stroke-opacity=".85"/><path d="M260 244 270 316" stroke="#aef532" stroke-width="1" stroke-opacity=".6"/><path d="M432 233 442 305" stroke="#aef532" stroke-width="1" stroke-opacity=".6"/><path d="M347 284 357 356" stroke="#aef532" stroke-width="1" stroke-opacity=".6"/><path d="M531 299 541 371" stroke="#aef532" stroke-width="1" stroke-opacity=".6"/><circle cx="260" cy="236" r="11" fill="#b9ff32" opacity=".45" filter="url(#node-glow)"/><circle cx="260" cy="236" r="7" fill="url(#node-fill)"/><circle cx="344" cy="204" r="11" fill="#b9ff32" opacity=".45" filter="url(#node-glow)"/><circle cx="344" cy="204" r="7" fill="url(#node-fill)"/><circle cx="432" cy="225" r="11" fill="#b9ff32" opacity=".45" filter="url(#node-glow)"/><circle cx="432" cy="225" r="7" fill="url(#node-fill)"/><circle cx="514" cy="248" r="11" fill="#b9ff32" opacity=".45" filter="url(#node-glow)"/><circle cx="514" cy="248" r="7" fill="url(#node-fill)"/><circle cx="347" cy="276" r="11" fill="#b9ff32" opacity=".45" filter="url(#node-glow)"/><circle cx="347" cy="276" r="7" fill="url(#node-fill)"/><circle cx="423" cy="307" r="11" fill="#b9ff32" opacity=".45" filter="url(#node-glow)"/><circle cx="423" cy="307" r="7" fill="url(#node-fill)"/><circle cx="531" cy="291" r="11" fill="#b9ff32" opacity=".45" filter="url(#node-glow)"/><circle cx="531" cy="291" r="7" fill="url(#node-fill)"/><g filter="url(#layer-shadow)"><path d="M130 170 429 73q12-4 24 0l190 65q18 7 0 14L344 250q-12 4-24 0l-190-65q-18-8 0-15Z" fill="url(#glass-fill)" stroke="var(--glass-edge)" stroke-width="1.5"/></g><path d="M260 156 344 124" stroke="#b7f73b" stroke-width="1.2" stroke-opacity=".85"/><path d="M260 156 347 196" stroke="#b7f73b" stroke-width="1.2" stroke-opacity=".85"/><path d="M344 124 432 145" stroke="#b7f73b" stroke-width="1.2" stroke-opacity=".85"/><path d="M344 124 347 196" stroke="#b7f73b" stroke-width="1.2" stroke-opacity=".85"/><path d="M344 124 423 227" stroke="#b7f73b" stroke-width="1.2" stroke-opacity=".85"/><path d="M432 145 514 168" stroke="#b7f73b" stroke-width="1.2" stroke-opacity=".85"/><path d="M432 145 347 196" stroke="#b7f73b" stroke-width="1.2" stroke-opacity=".85"/><path d="M432 145 423 227" stroke="#b7f73b" stroke-width="1.2" stroke-opacity=".85"/><path d="M514 168 531 211" stroke="#b7f73b" stroke-width="1.2" stroke-opacity=".85"/><path d="M347 196 423 227" stroke="#b7f73b" stroke-width="1.2" stroke-opacity=".85"/><path d="M423 227 531 211" stroke="#b7f73b" stroke-width="1.2" stroke-opacity=".85"/><path d="M347 196 531 211" stroke="#b7f73b" stroke-width="1.2" stroke-opacity=".85"/><path d="M260 164 270 236" stroke="#aef532" stroke-width="1" stroke-opacity=".6"/><path d="M432 153 442 225" stroke="#aef532" stroke-width="1" stroke-opacity=".6"/><path d="M347 204 357 276" stroke="#aef532" stroke-width="1" stroke-opacity=".6"/><path d="M531 219 541 291" stroke="#aef532" stroke-width="1" stroke-opacity=".6"/><circle cx="260" cy="156" r="11" fill="#b9ff32" opacity=".45" filter="url(#node-glow)"/><circle cx="260" cy="156" r="7" fill="url(#node-fill)"/><circle cx="344" cy="124" r="11" fill="#b9ff32" opacity=".45" filter="url(#node-glow)"/><circle cx="344" cy="124" r="7" fill="url(#node-fill)"/><circle cx="432" cy="145" r="11" fill="#b9ff32" opacity=".45" filter="url(#node-glow)"/><circle cx="432" cy="145" r="7" fill="url(#node-fill)"/><circle cx="514" cy="168" r="11" fill="#b9ff32" opacity=".45" filter="url(#node-glow)"/><circle cx="514" cy="168" r="7" fill="url(#node-fill)"/><circle cx="347" cy="196" r="11" fill="#b9ff32" opacity=".45" filter="url(#node-glow)"/><circle cx="347" cy="196" r="7" fill="url(#node-fill)"/><circle cx="423" cy="227" r="11" fill="#b9ff32" opacity=".45" filter="url(#node-glow)"/><circle cx="423" cy="227" r="7" fill="url(#node-fill)"/><circle cx="531" cy="211" r="11" fill="#b9ff32" opacity=".45" filter="url(#node-glow)"/><circle cx="531" cy="211" r="7" fill="url(#node-fill)"/></svg>
-        <div class="desktop-hero__code" aria-label="EveryO model example"><code><span>import</span> everyo <span>as</span> eo<br>model = eo.Sequential(eo.Linear(8, 1))</code></div>
-      </div>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>EveryO — Understand the intelligence you build.</title>
+    <meta
+      name="description"
+      content="A readable Python neural computing framework built on NumPy. Explore tensors, autograd, neural networks, and small-scale experiments."
+    />
+    <meta name="robots" content="index,follow" />
+    <meta name="theme-color" content="#f5f4f0" />
+    <link rel="canonical" href="https://krishanth7.github.io/everyo-site/" />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:title"
+      content="EveryO — Understand the intelligence you build."
+    />
+    <meta
+      property="og:description"
+      content="A readable Python neural computing framework built on NumPy. Explore tensors, autograd, neural networks, and small-scale experiments."
+    />
+    <meta
+      property="og:url"
+      content="https://krishanth7.github.io/everyo-site/"
+    />
+    <meta
+      property="og:image"
+      content="https://krishanth7.github.io/everyo-site/assets/img/social-card.png"
+    />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="EveryO — Understand the intelligence you build."
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="EveryO — Understand the intelligence you build."
+    />
+    <meta
+      name="twitter:description"
+      content="A readable Python neural computing framework built on NumPy. Explore tensors, autograd, neural networks, and small-scale experiments."
+    />
+    <meta
+      name="twitter:image"
+      content="https://krishanth7.github.io/everyo-site/assets/img/social-card.png"
+    />
+    <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg" />
+    <script>
+      try {
+        var t = localStorage.getItem("everyo-theme");
+        document.documentElement.dataset.theme =
+          t === "dark" || t === "light"
+            ? t
+            : matchMedia("(prefers-color-scheme: dark)").matches
+              ? "dark"
+              : "light";
+      } catch (_) {}
+    </script>
+    <link rel="stylesheet" href="assets/css/developer-site.css" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareSourceCode",
+        "name": "EveryO",
+        "codeRepository": "https://github.com/krishanth7/EveryO",
+        "programmingLanguage": "Python",
+        "license": "https://opensource.org/license/mit",
+        "description": "A NumPy-based neural computing framework for learning, teaching, and small-scale experiments."
+      }
+    </script>
+  </head>
+  <body data-page="overview">
+    <a class="skip" href="#main">Skip to content</a>
+    <div class="announcement">
+      <a href="https://github.com/krishanth7/EveryO/releases"
+        >Open source. Open to your next idea.
+        <span
+          >Explore EveryO 0.2.0
+          <svg
+            class="arrow"
+            viewBox="0 0 16 16"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.4"
+            aria-hidden="true"
+          >
+            <path d="M3 13 13 3M3 3h10v10" /></svg></span
+      ></a>
     </div>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="brand" href="index.html" aria-label="EveryO home"
+          ><span class="brand-mark" aria-hidden="true">e<span>o</span></span
+          ><span>EveryO</span></a
+        >
+        <nav id="nav-links" aria-label="Primary">
+          <a data-page="overview" href="index.html" aria-current="page"
+            >Overview</a
+          ><a data-page="features" href="features.html">Framework</a
+          ><a data-page="documentation" href="documentation.html"
+            >Documentation</a
+          ><a data-page="examples" href="examples.html">Examples</a
+          ><a data-page="community" href="community.html">Community</a>
+        </nav>
+        <div class="header-actions">
+          <button
+            id="theme-toggle"
+            class="icon-button"
+            aria-label="Switch colour theme"
+            aria-pressed="false"
+            type="button"
+          >
+            ◐</button
+          ><a class="github-link" href="https://github.com/krishanth7/EveryO"
+            >GitHub
+            <span aria-hidden="true"
+              ><svg
+                class="arrow"
+                viewBox="0 0 16 16"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.4"
+                aria-hidden="true"
+              >
+                <path d="M3 13 13 3M3 3h10v10" /></svg></span></a
+          ><button
+            id="nav-toggle"
+            class="icon-button menu-toggle"
+            type="button"
+            aria-expanded="false"
+            aria-controls="nav-links"
+            aria-label="Open menu"
+          >
+            ☰
+          </button>
+        </div>
+      </div>
+    </header>
+    <main id="main">
+      <section class="hero container" id="top">
+        <div class="hero-copy">
+          <p class="eyebrow">
+            <span class="status-dot"></span> THE OPEN-SOURCE NEURAL COMPUTING
+            FRAMEWORK
+          </p>
+          <h1>
+            Understand the<br />intelligence<br />you
+            <span class="accent-word">build.</span>
+          </h1>
+          <p class="hero-description">
+            From your first tensor to your own transformer. A readable Python
+            framework built on NumPy, for developers who want to see how it all
+            works.
+          </p>
+          <div class="actions">
+            <a class="button" href="documentation.html#install"
+              >Start building
+              <span aria-hidden="true"
+                ><svg
+                  class="arrow"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.4"
+                  aria-hidden="true"
+                >
+                  <path d="M3 13 13 3M3 3h10v10" /></svg></span></a
+            ><a
+              class="button secondary"
+              href="https://github.com/krishanth7/EveryO"
+              >Explore the source
+              <span aria-hidden="true"
+                ><svg
+                  class="arrow"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.4"
+                  aria-hidden="true"
+                >
+                  <path d="M3 13 13 3M3 3h10v10" /></svg></span
+            ></a>
+          </div>
+          <div class="hero-meta">
+            <span>Python 3.9–3.12</span><span>Runs locally</span
+            ><span>MIT licensed</span>
+          </div>
+        </div>
+        <div
+          class="graph"
+          aria-label="Computation graph: x equals 2, multiplied by itself gives y equals 4; the derivative is 4"
+        >
+          <div class="graph-top">
+            <span class="signal"></span> LIVE CONCEPT / AUTOGRAD
+            <span class="mono">01</span>
+          </div>
+          <div class="graph-stage">
+            <span class="graph-axis">FORWARD PASS ↓</span>
+            <div class="graph-node input-node">
+              <small>INPUT</small><strong>x <em>2.0</em></strong>
+            </div>
+            <div class="graph-wire"></div>
+            <div class="graph-operation">× <span>x · x</span></div>
+            <div class="graph-wire"></div>
+            <div class="graph-node output-node">
+              <small>OUTPUT</small><strong>y <em>4.0</em></strong>
+            </div>
+            <div class="gradient-note">
+              ∂y / ∂x <b>4.0</b><span>← backward()</span>
+            </div>
+          </div>
+          <div class="graph-bottom">
+            <span>NumPy at the core.</span
+            ><span
+              >Every operation, readable.
+              <svg
+                class="arrow"
+                viewBox="0 0 16 16"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.4"
+                aria-hidden="true"
+              >
+                <path d="M3 13 13 3M3 3h10v10" /></svg
+            ></span>
+          </div>
+        </div>
+      </section>
+      <section class="principles">
+        <div class="container principles-inner">
+          <p>YOUR CURIOSITY.<br /><b>THE WHOLE STACK.</b></p>
+          <span
+            >Tensors
+            <i
+              ><svg
+                class="arrow"
+                viewBox="0 0 16 16"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.4"
+                aria-hidden="true"
+              >
+                <path d="M3 13 13 3M3 3h10v10" /></svg></i></span
+          ><span
+            >Autograd
+            <i
+              ><svg
+                class="arrow"
+                viewBox="0 0 16 16"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.4"
+                aria-hidden="true"
+              >
+                <path d="M3 13 13 3M3 3h10v10" /></svg></i></span
+          ><span
+            >Neural networks
+            <i
+              ><svg
+                class="arrow"
+                viewBox="0 0 16 16"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.4"
+                aria-hidden="true"
+              >
+                <path d="M3 13 13 3M3 3h10v10" /></svg></i></span
+          ><span
+            >Training
+            <i
+              ><svg
+                class="arrow"
+                viewBox="0 0 16 16"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.4"
+                aria-hidden="true"
+              >
+                <path d="M3 13 13 3M3 3h10v10" /></svg></i
+          ></span>
+        </div>
+      </section>
+      <section class="section container" id="why-everyo">
+        <div class="section-heading">
+          <p class="eyebrow">01 / BUILT TO BE UNDERSTOOD</p>
+          <h2>Less black box.<br />More lightbulb moments.</h2>
+          <p>
+            A framework you can run, read, and reason about. Follow the
+            implementation from the first forward pass to the final parameter
+            update.
+          </p>
+        </div>
+        <div class="grid three">
+          <article class="card">
+            <span class="card-index">01</span>
+            <h3>Read the mechanics.</h3>
+            <p>
+              Trace reverse-mode differentiation, inspect NumPy kernels, and
+              follow the maths into the code.
+            </p>
+            <a
+              class="text-link"
+              href="https://github.com/krishanth7/EveryO/blob/main/everyo/core/autograd.py"
+              >Read autograd
+              <span aria-hidden="true"
+                ><svg
+                  class="arrow"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.4"
+                  aria-hidden="true"
+                >
+                  <path d="M3 13 13 3M3 3h10v10" /></svg></span
+            ></a>
+          </article>
+          <article class="card">
+            <span class="card-index">02</span>
+            <h3>Own the experiment.</h3>
+            <p>
+              Generate datasets locally, set your seeds, and train small models
+              without an account or API key.
+            </p>
+            <a class="text-link" href="examples.html"
+              >Find an experiment
+              <span aria-hidden="true"
+                ><svg
+                  class="arrow"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.4"
+                  aria-hidden="true"
+                >
+                  <path d="M3 13 13 3M3 3h10v10" /></svg></span
+            ></a>
+          </article>
+          <article class="card">
+            <span class="card-index">03</span>
+            <h3>Check the numbers.</h3>
+            <p>
+              Explore finite-difference tests and optional TensorFlow reference
+              comparisons. Understand what was validated.
+            </p>
+            <a class="text-link" href="features.html#validation"
+              >See validation
+              <span aria-hidden="true"
+                ><svg
+                  class="arrow"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.4"
+                  aria-hidden="true"
+                >
+                  <path d="M3 13 13 3M3 3h10v10" /></svg></span
+            ></a>
+          </article>
+        </div>
+      </section>
+      <section class="section code-section" id="code-preview">
+        <div class="container split">
+          <div>
+            <div class="section-heading">
+              <p class="eyebrow">02 / A FEW LINES. A REAL GRADIENT.</p>
+              <h2>The maths is yours<br />to follow.</h2>
+              <p>
+                Mark a tensor, perform an operation, and call backward(). EveryO
+                records the graph and accumulates the gradient.
+              </p>
+            </div>
+            <div
+              class="example-tabs"
+              role="group"
+              aria-label="Choose a code example"
+            >
+              <button
+                type="button"
+                data-example="gradients"
+                aria-pressed="true"
+              >
+                01 Autograd</button
+              ><button
+                type="button"
+                data-example="networks"
+                aria-pressed="false"
+              >
+                02 A network
+              </button>
+            </div>
+            <a class="text-link" href="documentation.html#gradients"
+              >Walk through the quickstart
+              <svg
+                class="arrow"
+                viewBox="0 0 16 16"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.4"
+                aria-hidden="true"
+              >
+                <path d="M3 13 13 3M3 3h10v10" /></svg
+            ></a>
+          </div>
+          <div>
+            <div id="interactive-code">
+              <div class="codebox">
+                <div class="codebar">
+                  <span>first_gradient.py</span
+                  ><button class="copy-button" type="button">Copy code</button>
+                </div>
+                <pre><code>import everyo as eo
 
-  </div>
-</section>
-<section class="ov-section" id="what-is-everyo" aria-labelledby="what-title"><div class="ov-wrap ov-split"><div><p class="ov-eyebrow">WHAT IS EVERYO?</p><h2 id="what-title">Explore the foundations of intelligent computing.</h2><p class="ov-lede">EveryO is a neural computing framework written from scratch in Python on NumPy. Follow a number from a tensor, through an operation, and into its gradient.</p><p>Built for learning, teaching, and small-scale experiments, it brings tensors, automatic differentiation, layers, optimizers, and training into one readable project.</p><p class="ov-note">A learning and experimentation framework—not a production training runtime.</p><a class="ov-link" href="documentation.html">Explore the architecture <span aria-hidden="true">→</span></a></div><div class="ov-concept"><div class="ov-concept__top"><span class="ov-editor-dots" aria-hidden="true">● ● ●</span><span>Inside the framework</span></div><div class="ov-concept__steps" role="group" aria-label="Explore framework concepts"><button type="button" data-concept="tensor" aria-pressed="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 2 9 5v10l-9 5-9-5V7Zm0 10v10M3 7l9 5 9-5"/></svg><span>Tensors</span><small>Store the numbers</small></button><span aria-hidden="true">→</span><button type="button" data-concept="gradient" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 20h18M4 17 9 7l5 7 6-12"/></svg><span>Gradients</span><small>Trace the change</small></button><span aria-hidden="true">→</span><button type="button" data-concept="network" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5" cy="6" r="3"/><circle cx="19" cy="6" r="3"/><circle cx="12" cy="19" r="3"/><path d="m7 8 4 8m6-8-4 8M8 6h8"/></svg><span>Networks</span><small>Connect the layers</small></button></div><p id="concept-explanation" role="status">Tensors hold numerical data, shapes, and device information. NumPy powers the core computation.</p><code id="concept-code">x = eo.tensor([2.0], requires_grad=True)</code></div></div></section><section class="ov-section ov-surface" id="why-everyo"><div class="ov-wrap"><div class="ov-heading"><p class="ov-eyebrow">WHY CHOOSE EVERYO?</p><h2>Built for developers who want to understand AI.</h2><p>Explore neural computing with approachable tools, transparent implementations, and an open development ecosystem.</p></div><div class="ov-grid ov-grid--four"><article class="ov-card"><div class="ov-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m8 5-7 7 7 7m8-14 7 7-7 7M14 3l-4 18"/></svg></div><h3>Developer-First</h3><p>Explore machine learning concepts through Python tools and readable development workflows.</p></article><article class="ov-card"><div class="ov-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5" cy="6" r="3"/><circle cx="19" cy="6" r="3"/><circle cx="12" cy="19" r="3"/><path d="m7 8 4 8m6-8-4 8M8 6h8"/></svg></div><h3>Flexible Experimentation</h3><p>Experiment with numerical operations, network architectures, and model-training workflows.</p></article><article class="ov-card"><div class="ov-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12h4l3-8 6 16 3-8h4"/></svg></div><h3>Transparent Computation</h3><p>Understand how tensors, gradients, and training operations work together.</p></article><article class="ov-card"><div class="ov-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="5" r="3"/><circle cx="6" cy="19" r="3"/><circle cx="19" cy="5" r="3"/><path d="M6 8v8m0-4c10 0 13-1 13-4"/></svg></div><h3>Open-Source Development</h3><p>Study the implementation, contribute improvements, and collaborate through GitHub.</p></article></div><a class="ov-link" href="features.html">Discover the design philosophy <span aria-hidden="true">→</span></a></div></section><section class="ov-section" id="capabilities"><div class="ov-wrap"><div class="ov-heading"><p class="ov-eyebrow">CORE CAPABILITIES</p><h2>Explore what’s inside EveryO.</h2><p>A clear foundation for numerical computing, automatic differentiation, and neural network experimentation.</p></div><div class="ov-grid ov-grid--three"><article class="ov-card"><div class="ov-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 2 9 5v10l-9 5-9-5V7Zm0 10v10M3 7l9 5 9-5"/></svg></div><h3>Tensor Computing</h3><p>Create arrays, combine operations, and inspect shapes, dtypes, and NumPy interoperability.</p><a class="ov-link" href="features.html#tensors">Explore tensor computing <span aria-hidden="true">→</span></a></article><article class="ov-card"><div class="ov-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 20h18M4 17 9 7l5 7 6-12"/></svg></div><h3>Automatic Differentiation</h3><p>Record operations and follow reverse-mode gradients through a transparent computation graph.</p><a class="ov-link" href="features.html#autograd">Explore automatic differentiation <span aria-hidden="true">→</span></a></article><article class="ov-card"><div class="ov-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 2 10 5-10 5L2 7Zm-10 10 10 5 10-5M2 17l10 5 10-5"/></svg></div><h3>Neural Network Components</h3><p>Compose linear layers, convolutions, recurrent networks, and attention modules.</p><a class="ov-link" href="features.html#networks">Explore neural network components <span aria-hidden="true">→</span></a></article><article class="ov-card"><div class="ov-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v3m0 14v3M2 12h3m14 0h3M5 5l2 2m10 10 2 2M5 19l2-2M17 7l2-2"/></svg></div><h3>Optimization and Training</h3><p>Use SGD or Adam with data loaders, losses, metrics, and training callbacks.</p><a class="ov-link" href="features.html#training">Explore optimization and training <span aria-hidden="true">→</span></a></article><article class="ov-card"><span class="ov-tag">Optional backend</span><div class="ov-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="5" width="14" height="14" rx="3"/><path d="M9 1v4m6-4v4M9 19v4m6-4v4M1 9h4m-4 6h4m14-6h4m-4 6h4"/></svg></div><h3>Backend Integration</h3><p>Start with NumPy on CPU. CUDA and reference integrations require optional dependencies.</p><a class="ov-link" href="features.html#backends">Explore backend integration <span aria-hidden="true">→</span></a></article><article class="ov-card"><div class="ov-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/><path d="M12 2 3 5v7c0 5 9 10 9 10s9-5 9-10V5Z"/></svg></div><h3>Testing and Developer Tools</h3><p>Inspect gradient checks, diagnose your environment, and explore profiling and visualization.</p><a class="ov-link" href="features.html#tools">Explore testing and developer tools <span aria-hidden="true">→</span></a></article></div><div class="ov-section-action"><a class="ov-link" href="features.html">Explore all features <span aria-hidden="true">→</span></a></div></div></section><section class="how-everyo" id="how-it-works" aria-labelledby="how-everyo-title">
-  <div class="wrap ov-wrap">
-    <div class="how-everyo__heading">
-      <p class="how-everyo__eyebrow">HOW IT WORKS</p>
-      <h2 id="how-everyo-title">From idea to intelligence in three steps.</h2>
-      <p>Set up the framework, explore its components, and start experimenting with neural networks.</p>
-    </div>
-    <ol class="how-everyo__steps">
-      <li class="how-step">
-        <div class="how-step__intro"><span class="how-step__number" aria-hidden="true">01</span><div><h3>Install EveryO</h3><p><a href="https://github.com/krishanth7/EveryO">Clone the repository</a>, activate a Python environment, then install from its root.</p></div></div>
-        <div class="how-terminal" aria-label="Install EveryO from the cloned repository"><div class="how-terminal__bar" aria-hidden="true"><i></i><i></i><i></i></div><pre><code><b>$</b> git clone https://github.com/krishanth7/EveryO.git
-<b>$</b> cd EveryO
-<b>$</b> python -m pip install -e .</code></pre></div>
-      </li>
-      <li class="how-step">
-        <div class="how-step__intro"><span class="how-step__number" aria-hidden="true">02</span><div><h3>Build your model</h3><p>Define and configure a neural network.</p></div></div>
-        <div class="how-terminal" aria-label="EveryO Python model example"><div class="how-terminal__bar" aria-hidden="true"><i></i><i></i><i></i></div><pre><code><b>import</b> everyo <b>as</b> eo
-model = eo.Sequential(
-    eo.Linear(8, 1))</code></pre></div>
-      </li>
-      <li class="how-step">
-        <div class="how-step__intro"><span class="how-step__number" aria-hidden="true">03</span><div><h3>Train and explore</h3><p>Run experiments and inspect training progress.</p></div></div>
-        <div class="how-step__results" role="img" aria-label="Illustrative training loss and neural network, not measured results">
-          <svg class="how-step__loss" viewBox="0 0 220 122" fill="none" aria-hidden="true"><text x="110" y="14" text-anchor="middle" fill="currentColor" font-size="11" font-weight="600">Training loss</text><path d="M32 27V98H207" stroke="currentColor" stroke-opacity=".55"/><path d="M32 62H207M75 27V98M119 27V98M163 27V98" stroke="currentColor" stroke-opacity=".08"/><g fill="currentColor" font-size="9"><text x="9" y="33">1.0</text><text x="9" y="66">0.5</text><text x="9" y="100">0.0</text><text x="31" y="110">0</text><text x="189" y="110">200</text><text x="113" y="119">Epochs</text></g><path d="M36 34C46 52 53 65 66 71S90 81 103 84 125 86 145 88 182 90 206 91" stroke="#b7fa34" stroke-width="3" stroke-linecap="round"/></svg>
-          <svg class="how-step__network" viewBox="0 0 126 122" fill="none" aria-hidden="true"><g stroke="#e4eadf" stroke-opacity=".65"><path d="m23 34 39-16M23 34l39 43M23 34l39 68M23 34l79 36M23 87l39-69M23 87l39-26M23 87l39 16M62 18l40 52M62 61l40 9M62 103l40-33"/></g><g fill="#b7fa34" stroke="#ddffa8" stroke-width="1.2"><circle cx="23" cy="34" r="7"/><circle cx="23" cy="87" r="7"/><circle cx="62" cy="18" r="7"/><circle cx="62" cy="61" r="7"/><circle cx="62" cy="103" r="7"/><circle cx="102" cy="70" r="8"/></g></svg>
-        </div><span class="how-step__note">Illustrative training view</span>
-      </li>
-    </ol>
-    <a class="how-everyo__guide" href="documentation.html#install">Read the quickstart guide <span aria-hidden="true">→</span></a>
-  </div>
-</section><section class="ov-section ov-surface" id="code-preview"><div class="ov-wrap"><div class="ov-heading"><p class="ov-eyebrow">READ. COPY. EXPERIMENT.</p><h2>See EveryO in action.</h2><p>Explore a practical example and discover how the framework brings computational concepts together.</p></div><div class="ov-code-demo"><div class="ov-code-editor"><div class="ov-code-toolbar"><div role="tablist" aria-label="Python examples"><button role="tab" type="button" id="tab-tensors" aria-controls="example-panel" aria-selected="true" tabindex="0" data-example="tensors">Tensors</button><button role="tab" type="button" id="tab-gradients" aria-controls="example-panel" aria-selected="false" tabindex="-1" data-example="gradients">Gradients</button><button role="tab" type="button" id="tab-networks" aria-controls="example-panel" aria-selected="false" tabindex="-1" data-example="networks">Networks</button></div><button type="button" class="ov-copy" id="copy-code">Copy code</button></div><div id="example-panel" role="tabpanel" aria-labelledby="tab-tensors" tabindex="0"><div class="ov-code-filename">tensor_basics.py <span>Python</span></div><pre><code id="example-code">import everyo as eo
+x = eo.tensor([2.0], requires_grad=True)
+y = x * x
+y.backward()
 
-x = eo.tensor([[1.0, 2.0]])
-y = eo.tensor([[3.0], [4.0]])
-
-print(eo.matmul(x, y))</code></pre></div><p class="ov-copy-status" id="copy-status" role="status" aria-live="polite"></p></div><div class="ov-output"><p class="ov-eyebrow">EXPECTED OUTPUT · NOT EXECUTED HERE</p><pre id="example-output">Tensor([[11.]], shape=(1, 1), dtype=float32)</pre><div class="ov-output__visual" aria-hidden="true"><span id="example-visual">[1, 2] × [3, 4]ᵀ</span><strong id="example-result">11</strong></div><h3 id="example-heading">Small tensors. Clear results.</h3><p id="example-explanation">Matrix multiplication combines two tensors. This documented example produces a single value: 1 × 3 + 2 × 4 = 11.</p><p class="ov-note">These are documented or analytically derived outputs. Python does not run in this page.</p><a class="ov-link" href="examples.html">Browse runnable examples <span aria-hidden="true">→</span></a></div></div></div></section><section class="ov-section" id="community"><div class="ov-wrap"><div class="ov-heading"><p class="ov-eyebrow">OPEN SOURCE · OPEN COLLABORATION</p><h2>Build the future of EveryO together.</h2><p>EveryO grows through open development, technical discussions, documentation, and community contributions.</p></div><div class="ov-grid ov-grid--two"><article class="ov-card"><div class="ov-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="5" r="3"/><circle cx="6" cy="19" r="3"/><circle cx="19" cy="5" r="3"/><path d="M6 8v8m0-4c10 0 13-1 13-4"/></svg></div><h3>GitHub Repository</h3><p>Browse source code, commits, and the project’s development history.</p><a class="ov-link" href="https://github.com/krishanth7/EveryO">View repository <span aria-hidden="true">→</span></a></article><article class="ov-card"><div class="ov-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m8 5-7 7 7 7m8-14 7 7-7 7M14 3l-4 18"/></svg></div><h3>Contribute</h3><p>Read the contribution guidelines and help improve the framework.</p><a class="ov-link" href="https://github.com/krishanth7/EveryO/blob/main/CONTRIBUTING.md">Start contributing <span aria-hidden="true">→</span></a></article><article class="ov-card"><div class="ov-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v7m0 3v2"/></svg></div><h3>Report an Issue</h3><p>Report a reproducible bug or suggest a focused improvement.</p><a class="ov-link" href="https://github.com/krishanth7/EveryO/issues">Report an issue <span aria-hidden="true">→</span></a></article><article class="ov-card"><div class="ov-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="7" r="4"/><path d="M2 21v-2a4 4 0 0 1 4-4h6a4 4 0 0 1 4 4v2M17 3a4 4 0 0 1 0 8m5 10v-2a4 4 0 0 0-3-3.87"/></svg></div><h3>Discussions</h3><p>Ask questions and participate in technical conversations.</p><a class="ov-link" href="https://github.com/krishanth7/EveryO/discussions">Join discussions <span aria-hidden="true">→</span></a></article></div><div class="ov-section-action"><a class="ov-link" href="community.html">Explore the community <span aria-hidden="true">→</span></a></div></div></section><section class="ov-section ov-final" id="get-started"><div class="ov-wrap"><div class="ov-final__panel"><p class="ov-eyebrow">YOUR NEXT EXPERIMENT STARTS HERE</p><h2>Ready to build with EveryO?</h2><p>Explore the documentation, install the framework, and start experimenting with neural computing.</p><div class="ov-buttons"><a class="ov-button ov-button--primary" href="documentation.html#install">Get Started <span aria-hidden="true">→</span></a><a class="ov-button ov-button--secondary" href="documentation.html">Explore Documentation <span aria-hidden="true">→</span></a></div><span class="ov-final__orbit" aria-hidden="true"></span></div></div></section></main><footer class="final-footer" id="footer" aria-label="EveryO footer">
- <div class="wrap">
-  <div class="final-footer__grid">
-   <div class="final-footer__identity">
-    <a class="final-footer__brand" href="./#top" aria-label="EveryO home"><svg viewBox="0 0 84 64" fill="none" aria-hidden="true"><ellipse cx="42" cy="32" rx="39" ry="19" transform="rotate(-35 42 32)" stroke="#b0f438" stroke-width="5"/><circle cx="42" cy="32" r="10" fill="#b0f438"/><path d="m62 42 8-6" stroke="var(--footer-bg)" stroke-width="8"/></svg><span>EveryO</span></a>
-    <p class="final-footer__tagline">Build intelligence, your way.</p>
-    <p class="final-footer__description">Open-source tools for curious AI builders.</p>
-    <div class="final-footer__social"><a href="https://github.com/krishanth7/EveryO" aria-label="EveryO on GitHub"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17.3 4.7 18.3 5 18.3 5c.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .5Z"/></svg><span>GitHub</span></a><a href="community.html" aria-label="EveryO community"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="9" cy="7" r="4"/><path d="M2 21v-2a4 4 0 0 1 4-4h6a4 4 0 0 1 4 4v2M17 3a4 4 0 0 1 0 8M22 21v-2a4 4 0 0 0-3-3.87"/></svg><span>Community</span></a></div>
-   </div>
-<nav class="final-footer__column" aria-label="Framework"><h2>Framework</h2><ul><li><a href="./#top">Overview</a></li><li><a href="features.html">Features</a></li><li><a href="examples.html">Examples</a></li><li><a href="https://github.com/krishanth7/EveryO/releases">Releases</a></li></ul></nav>
-<nav class="final-footer__column" aria-label="Developers"><h2>Developers</h2><ul><li><a href="documentation.html">Documentation</a></li><li><a href="documentation.html#install">Quickstart</a></li><li><a href="https://github.com/krishanth7/EveryO/blob/main/docs/api-reference.md">API Reference</a></li><li><a href="https://github.com/krishanth7/EveryO">GitHub</a></li></ul></nav>
-<nav class="final-footer__column" aria-label="Community"><h2>Community</h2><ul><li><a href="community.html">Discussions</a></li><li><a href="https://github.com/krishanth7/EveryO/blob/main/CONTRIBUTING.md">Contributing</a></li><li><a href="https://github.com/krishanth7/EveryO/issues">Report an Issue</a></li><li><a href="https://github.com/krishanth7/EveryO/blob/main/SUPPORT.md">Support</a></li></ul></nav>
-<nav class="final-footer__column" aria-label="Resources"><h2>Resources</h2><ul><li><a href="https://github.com/krishanth7/EveryO/blob/main/CHANGELOG.md">Changelog</a></li><li><a href="https://github.com/krishanth7/EveryO/blob/main/LICENSE">License</a></li><li><a href="https://github.com/krishanth7/EveryO/security/policy">Security</a></li><li><a href="https://github.com/krishanth7/EveryO/blob/main/SUPPORT.md">Contact</a></li></ul></nav>
-  </div>
-  <div class="final-footer__bottom"><p>© 2026 EveryO. Open source, built for builders.</p><div class="final-footer__legal"><button type="button" onclick="document.getElementById('footer-privacy').showModal()">Privacy</button><span aria-hidden="true">·</span><a href="https://github.com/krishanth7/EveryO/blob/main/PROJECT_POLICY.md">Terms</a></div><span class="final-footer__status"><i aria-hidden="true"></i>Open source project</span></div>
- </div>
-</footer>
-<dialog class="footer-privacy" id="footer-privacy" aria-labelledby="privacy-title"><h2 id="privacy-title">Your privacy</h2><p>This site does not use analytics, tracking cookies, or third-party scripts. Your theme preference is stored locally in your browser.</p><p>External links take you to GitHub, where GitHub’s policies apply.</p><form method="dialog"><button>Close</button></form></dialog>
-<script src="everyo-corporate.js?v=overview-20261104" defer></script>
-<script src="everyo-overview.js?v=overview-20261104" defer></script>
-</body>
+print(x.grad)  # [4.]
+</code></pre>
+                <span class="copy-status" role="status"></span>
+              </div>
+            </div>
+            <div class="code-result">
+              <span class="status-dot"></span
+              ><span id="example-caption"
+                >Expected: [4.] — because d(x²)/dx = 2x</span
+              >
+            </div>
+            <p class="caption">
+              Documented examples. Python runs on your machine, not in this
+              page.
+            </p>
+          </div>
+        </div>
+      </section>
+      <section class="section container" id="how-it-works">
+        <div class="section-heading">
+          <p class="eyebrow">03 / ONE READABLE STACK</p>
+          <h2>Build from the ground up.</h2>
+          <p>
+            The same NumPy foundation takes you from tensor arithmetic to
+            convolution and attention.
+          </p>
+        </div>
+        <div class="stack">
+          <a href="features.html#training"
+            ><span>04</span>
+            <h3>Training &amp; tools</h3>
+            <p>Trainer · callbacks · checkpoints · charts</p>
+            <b
+              ><svg
+                class="arrow"
+                viewBox="0 0 16 16"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.4"
+                aria-hidden="true"
+              >
+                <path d="M3 13 13 3M3 3h10v10" /></svg></b></a
+          ><a href="features.html#networks"
+            ><span>03</span>
+            <h3>Neural networks</h3>
+            <p>Linear · CNN · RNN · LSTM · Transformer</p>
+            <b
+              ><svg
+                class="arrow"
+                viewBox="0 0 16 16"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.4"
+                aria-hidden="true"
+              >
+                <path d="M3 13 13 3M3 3h10v10" /></svg></b></a
+          ><a href="features.html#autograd"
+            ><span>02</span>
+            <h3>Automatic differentiation</h3>
+            <p>Computation graph · backward pass · gradients</p>
+            <b
+              ><svg
+                class="arrow"
+                viewBox="0 0 16 16"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.4"
+                aria-hidden="true"
+              >
+                <path d="M3 13 13 3M3 3h10v10" /></svg></b></a
+          ><a href="features.html#tensors"
+            ><span>01</span>
+            <h3>Tensors &amp; NumPy</h3>
+            <p>Shapes · broadcasting · operations · CPU core</p>
+            <b
+              ><svg
+                class="arrow"
+                viewBox="0 0 16 16"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.4"
+                aria-hidden="true"
+              >
+                <path d="M3 13 13 3M3 3h10v10" /></svg></b
+          ></a>
+        </div>
+      </section>
+      <section class="section results-section" id="results">
+        <div class="container split">
+          <div>
+            <div class="section-heading">
+              <p class="eyebrow">04 / EXPERIMENTS YOU CAN REPRODUCE</p>
+              <h2>Show your work.</h2>
+              <p>
+                Explore the training curves and decision boundaries produced by
+                the framework’s own examples.
+              </p>
+            </div>
+            <div class="result-stat">
+              <strong>99.3<span>%</span></strong>
+              <p>
+                Accuracy on 600 held-out digits<br /><span
+                  >Reported example run · CPU · 17,226 parameters</span
+                >
+              </p>
+            </div>
+            <p class="caption">
+              An example-run measurement, not a benchmark or performance
+              guarantee. Results depend on hardware and configuration.
+            </p>
+            <a class="text-link" href="examples.html#digits"
+              >Reproduce the digit experiment
+              <svg
+                class="arrow"
+                viewBox="0 0 16 16"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.4"
+                aria-hidden="true"
+              >
+                <path d="M3 13 13 3M3 3h10v10" /></svg
+            ></a>
+          </div>
+          <figure class="result-figure">
+            <img
+              src="assets/img/training-curves.png"
+              alt="Training and validation loss and accuracy curves from the EveryO digit classifier example"
+              loading="lazy"
+              width="1200"
+              height="420"
+            />
+            <figcaption>
+              neural_network.py <span>TRAINING HISTORY / 25 EPOCHS</span>
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+      <section class="section container" id="community">
+        <div class="section-heading">
+          <p class="eyebrow">05 / MADE FOR THE CURIOUS</p>
+          <h2>Your next “what if?”<br />belongs here.</h2>
+          <p>Choose a starting point. Make a small change. See what happens.</p>
+        </div>
+        <div class="grid three">
+          <article class="card">
+            <span class="card-index">LEARN</span>
+            <h3>Follow a gradient.</h3>
+            <p>
+              Start with tensors and understand why the derivative of x² is 2x.
+            </p>
+            <a class="text-link" href="documentation.html#gradients"
+              >Learn the fundamentals
+              <span aria-hidden="true"
+                ><svg
+                  class="arrow"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.4"
+                  aria-hidden="true"
+                >
+                  <path d="M3 13 13 3M3 3h10v10" /></svg></span
+            ></a>
+          </article>
+          <article class="card">
+            <span class="card-index">EXPERIMENT</span>
+            <h3>Train something small.</h3>
+            <p>
+              Build a classifier, visualize a decision boundary, or inspect an
+              attention head.
+            </p>
+            <a class="text-link" href="examples.html"
+              >Explore examples
+              <span aria-hidden="true"
+                ><svg
+                  class="arrow"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.4"
+                  aria-hidden="true"
+                >
+                  <path d="M3 13 13 3M3 3h10v10" /></svg></span
+            ></a>
+          </article>
+          <article class="card">
+            <span class="card-index">CONTRIBUTE</span>
+            <h3>Make it better.</h3>
+            <p>
+              Bring a reproducible bug, clearer docs, or a well-tested
+              implementation.
+            </p>
+            <a class="text-link" href="community.html"
+              >Meet the project
+              <span aria-hidden="true"
+                ><svg
+                  class="arrow"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.4"
+                  aria-hidden="true"
+                >
+                  <path d="M3 13 13 3M3 3h10v10" /></svg></span
+            ></a>
+          </article>
+        </div>
+      </section>
+      <section class="cta-section" id="get-started">
+        <div class="container">
+          <p class="eyebrow">FROM “HOW DOES IT WORK?” TO “I BUILT THIS.”</p>
+          <h2>Stay curious.<br />Build with EveryO<span>.</span></h2>
+          <div class="actions">
+            <a class="button" href="documentation.html#install"
+              >Get started
+              <span aria-hidden="true"
+                ><svg
+                  class="arrow"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.4"
+                  aria-hidden="true"
+                >
+                  <path d="M3 13 13 3M3 3h10v10" /></svg></span></a
+            ><a
+              class="button secondary"
+              href="https://github.com/krishanth7/EveryO"
+              >Star on GitHub
+              <span aria-hidden="true"
+                ><svg
+                  class="arrow"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.4"
+                  aria-hidden="true"
+                >
+                  <path d="M3 13 13 3M3 3h10v10" /></svg></span
+            ></a>
+          </div>
+          <span class="cta-watermark" aria-hidden="true">eo</span>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <div class="container">
+        <div class="footer-top">
+          <div>
+            <a class="brand" href="index.html"
+              ><span class="brand-mark" aria-hidden="true">e<span>o</span></span
+              ><span>EveryO</span></a
+            >
+            <p>
+              Small enough to understand.<br />Open enough to make your own.
+            </p>
+            <span class="mono">PYTHON · NUMPY · MIT LICENSE</span>
+          </div>
+          <nav aria-label="Explore">
+            <h2>Explore</h2>
+            <a href="features.html">Framework</a
+            ><a href="documentation.html">Documentation</a
+            ><a href="examples.html">Examples</a>
+          </nav>
+          <nav aria-label="Open source">
+            <h2>Open source</h2>
+            <a href="https://github.com/krishanth7/EveryO"
+              >Source code
+              <svg
+                class="arrow"
+                viewBox="0 0 16 16"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.4"
+                aria-hidden="true"
+              >
+                <path d="M3 13 13 3M3 3h10v10" /></svg></a
+            ><a href="https://github.com/krishanth7/EveryO/issues"
+              >Issues
+              <svg
+                class="arrow"
+                viewBox="0 0 16 16"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.4"
+                aria-hidden="true"
+              >
+                <path d="M3 13 13 3M3 3h10v10" /></svg></a
+            ><a
+              href="https://github.com/krishanth7/EveryO/blob/main/CONTRIBUTING.md"
+              >Contribute
+              <svg
+                class="arrow"
+                viewBox="0 0 16 16"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.4"
+                aria-hidden="true"
+              >
+                <path d="M3 13 13 3M3 3h10v10" /></svg
+            ></a>
+          </nav>
+          <nav aria-label="Project">
+            <h2>Project</h2>
+            <a href="community.html">Community</a
+            ><a
+              href="https://github.com/krishanth7/EveryO/blob/main/CHANGELOG.md"
+              >Changelog
+              <svg
+                class="arrow"
+                viewBox="0 0 16 16"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.4"
+                aria-hidden="true"
+              >
+                <path d="M3 13 13 3M3 3h10v10" /></svg></a
+            ><a
+              href="https://github.com/krishanth7/EveryO/blob/main/SECURITY.md"
+              >Security
+              <svg
+                class="arrow"
+                viewBox="0 0 16 16"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.4"
+                aria-hidden="true"
+              >
+                <path d="M3 13 13 3M3 3h10v10" /></svg
+            ></a>
+          </nav>
+        </div>
+        <div class="footer-bottom">
+          <span>© 2026 EveryO. Built in the open.</span
+          ><span
+            >No analytics. No tracking cookies. Theme saved on your
+            device.</span
+          ><a href="https://github.com/krishanth7/EveryO/blob/main/LICENSE"
+            >MIT License
+            <svg
+              class="arrow"
+              viewBox="0 0 16 16"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.4"
+              aria-hidden="true"
+            >
+              <path d="M3 13 13 3M3 3h10v10" /></svg
+          ></a>
+        </div>
+      </div>
+    </footer>
+    <script src="assets/js/developer-site.js" defer></script>
+  </body>
 </html>
-
-
