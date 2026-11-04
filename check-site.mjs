@@ -1,17 +1,22 @@
-import {readFileSync} from 'node:fs';
-import {fileURLToPath} from 'node:url';
-import assert from 'node:assert/strict';
+import {readFileSync,existsSync} from 'node:fs';import {fileURLToPath} from 'node:url';import assert from 'node:assert/strict';
 const root=fileURLToPath(new URL('.',import.meta.url));
-const html=readFileSync(root+'index.html','utf8');
-const ids=[...html.matchAll(/\bid="([^"]+)"/g)].map(m=>m[1]);
-assert.equal(ids.length,new Set(ids).size,'Duplicate HTML IDs');
-for(const [,id] of html.matchAll(/href="#([^"]+)"/g))assert.ok(ids.includes(id),'Missing target '+id);
-for(const [,id] of html.matchAll(/aria-controls="([^"]+)"/g))assert.ok(ids.includes(id),'Missing controlled panel '+id);
-assert.equal((html.match(/aria-current="page"/g)||[]).length,1,'Exactly one initial active link');
-assert.equal((html.match(/<section\b/g)||[]).length,3,'Preserve three content sections');
-assert.equal((html.match(/<footer\b/g)||[]).length,1,'Preserve the footer');
-for(const file of ['everyo-corporate.css','everyo-corporate.js'])assert.ok(readFileSync(root+file).length>0,file);
-const css=readFileSync(root+'everyo-corporate.css','utf8');
-assert.ok(css.includes('(prefers-reduced-motion:reduce)'),'Reduced motion styles');
-assert.ok(css.includes('(max-width:1199px)'),'Shared responsive breakpoint');
-console.log('PASS: unique IDs, navigation targets, ARIA controls, active link, three sections, footer, local assets, reduced motion, breakpoint.');
+const files=['index.html','documentation.html','features.html','examples.html','community.html'];
+const docs=new Map(files.map(name=>{const text=readFileSync(root+name,'utf8');return [name,{text,ids:[...text.matchAll(/\bid="([^"]+)"/g)].map(m=>m[1])}];}));
+let checked=0;
+for(const [name,{text,ids}]of docs){
+ assert.equal(ids.length,new Set(ids).size,name+': duplicate IDs');assert.equal((text.match(/<h1\b/g)||[]).length,1,name+': one H1');
+ assert.equal((text.match(/aria-current="page"/g)||[]).length,1,name+': one current page');
+ for(const [,id]of text.matchAll(/aria-controls="([^"]+)"/g))assert.ok(ids.includes(id),name+': control '+id);
+ for(const [,href]of text.matchAll(/href="([^"]+)"/g)){
+  const url=new URL(href,'https://example.test/everyo-site/'+name);if(url.origin!=='https://example.test')continue;
+  const file=url.pathname.split('/').pop()||'index.html';
+  if(docs.has(file)){if(url.hash)assert.ok(docs.get(file).ids.includes(url.hash.slice(1)),name+': '+href);checked++;}
+  else assert.ok(existsSync(root+file),name+': missing local file '+href);
+ }
+ for(const [,src]of text.matchAll(/<script[^>]+src="([^"]+)"/g))assert.ok(existsSync(root+src.split('?')[0]),name+': missing script '+src);
+ assert.match(text,/<link rel="canonical"/);assert.match(text,/<meta name="robots"/);
+}
+assert.equal((docs.get('index.html').text.match(/<section\b/g)||[]).length,8,'Overview requires eight sections');
+const css=readFileSync(root+'everyo-overview.css','utf8');assert.match(css,/prefers-reduced-motion:reduce/);assert.match(css,/overflow-x:auto/);
+assert.equal((readFileSync(root+'sitemap.xml','utf8').match(/<loc>/g)||[]).length,5);
+console.log(`PASS: 5 pages; ${checked} internal links; unique IDs; one H1/current page each; eight Overview sections; local scripts/styles; metadata; reduced motion; five sitemap URLs.`);

@@ -109,14 +109,15 @@
   });
   reduced.addEventListener("change", finishMenu);
 
-  function markActive(id) {
+  function markActive() {
+    var page = document.body.dataset.page || "overview";
     mainLinks.forEach(function (link) {
-      if (link.getAttribute("href") === "#" + id) link.setAttribute("aria-current", "page");
+      if (link.dataset.page === page) link.setAttribute("aria-current", "page");
       else link.removeAttribute("aria-current");
     });
   }
   function syncLocation() {
-    markActive(window.location.hash === "#why-everyo" ? "why-everyo" : "top");
+    markActive();
     if (links.dataset.open === "true") setMenu(false, links.contains(document.activeElement));
   }
   window.addEventListener("hashchange", syncLocation);
@@ -124,12 +125,8 @@
   window.addEventListener("pageshow", function () { setMenu(false, false); preference = readPreference(); applyTheme(); syncLocation(); scheduleScroll(); });
   function updateScroll() {
     frame = 0;
-    var why = document.getElementById("why-everyo");
-    var how = document.getElementById("how-it-works");
-    var edge = header.offsetHeight + 60;
-    var activeFeatures = why && why.getBoundingClientRect().top <= edge && (!how || how.getBoundingClientRect().top > edge);
     header.dataset.scrolled = String(window.scrollY > 8);
-    markActive(activeFeatures ? "why-everyo" : "top");
+    markActive();
   }
   function scheduleScroll() { if (!frame) frame = window.requestAnimationFrame(updateScroll); }
   window.addEventListener("scroll", scheduleScroll, { passive: true });
@@ -164,3 +161,4 @@
   search.addEventListener("close", function () { searchOpen.focus({ preventScroll: true }); });
   searchInput.addEventListener("input", showResults);
 })();
+
