@@ -1,0 +1,836 @@
+# EveryO
+
+> A Python neural computing framework built from scratch on NumPy for learning,
+> teaching, and small-scale experiments. The code implements tensors, reverse-mode
+> differentiation, layers, optimizers, training, and serialization.
+
+## Website
+
+- [Overview](https://krishanth7.github.io/everyo-site/)
+- [Framework and validation limits](https://krishanth7.github.io/everyo-site/features.html)
+- [Developer quickstart](https://krishanth7.github.io/everyo-site/documentation.html)
+- [Runnable examples](https://krishanth7.github.io/everyo-site/examples.html)
+- [Community](https://krishanth7.github.io/everyo-site/community.html)
+
+## Machine-readable documentation
+
+- [Markdown quickstart](https://krishanth7.github.io/everyo-site/documentation.md)
+- [Full AI reference](https://krishanth7.github.io/everyo-site/llms-full.txt): self-contained guide and API map
+
+## Authoritative sources
+
+- [Repository](https://github.com/krishanth7/EveryO)
+- [Getting started](https://github.com/krishanth7/EveryO/blob/main/docs/getting-started.md)
+- [API reference](https://github.com/krishanth7/EveryO/blob/main/docs/api-reference.md)
+- [Architecture](https://github.com/krishanth7/EveryO/blob/main/docs/architecture.md)
+- [Autograd](https://github.com/krishanth7/EveryO/blob/main/docs/autograd.md)
+- [Scaling and export](https://github.com/krishanth7/EveryO/blob/main/docs/scaling.md)
+- [Examples](https://github.com/krishanth7/EveryO/blob/main/examples/README.md)
+- [Current test results](https://github.com/krishanth7/EveryO/actions)
+
+## Scope and limits
+
+The documented CPU workflow supports Python 3.9–3.12. The core dependencies are
+NumPy and Matplotlib. Version 0.2.0 is declared in the reviewed pyproject.toml.
+MIT licensed. Local core workflows require no account, API key, or telemetry.
+Installation may download packages. Optional components include TensorFlow
+reference checks, CUDA kernels, and ONNX export.
+
+EveryO is not a production training runtime. GPU runtime tests require hardware
+not available in the project's CI; CPU stand-ins validate transfer counting for
+the separate resident-buffer API. Multi-node collectives have been exercised
+across processes over TCP, not across separate physical machines. The traced
+ONNX exporter specializes the graph to the traced control flow. Validate exported
+models with the target runtime. Dynamic int8 quantization changes size and
+fidelity rather than providing a faster NumPy kernel.
+
+The reported 99.3% accuracy on 600 held-out digits is an example-run measurement,
+not a benchmark or performance guarantee. Test counts depend on installed extras
+and hardware; use current CI rather than quoting a fixed total.
+
+## Project policies
+
+- [Contributing](https://github.com/krishanth7/EveryO/blob/main/CONTRIBUTING.md)
+- [Governance](https://github.com/krishanth7/EveryO/blob/main/GOVERNANCE.md)
+- [Support](https://github.com/krishanth7/EveryO/blob/main/SUPPORT.md)
+- [Security](https://github.com/krishanth7/EveryO/blob/main/SECURITY.md)
+
+Content reviewed against upstream commit 6c05a061eb62fa2646e726d15cac07053d04c79e.
+
+
+---
+
+# EveryO developer quickstart
+
+Canonical HTML: https://krishanth7.github.io/everyo-site/documentation.html
+Project source: https://github.com/krishanth7/EveryO
+Reviewed source revision: 6c05a061eb62fa2646e726d15cac07053d04c79e
+License: MIT
+
+This is a text companion to the developer website. The upstream source and
+its docstrings remain authoritative. Examples assume Python 3.9–3.12 and the
+NumPy CPU workflow. No account or API key is required. Installation downloads
+packages; locally generated datasets do not require downloads.
+
+# Getting started
+
+This guide takes about five minutes and assumes Python 3.9 or newer.
+
+## Install
+
+```bash
+git clone https://github.com/krishanth7/EveryO.git
+cd EveryO
+python -m venv .venv
+```
+
+Activate the environment — on Linux/macOS:
+
+```bash
+source .venv/bin/activate
+```
+
+On Windows (PowerShell):
+
+```powershell
+.venv\Scripts\Activate.ps1
+```
+
+Then install EveryO in editable mode:
+
+```bash
+pip install -e .
+```
+
+Check that everything works:
+
+```bash
+everyo info
+everyo doctor
+```
+
+`doctor` verifies that the numerics are correct (it runs a real gradient check)
+and reports which optional components are present. Neither command sends
+anything anywhere; EveryO collects no telemetry.
+
+## Your first tensor
+
+```python
+import everyo as eo
+
+x = eo.tensor([[1.0, 2.0]])
+y = eo.tensor([[3.0], [4.0]])
+
+print(eo.matmul(x, y))
+# Tensor([[11.]], shape=(1, 1), dtype=float32)
+```
+
+Tensors expose the properties you would expect:
+
+```python
+x.shape  # (1, 2)
+x.ndim  # 2
+x.dtype  # 'float32'
+x.device  # device('cpu')
+x.size  # 2
+```
+
+## Gradients
+
+Mark a tensor with `requires_grad=True` and EveryO records every operation
+applied to it. Calling `.backward()` on a scalar result fills in `.grad`:
+
+```python
+x = eo.tensor([2.0], requires_grad=True)
+y = x * x
+y.backward()
+
+print(x.grad)  # [4.]   because d(x^2)/dx = 2x
+```
+
+Wrap inference in `eo.no_grad()` to skip graph construction entirely:
+
+```python
+with eo.no_grad():
+    predictions = model(features)
+```
+
+## A small network
+
+```python
+import everyo as eo
+
+model = eo.Sequential(
+    eo.Linear(4, 16),
+    eo.ReLU(),
+    eo.Linear(16, 3),
+)
+
+print(model.summary())
+```
+
+## Training it
+
+```python
+import everyo as eo
+from everyo.datasets import make_blobs
+
+features, labels = make_blobs(n_samples=600, n_features=4, centers=3, seed=0)
+x_train, x_test, y_train, y_test = eo.stratified_split(features, labels, test_size=0.2, seed=0)
+
+model = eo.Sequential(eo.Linear(4, 16, seed=0), eo.ReLU(), eo.Linear(16, 3, seed=1))
+
+trainer = eo.Trainer(
+    model=model,
+    optimizer=eo.Adam(model.parameters(), lr=0.01),
+    loss_fn=eo.CrossEntropyLoss(),
+    metrics=["accuracy"],
+)
+
+history = trainer.fit(
+    eo.DataLoader(eo.ArrayDataset(x_train, y_train), batch_size=32, shuffle=True, seed=0),
+    epochs=20,
+    validation_loader=eo.DataLoader(eo.ArrayDataset(x_test, y_test), batch_size=64),
+)
+
+print(trainer.evaluate(eo.DataLoader(eo.ArrayDataset(x_test, y_test), batch_size=64)))
+```
+
+## A convolutional network
+
+Images are `NHWC` — `(batch, height, width, channels)` — so a single-channel
+8x8 image batch has shape `(n, 8, 8, 1)`:
+
+This separate architecture is named `cnn` so the trained `model` above remains
+available for evaluation and saving.
+
+```python
+cnn = eo.Sequential(
+    eo.Conv2D(1, 8, 3, padding="same"),
+    eo.ReLU(),
+    eo.MaxPool2D(2),
+    eo.Conv2D(8, 16, 3, padding="same"),
+    eo.ReLU(),
+    eo.MaxPool2D(2),
+    eo.Flatten(),
+    eo.Linear(2 * 2 * 16, 10),
+)
+```
+
+`padding` accepts `"valid"`, `"same"` or an int, and `stride` accepts an int or
+a `(height, width)` pair. See `examples/convolutional_network.py`.
+
+## Charts, saving and loading
+
+```python
+from pathlib import Path
+
+Path("artifacts").mkdir(exist_ok=True)
+eo.plot_history(history, save_path="artifacts/history.png")
+
+eo.save(model, "artifacts/model.evo")
+restored = eo.load("artifacts/model.evo")
+```
+
+Charts work without a display: on a headless machine EveryO selects the
+non-interactive Agg backend automatically.
+
+## Where to go next
+
+* [Architecture](https://github.com/krishanth7/EveryO/blob/main/docs/architecture.md) — how the package fits together.
+* [Autograd](https://github.com/krishanth7/EveryO/blob/main/docs/autograd.md) — how the gradient engine works.
+* [CUDA](https://github.com/krishanth7/EveryO/blob/main/docs/cuda.md) — building and using the optional GPU kernels.
+* `examples/` — runnable scripts covering every feature.
+
+## Verification and scope
+
+EveryO is for learning, teaching, and small-scale experiments, not a production
+training runtime. GPU runtime validation requires hardware absent from project CI.
+Multi-machine training has not been validated. Exported ONNX graphs must be
+checked against their target runtime. Reported example metrics are measurements,
+not performance guarantees. See https://krishanth7.github.io/everyo-site/features.html#validation.
+
+## Continue reading
+
+- Full AI reference: https://krishanth7.github.io/everyo-site/llms-full.txt
+- AI discovery index: https://krishanth7.github.io/everyo-site/llms.txt
+- Examples: https://krishanth7.github.io/everyo-site/examples.html
+- Support: https://github.com/krishanth7/EveryO/blob/main/SUPPORT.md
+
+
+---
+
+Source: https://github.com/krishanth7/EveryO/blob/6c05a061eb62fa2646e726d15cac07053d04c79e/docs/api-reference.md
+
+# API reference
+
+Everything listed here is importable from the top-level `everyo` package.
+Docstrings in the source are the authoritative reference; this page is a map.
+
+## Tensors
+
+| Name | Purpose |
+| --- | --- |
+| `eo.tensor(data, *, dtype, device, requires_grad)` | Create a tensor |
+| `eo.as_tensor(data)` | Convert only when needed |
+| `eo.is_tensor(obj)` | Type check |
+| `eo.zeros`, `eo.ones`, `eo.full`, `eo.eye` | Filled tensors |
+| `eo.zeros_like`, `eo.ones_like` | Match an existing tensor |
+| `eo.arange`, `eo.linspace` | Ranges |
+| `eo.uniform`, `eo.normal`, `eo.rand`, `eo.randn` | Random tensors (accept `seed=`) |
+| `eo.one_hot(indices, num_classes)` | One-hot encoding |
+
+Tensor properties: `.shape`, `.ndim`, `.size`, `.dtype`, `.device`,
+`.requires_grad`, `.is_leaf`, `.grad`, `.T`.
+
+Tensor methods: `.backward()`, `.zero_grad()`, `.retain_grad()`, `.detach()`,
+`.numpy()`, `.tolist()`, `.item()`, `.astype()`, `.to()`, `.cpu()`, `.cuda()`,
+`.clone()`, `.reshape()`, `.transpose()`, `.flatten()`, `.sum()`, `.mean()`,
+`.max()`, `.min()`, `.argmax()`, `.argmin()`, `.exp()`, `.log()`, `.sqrt()`,
+`.abs()`, `.clip()`, `.matmul()`, `.dot()`.
+
+## Operations
+
+Arithmetic: `add`, `subtract`, `multiply`, `divide`, `negative`, `power`,
+`exp`, `log`, `sqrt`, `abs`, `clip`.
+
+Linear algebra: `matmul`, `dot`.
+
+Reductions: `sum`, `mean`, `max`, `min`, `variance`.
+
+Shape: `reshape`, `transpose`, `flatten`, `concatenate`, `stack`.
+
+Activations: `relu`, `sigmoid`, `tanh`, `softmax`, `log_softmax`.
+
+Convolution: `conv2d(x, weight, bias, *, stride, padding)`,
+`max_pool2d(x, pool_size, *, stride, padding)`,
+`avg_pool2d(x, pool_size, *, stride, padding)`. Images are `NHWC`
+(`batch, height, width, channels`) and kernels are
+`(kernel_h, kernel_w, in_channels, out_channels)` — TensorFlow's layout.
+`padding` is `"valid"`, `"same"` or an int.
+
+## Gradient mode
+
+`eo.no_grad()`, `eo.enable_grad()`, `eo.set_grad_enabled(mode)` — all usable as
+context managers or decorators.
+
+## Layers and models
+
+| Name | Purpose |
+| --- | --- |
+| `eo.Module` | Base class for everything with parameters |
+| `eo.Parameter` | A tensor an optimizer updates |
+| `eo.Sequential(*layers)` | Chain layers |
+| `eo.Linear(in_features, out_features, *, bias, initializer, seed)` | Affine layer |
+| `eo.Conv2D(in_channels, out_channels, kernel_size, *, stride, padding, bias, initializer, seed)` | 2-D convolution over `NHWC` images |
+| `eo.MaxPool2D(pool_size, *, stride, padding)` | Max pooling |
+| `eo.AvgPool2D(pool_size, *, stride, padding)` | Average pooling |
+| `eo.Embedding(num_embeddings, embedding_dim, *, initializer, seed)` | Learned id-to-vector lookup |
+| `eo.BatchNorm1D(num_features, ...)` / `eo.BatchNorm2D(...)` | Normalise per feature across the batch |
+| `eo.LayerNorm(normalized_shape, ...)` | Normalise each sample across its own features |
+| `eo.RNN` / `eo.LSTM` / `eo.GRU` `(input_size, hidden_size, *, return_sequences, ...)` | Recurrent layers over `(batch, time, features)` |
+| `eo.MultiHeadAttention(embed_dim, num_heads, *, dropout, bias, seed)` | Self- or cross-attention |
+| `eo.PositionalEncoding(embed_dim, *, max_length, dropout)` | Fixed sinusoidal positions |
+| `eo.TransformerEncoderBlock(embed_dim, num_heads, ...)` | Attention + feed-forward with residuals |
+| `eo.TransformerEncoder(embed_dim, num_heads, *, num_layers, ...)` | A stack of encoder blocks |
+| `eo.Flatten(start_dim=1)` | Collapse trailing dimensions |
+| `eo.Dropout(p, *, seed)` | Inverted dropout |
+| `eo.ReLU`, `eo.Sigmoid`, `eo.Tanh`, `eo.Softmax`, `eo.LogSoftmax` | Activation modules |
+
+Attention helpers: `eo.scaled_dot_product_attention(q, k, v, *, mask, dropout)`,
+`eo.causal_mask(size)`, `eo.padding_mask(lengths, size)`.
+
+Module methods: `parameters()`, `named_parameters()`, `named_modules()`,
+`register_buffer()`, `named_buffers()`, `buffers()`,
+`num_parameters()`, `zero_grad()`, `train()`, `eval()`, `to(device)`,
+`state_dict()`, `load_state_dict()`, `get_config()`, `summary()`.
+
+## Losses
+
+`eo.MSELoss`, `eo.MAELoss`, `eo.BCELoss`, `eo.BCEWithLogitsLoss`,
+`eo.CrossEntropyLoss` — all accept `reduction` in `{"mean", "sum", "none"}`.
+Functional forms live in `everyo.nn`: `mse_loss`, `mae_loss`,
+`binary_cross_entropy`, `cross_entropy`.
+
+`CrossEntropyLoss` takes raw logits and applies log-softmax internally, so the
+final layer should be a plain `Linear`.
+
+## Optimizers
+
+| Name | Arguments |
+| --- | --- |
+| `eo.SGD` | `lr`, `momentum`, `weight_decay`, `nesterov` |
+| `eo.Adam` | `lr`, `betas`, `eps`, `weight_decay`, `amsgrad` |
+
+Both provide `zero_grad()`, `step()` and `get_config()`.
+
+## Data
+
+`eo.Dataset`, `eo.ArrayDataset`, `eo.TransformDataset`, `eo.Subset`,
+`eo.load_csv_dataset`, `eo.DataLoader`.
+
+Preprocessing: `eo.StandardScaler`, `eo.MinMaxScaler`, `eo.standardize`,
+`eo.one_hot_encode`; `everyo.data` additionally exports `normalize`,
+`min_max_scale` and `shuffle_arrays`.
+
+Splitting: `eo.train_test_split`, `eo.random_split`, `eo.stratified_split`.
+
+## Training
+
+`eo.Trainer(model, optimizer, loss_fn, *, metrics, device, gradient_clip)` with
+`fit()`, `evaluate()`, `predict()` and `predict_classes()`.
+
+Callbacks: `eo.EarlyStopping`, `eo.ModelCheckpoint`, `eo.ProgressLogger`,
+`eo.CSVLogger`, `eo.LearningRateScheduler`, and `eo.Callback` to write your own.
+
+Metrics: `eo.accuracy`, `eo.confusion_matrix`; `everyo.training` also exports
+`binary_accuracy`, `mean_absolute_error`, `mean_squared_error` and `r2_score`.
+
+`eo.History` supports `history["loss"]`, `.best()`, `.last()`, `.to_dict()`,
+`.to_json()` and `.to_csv()`.
+
+## Serialization
+
+`eo.save(model, path, *, metadata, overwrite)`, `eo.load(path, *, model, strict)`
+and `eo.inspect_archive(path)`.
+
+## Visualization
+
+`eo.plot_loss`, `eo.plot_accuracy`, `eo.plot_history`, `eo.plot_confusion_matrix`,
+`eo.plot_predictions`, `eo.plot_benchmark`; `everyo.visualization` also exports
+`plot_metric`, `plot_decision_boundary` and `plot_benchmark_bars`. All accept
+`save_path=` and work headlessly.
+
+## Devices and CUDA
+
+`eo.device(spec, *, strict)`, `eo.Device`, and the `eo.cuda` namespace:
+`is_available()`, `device_count()`, `runtime_info()`, `unavailable_reason()`,
+plus the kernels `add`, `multiply`, `matmul`, `relu`, `sum_all` (each taking
+`strict=`).
+
+## Datasets
+
+`everyo.datasets`: `load_digits`, `render_digit`, `make_regression`,
+`make_blobs`, `make_moons`, `make_spirals`, `make_xor`. All are generated
+locally from a seed; nothing is downloaded.
+
+## Configuration and logging
+
+`eo.load_config(path)`, `eo.Config`, `eo.ModelConfig`, `eo.TrainingConfig`,
+`eo.DeviceConfig`; `eo.configure_logging(level)` and `eo.get_logger(name)`.
+
+## Mixed precision
+
+`eo.autocast(enabled=True, *, dtype="float16")` — context manager and decorator;
+`eo.is_autocast_enabled()`, `eo.autocast_dtype()`. `eo.GradScaler(init_scale, *,
+growth_factor, backoff_factor, growth_interval, enabled)` with `scale`,
+`backward`, `unscale_`, `step`, `update`, `get_scale`, `state_dict` and
+`load_state_dict`. Only `matmul` and `conv2d` are autocast; see
+[scaling.md](https://github.com/krishanth7/EveryO/blob/6c05a061eb62fa2646e726d15cac07053d04c79e/docs/scaling.md).
+
+## ONNX export
+
+`eo.export_onnx(model, path, *, input_shape, input_name, output_name, opset,
+model_name)`, `eo.run_onnx(path, inputs, *, input_name)`, `eo.onnx_available()`.
+`everyo.serialization.onnx_export` also exports `SUPPORTED_LAYERS` and
+`DEFAULT_OPSET`. Needs the optional `everyo[onnx]` extra.
+
+## Distributed training
+
+`everyo.distributed`: `spawn(fn, world_size, *, args, kwargs, start_method,
+timeout)`, `ProcessGroup` (`rank`, `world_size`, `is_main`, `barrier`,
+`all_reduce_mean`, `broadcast`, `close`), `average_gradients(parameters, group)`,
+`all_reduce_mean(arrays, group)`, `shard_indices(count, rank, world_size, *,
+drop_last)`, `available_workers()`, `DistributedError`. Single machine only.
+
+## Exceptions
+
+`EveryOError` is the base class. Subclasses: `EveryOShapeError`,
+`EveryODeviceError`, `EveryODTypeError`, `EveryOGradientError`,
+`EveryOSerializationError`, `EveryOConfigurationError`, `EveryOBackendError`,
+`EveryOCudaError`, and `everyo.distributed.DistributedError`.
+
+## Quantization
+
+`everyo.quantization.quantize(array, axis=None)` creates a symmetric int8
+representation. `quantize_dynamic(model)` returns an inference-only copy where
+each `Linear` layer is replaced by a per-output-channel `QuantizedLinear`.
+Activations stay floating point; no calibration dataset is required.
+
+## Profiling
+
+Use `with everyo.profiler.profile() as result:` around inference or training.
+Every module call is timed only while the context is active. `summary()`
+aggregates calls, while `export_chrome_trace()` produces a trace for Perfetto
+or Chrome DevTools. `record_function()` adds user-defined regions.
+
+## Command line
+
+```
+everyo info        # versions and available backends
+everyo doctor      # diagnose the installation
+everyo benchmark   # measure matmul across backends
+everyo test        # run the bundled test suite
+everyo demo        # train the bundled digit classifier
+```
+
+
+---
+
+Source: https://github.com/krishanth7/EveryO/blob/6c05a061eb62fa2646e726d15cac07053d04c79e/docs/architecture.md
+
+# Architecture
+
+EveryO is layered so that each level depends only on the ones below it. You can
+read it bottom-up in an afternoon.
+
+```
+                everyo.cli            everyo.visualization
+                     |                          |
+        +------------+--------------------------+
+        |
+   everyo.training  (Trainer, callbacks, history, metrics)
+        |
+   everyo.optim     (SGD, Adam)          everyo.serialization  (.evo archives)
+        |                                        |
+   everyo.nn        (Module, layers, activations, losses)
+        |
+   everyo.core      (Tensor, operations, autograd, device, dtype)
+        |
+   everyo.backends  (numpy_backend, tensorflow_backend)  everyo.cuda
+        |                                                    |
+      NumPy                                     optional native extension
+```
+
+## Layers
+
+### `everyo.core`
+
+The foundation.
+
+* `dtype.py` — the small set of supported NumPy dtypes, with `float32` as the
+  default floating point type.
+* `device.py` — the `Device` abstraction. Buffers always live in host memory;
+  the device selects *where operations execute*. Requesting CUDA without a
+  working extension degrades to CPU with a warning rather than failing.
+* `tensor.py` — the `Tensor` type: data, device, gradient state, operators.
+* `operations.py` — every differentiable operation. Each one validates its
+  inputs, computes the forward result (dispatching to CUDA when the tensor is
+  on a CUDA device and a kernel exists) and records a graph node.
+* `autograd.py` — the reverse-mode engine: graph nodes, an iterative
+  topological sort, gradient accumulation and the `no_grad` mode flag.
+* `convolution.py` — convolution and pooling. These live apart from
+  `operations.py` because they need windowing helpers nothing else uses, and
+  because the file would otherwise dwarf every other module. The forward pass
+  is im2col, which turns a convolution into a single matrix multiplication;
+  the backward pass is two more multiplications plus a scatter-add back into
+  the padded image.
+
+### `everyo.backends`
+
+`operator_backend.py` defines the common `OperatorBackend` contract and owns
+all device dispatch and fallback decisions. `numpy_backend.py` is the reference
+implementation of every kernel EveryO needs. `tensorflow_backend.py` is
+optional and used for cross-checking numerics, for a Keras reference model and
+for benchmarks. Importing the package never imports TensorFlow.
+
+### `everyo.cuda`
+
+`availability.py` answers "can we run CUDA kernels right now?" without ever
+raising. `interface.py` mirrors the NumPy kernel signatures and exposes
+`supports()` plus `unsupported_reason()` so dispatch misses are observable and
+testable. Direct calls fall back to NumPy unless `strict=True` is passed. The
+kernels themselves live in the top-level `cuda/` directory and are built
+separately.
+
+### `everyo.nn`
+
+`Module` owns parameters and sub-modules, and can describe itself as a plain
+dictionary via `get_config()`. That description is what makes pickle-free
+serialisation possible. Layers, activations and losses all build on it.
+
+### `everyo.optim`
+
+`Optimizer` holds the parameter list and per-parameter state keyed by object
+identity. `SGD` and `Adam` implement `step()`.
+
+### `everyo.data`
+
+`Dataset` is a two-method contract (`__len__`, `__getitem__`). `DataLoader`
+batches and shuffles it, with a fast path that slices whole arrays when the
+dataset is an `ArrayDataset`. Preprocessing follows a `fit`/`transform` split so
+that scaling statistics come from training data only.
+
+### `everyo.training`
+
+`Trainer` runs the loop; `Callback` observers can stop training, checkpoint,
+log or reschedule the learning rate. `History` records one row per epoch and
+exports to JSON or CSV.
+
+### `everyo.serialization`
+
+An `.evo` file is a ZIP archive holding `manifest.json` (metadata plus the
+architecture as JSON) and `parameters.npz` (saved and loaded with
+`allow_pickle=False`). Loading rebuilds the model by looking class names up in
+a registry, so opening an untrusted file cannot execute code.
+
+## Design decisions
+
+**Buffers stay in host memory.** A CUDA device tag changes *where kernels run*,
+not where data lives. Transfers happen inside each kernel call. This costs
+bandwidth, and the benchmarks measure that cost honestly; in exchange the data
+model stays simple enough to read.
+
+**Images are `NHWC`.** `(batch, height, width, channels)` is TensorFlow's
+native layout, and EveryO uses TensorFlow as its correctness reference — so
+convolution results can be compared against `tf.nn.conv2d` without transposing
+anything, which is exactly what the test suite does.
+
+**`float32` by default.** Python lists and scalars become `float32`; a NumPy
+array keeps its own precision, so `float64` work stays `float64`. Gradient
+checks in the test suite use `float64` for accuracy.
+
+**Gradients are recorded only when needed.** A node is created only when
+gradient mode is on *and* at least one input requires gradients, so inference
+costs nothing extra.
+
+**Errors name the shapes.** `EveryOShapeError` messages state what was
+attempted, which shapes were involved and what would have been valid.
+
+**Optional means optional.** TensorFlow and CUDA are detected safely, report
+why they are unavailable, and never prevent the core from working.
+
+## Extending EveryO
+
+To add a differentiable operation:
+
+1. Implement the forward pass in `everyo/core/operations.py`.
+2. Return the gradients for each input from the `backward_fn` closure.
+3. Add a finite-difference check to `tests/test_autograd.py`.
+
+To add a layer:
+
+1. Subclass `Module`, decorate it with `@register_module` so it can be
+   serialised, and implement `forward`.
+2. Implement `get_config()` if the constructor takes arguments.
+3. Export it from `everyo/nn/__init__.py` and the top-level `everyo/__init__.py`.
+4. Add tests, including a save/load round trip.
+
+
+---
+
+Source: https://github.com/krishanth7/EveryO/blob/6c05a061eb62fa2646e726d15cac07053d04c79e/docs/autograd.md
+
+# How automatic differentiation works in EveryO
+
+The engine is roughly 250 lines and is worth reading end to end
+(`everyo/core/autograd.py`). This page explains the idea behind it.
+
+## The computation graph
+
+Every differentiable operation does three things:
+
+1. computes the forward result,
+2. captures whatever it needs for the backward pass in a closure,
+3. attaches a `Node` recording the inputs and that closure.
+
+```python
+def multiply(a, b):
+    left, right = _binary_inputs(a, b, "multiply")
+    data = _dispatch("multiply", device, left.data, right.data)
+
+    def backward_fn(gradient):
+        return (
+            unbroadcast(gradient * right.data, left.shape),
+            unbroadcast(gradient * left.data, right.shape),
+        )
+
+    return _make(data, (left, right), "multiply", backward_fn)
+```
+
+The closure implements the product rule: `d(ab)/da = b` and `d(ab)/db = a`,
+each multiplied by the incoming gradient (the chain rule).
+
+Nodes are created only when gradient mode is enabled *and* at least one input
+requires gradients. Inference therefore builds no graph at all.
+
+## The backward pass
+
+`Tensor.backward()` seeds the output gradient (ones, for a scalar), walks the
+graph in reverse topological order and accumulates gradients into each tensor's
+`.grad`.
+
+```python
+for node in topological_order(root):
+    incoming = gradients.get(id(node))
+    if node.requires_grad and (node.is_leaf or node.retains_grad):
+        node.accumulate_grad(incoming)
+    for parent, parent_grad in zip(node.grad_node.parents, node.grad_node.backward_fn(incoming)):
+        gradients[id(parent)] = gradients.get(id(parent), 0) + parent_grad
+```
+
+Two details matter:
+
+* **The traversal is iterative.** A recursive walk would hit Python's
+  recursion limit on deep graphs; `tests/test_autograd.py` checks a
+  2000-operation chain.
+* **Gradients are summed, not replaced.** When a tensor feeds several
+  operations, every path contributes. That is why `x + x` gives `dx = 2`, and
+  why you must call `zero_grad()` between steps unless you *want* accumulation.
+
+## Broadcasting
+
+NumPy broadcasting means a `(3,)` bias can be added to a `(32, 3)` activation.
+The gradient then arrives with the broadcast shape `(32, 3)` and must be summed
+back down to `(3,)` — summing over the expanded axes is exactly the derivative
+of broadcasting. `unbroadcast()` does this, and every broadcasting operation
+routes its gradients through it.
+
+## Only leaves keep gradients
+
+Intermediate tensors do not retain `.grad`, which keeps memory bounded. Call
+`.retain_grad()` on one if you want to inspect it:
+
+```python
+hidden = (x * 3).retain_grad()
+(hidden * 2).backward()
+print(hidden.grad)  # [2.]
+```
+
+## Turning it off
+
+```python
+with eo.no_grad():
+    predictions = model(features)  # no graph is built
+```
+
+`no_grad` is thread-local, works as a decorator, and restores the previous mode
+on exit. `enable_grad()` re-enables tracking inside a `no_grad` block.
+
+## Supported operations
+
+Gradients are implemented and finite-difference tested for: add, subtract,
+multiply, divide, negate, power, exp, log, sqrt, abs, clip, matmul (including
+the vector cases), dot, sum, mean, max, min, variance, reshape, transpose,
+flatten, concatenate, stack, indexing, ReLU, sigmoid, tanh, softmax and
+log-softmax.
+
+## How correctness is verified
+
+For a scalar function `f`, the central difference
+
+```
+(f(x + h) - f(x - h)) / 2h
+```
+
+approximates `df/dx` with error O(h²). `tests/test_autograd.py` compares every
+analytic gradient against this approximation in `float64`. If a backward pass
+were wrong, the comparison would fail — which is exactly what happened, and got
+caught, while this engine was being written.
+
+## What is not implemented in v0.1.0
+
+* Second-order derivatives (the graph is not differentiable itself).
+* In-place operations that would invalidate saved tensors.
+* Gradients through integer or boolean tensors (these cannot require grad).
+
+
+---
+
+Source: https://github.com/krishanth7/EveryO/blob/6c05a061eb62fa2646e726d15cac07053d04c79e/docs/troubleshooting.md
+
+# Installation and diagnostics
+
+Run commands from the repository root with the virtual environment activated.
+Use `python -m pip` to install into the same interpreter used by your examples.
+
+## Verify the environment
+
+```bash
+python -m pip install -e .
+everyo info
+everyo doctor
+```
+
+`info` reports versions and available backends. `doctor` also performs a core
+gradient check. Missing TensorFlow or CUDA is expected in a CPU installation.
+An optional backend being detected does not establish its numerical correctness
+on your hardware; run the relevant tests before relying on it.
+
+## Common problems
+
+| Symptom | Next step |
+| --- | --- |
+| `everyo` command not found | Activate the environment and repeat the editable installation. |
+| `pytest` is unavailable | Install development dependencies with `python -m pip install -e ".[dev]"`. |
+| CUDA is unavailable | Follow [CUDA setup](https://github.com/krishanth7/EveryO/blob/6c05a061eb62fa2646e726d15cac07053d04c79e/docs/cuda.md); the core CPU path does not require the native extension. |
+| ONNX import fails | Install `python -m pip install -e ".[onnx]"` in the active environment. |
+| Charts cannot open a window | Save charts to files; headless execution uses the Agg backend. |
+| Distributed example runs slowly | Limit BLAS worker threads as described in the [example catalog](https://github.com/krishanth7/EveryO/blob/6c05a061eb62fa2646e726d15cac07053d04c79e/examples/README.md). |
+
+## Machine-readable reports
+
+```bash
+everyo info --json
+everyo benchmark --sizes 32 --repeats 1 --json --output artifacts/benchmark.json
+```
+
+With `--json`, benchmark stdout contains only the JSON result. When `--output`
+is also supplied, the file confirmation goes to stderr so stdout can be piped
+to another program. Timing results depend on hardware, load, and backend;
+retain the environment report alongside measurements.
+
+## Report a reproducible problem
+
+Include the EveryO version or commit, operating system, command, traceback,
+and a small example using generated data. Include relevant `everyo info`
+output after reviewing it for information you do not want to share publicly.
+Use [Support](https://github.com/krishanth7/EveryO/blob/6c05a061eb62fa2646e726d15cac07053d04c79e/SUPPORT.md) for help and [Security](https://github.com/krishanth7/EveryO/blob/6c05a061eb62fa2646e726d15cac07053d04c79e/SECURITY.md) for private
+vulnerability reporting.
+
+
+---
+
+Source: https://github.com/krishanth7/EveryO/blob/6c05a061eb62fa2646e726d15cac07053d04c79e/examples/README.md
+
+# Examples
+
+Every example is a runnable script that uses only the public EveryO API and
+locally generated data — no downloads, no API keys, no credentials.
+
+Run them from the repository root:
+
+```bash
+python examples/tensor_basics.py
+```
+
+| Example | What it shows |
+| --- | --- |
+| `tensor_basics.py` | Tensor creation, arithmetic, broadcasting, reductions, autograd |
+| `linear_regression.py` | A single `Linear` layer trained with SGD + momentum |
+| `binary_classification.py` | Two-moons problem; MLP vs a linear model |
+| `multiclass_classification.py` | Three-class spirals with early stopping |
+| `neural_network.py` | The full pipeline on the bundled digit dataset |
+| `convolutional_network.py` | A CNN vs a dense baseline, plus the learned filters |
+| `sequence_models.py` | RNN/LSTM/GRU vs a transformer on long-range recall |
+| `mixed_precision.py` | `autocast` and `GradScaler`, with the underflow they exist to fix |
+| `onnx_export.py` | Exporting a CNN and checking it against ONNX Runtime |
+| `distributed_training.py` | Data-parallel training across CPU cores, checked against one process |
+| `save_and_load.py` | Saving, inspecting and reloading an `.evo` archive |
+| `tensorflow_backend.py` | Cross-checking EveryO against TensorFlow (optional) |
+| `cuda_example.py` | CUDA detection, correctness check and CPU fallback |
+| `onnx_trace.py` | Trace-based export of recurrent and attention models (ONNX extra) |
+| `quantization.py` | Dynamic INT8 quantization and comparison with the float model |
+| `profiling.py` | Model timing and trace export for performance analysis |
+
+`onnx_export.py` needs the optional `onnx` extra (`python -m pip install -e ".[onnx]"`) and reports cleanly
+when it is missing. Run `distributed_training.py` with `OMP_NUM_THREADS=1` set, or each worker will
+start its own BLAS thread pool and they will contend:
+
+```bash
+OMP_NUM_THREADS=1 python examples/distributed_training.py
+```
+
+Scripts that produce charts write them to `artifacts/`, which is git-ignored.
+`tensorflow_backend.py` and `cuda_example.py` both run on machines without
+those optional components: they report what is missing and exit cleanly.

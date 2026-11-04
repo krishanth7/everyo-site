@@ -1,0 +1,186 @@
+/* Motion enhances already visible content; no-JS and reduced-motion views stay complete. */
+:root {
+  --motion-ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+.page-progress {
+  height: 2px;
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  pointer-events: none;
+  overflow: hidden;
+}
+.page-progress > span {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  will-change: transform;
+}
+.site-header {
+  transition:
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
+}
+.site-header.is-scrolled {
+  box-shadow: 0 5px 24px #00000008;
+}
+.button {
+  transition:
+    transform 0.25s var(--motion-ease),
+    background 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.25s ease;
+}
+.button:hover {
+  box-shadow: 0 5px 15px #0000000a;
+  transform: translateY(-2px);
+}
+.button .arrow,
+.text-link .arrow,
+.github-link .arrow {
+  transition: transform 0.25s var(--motion-ease);
+}
+.button:hover .arrow,
+.text-link:hover .arrow,
+.github-link:hover .arrow {
+  transform: translate(2px, -2px);
+}
+.card {
+  transition:
+    transform 0.3s var(--motion-ease),
+    border-color 0.25s ease,
+    box-shadow 0.3s ease;
+}
+.card:hover {
+  box-shadow: 0 8px 22px #00000004;
+}
+.icon-button {
+  transition:
+    transform 0.25s var(--motion-ease),
+    border-color 0.2s ease,
+    background 0.2s ease;
+}
+.icon-button:hover {
+  background: var(--tint);
+  border-color: var(--muted);
+  transform: rotate(8deg);
+}
+summary {
+  transition: color 0.2s ease;
+}
+summary:hover {
+  color: var(--accent-text);
+}
+.docs-search-trigger {
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+.docs-search-trigger:hover {
+  background: var(--tint);
+  border-color: var(--muted);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .motion-enter {
+    animation: enter-view 0.65s var(--motion-ease) both;
+    animation-delay: var(--reveal-delay, 0ms);
+  }
+  .docs-search-dialog[open] {
+    animation: dialog-enter 0.2s var(--motion-ease) both;
+  }
+  details[open] > .codebox,
+  details[open] > p {
+    animation: disclosure-enter 0.22s ease both;
+  }
+  .graph.motion-enter .signal {
+    animation: signal-pulse 1.25s ease-in-out 3;
+  }
+  .graph.motion-enter .output-node {
+    animation: output-confirm 1.25s ease-in-out 3;
+  }
+  @keyframes enter-view {
+    from {
+      opacity: 0;
+      transform: translate3d(0, 16px, 0);
+    }
+    to {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+  }
+  @keyframes dialog-enter {
+    from {
+      opacity: 0;
+      transform: translateY(-8px) scale(0.985);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+  @keyframes disclosure-enter {
+    from {
+      opacity: 0;
+      transform: translateY(-4px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes signal-pulse {
+    0%,
+    100% {
+      box-shadow: 0 0 0 0 #e6482200;
+    }
+    50% {
+      box-shadow: 0 0 0 5px #e648221b;
+    }
+  }
+  @keyframes output-confirm {
+    0%,
+    100% {
+      box-shadow: none;
+    }
+    50% {
+      box-shadow: 0 0 0 4px #e6482210;
+    }
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .page-progress > span {
+    will-change: auto;
+  }
+  .motion-enter {
+    animation: none !important;
+  }
+  .reading-track > span {
+    transition: none;
+  }
+}
+@media (max-width: 800px) and (prefers-reduced-motion: no-preference) {
+  .header-inner > nav[data-open="true"] {
+    animation: disclosure-enter 0.2s var(--motion-ease);
+  }
+}
+@view-transition {
+  navigation: auto;
+}
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.18s;
+}
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}

@@ -1,16 +1,12 @@
-# robots.txt — https://krishanth7.github.io/everyo-site/
-#
-# Everything here is public documentation for an open-source project and is
-# meant to be indexed, quoted and summarised. Nothing is disallowed.
-
+# EveryO public website and developer documentation
+# Rules apply to this GitHub Pages project path.
 User-agent: *
-Allow: /
-
-# Machine-readable companions
-#   /llms.txt                    a summary written for language models
-#   /humans.txt                  the people and tools behind the site
-#   /.well-known/security.txt    how to report a vulnerability (RFC 9116)
-#   /ads.txt                     authorised digital sellers (template)
-#   /cats.txt                    no specification, one cat
+Allow: /everyo-site/
 
 Sitemap: https://krishanth7.github.io/everyo-site/sitemap.xml
+
+# Human and AI-readable companions (discovery hints, not robots directives):
+# https://krishanth7.github.io/everyo-site/llms.txt
+# https://krishanth7.github.io/everyo-site/llms-full.txt
+# https://krishanth7.github.io/everyo-site/documentation.md
+# llms.txt is a community convention; it does not guarantee crawler adoption.

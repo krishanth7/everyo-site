@@ -8,7 +8,10 @@
       name="description"
       content="Run reproducible EveryO experiments: tensors, digit classification, CNNs, transformers, ONNX export, and more."
     />
-    <meta name="robots" content="index,follow" />
+    <meta
+      name="robots"
+      content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1"
+    />
     <meta name="theme-color" content="#f5f4f0" />
     <link
       rel="canonical"
@@ -68,6 +71,89 @@
         "description": "A NumPy-based neural computing framework for learning, teaching, and small-scale experiments."
       }
     </script>
+    <meta name="author" content="EveryO contributors" />
+    <meta
+      name="keywords"
+      content="EveryO, Python, NumPy, neural computing, automatic differentiation, autograd, neural networks, open source, developer documentation"
+    />
+    <meta
+      name="googlebot"
+      content="index,follow,max-image-preview:large,max-snippet:-1"
+    />
+    <meta property="og:site_name" content="EveryO" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:image:type" content="image/png" />
+    <meta
+      name="twitter:image:alt"
+      content="EveryO — Understand the intelligence you build."
+    />
+    <link
+      rel="alternate"
+      type="text/plain"
+      title="EveryO LLM index"
+      href="llms.txt"
+    />
+    <link
+      rel="alternate"
+      type="text/plain"
+      title="EveryO expanded AI reference"
+      href="llms-full.txt"
+    />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "@id": "https://krishanth7.github.io/everyo-site/#website",
+            "url": "https://krishanth7.github.io/everyo-site/",
+            "name": "EveryO",
+            "inLanguage": "en",
+            "description": "Readable neural computing in Python, built on NumPy."
+          },
+          {
+            "@type": "WebPage",
+            "@id": "https://krishanth7.github.io/everyo-site/examples.html#page",
+            "url": "https://krishanth7.github.io/everyo-site/examples.html",
+            "name": "Examples — EveryO",
+            "description": "Run reproducible EveryO experiments: tensors, digit classification, CNNs, transformers, ONNX export, and more.",
+            "inLanguage": "en",
+            "isPartOf": {
+              "@id": "https://krishanth7.github.io/everyo-site/#website"
+            },
+            "about": {
+              "@type": "SoftwareSourceCode",
+              "name": "EveryO",
+              "codeRepository": "https://github.com/krishanth7/EveryO",
+              "programmingLanguage": "Python",
+              "license": "https://opensource.org/license/mit"
+            },
+            "breadcrumb": {
+              "@id": "https://krishanth7.github.io/everyo-site/examples.html#breadcrumbs"
+            }
+          },
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://krishanth7.github.io/everyo-site/examples.html#breadcrumbs",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "EveryO",
+                "item": "https://krishanth7.github.io/everyo-site/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Examples",
+                "item": "https://krishanth7.github.io/everyo-site/examples.html"
+              }
+            ]
+          }
+        ]
+      }
+    </script>
+    <link rel="stylesheet" href="assets/css/site-experience.css" />
   </head>
   <body data-page="examples">
     <a class="skip" href="#main">Skip to content</a>
@@ -134,6 +220,9 @@
             ☰
           </button>
         </div>
+      </div>
+      <div class="page-progress" aria-hidden="true">
+        <span id="page-progress-fill"></span>
       </div>
     </header>
     <main id="main">
@@ -666,6 +755,7 @@
           </nav>
           <nav aria-label="Project">
             <h2>Project</h2>
+            <a href="llms.txt">AI documentation</a>
             <a href="community.html">Community</a
             ><a
               href="https://github.com/krishanth7/EveryO/blob/main/CHANGELOG.md"
@@ -715,5 +805,6 @@
       </div>
     </footer>
     <script src="assets/js/developer-site.js" defer></script>
+    <script src="assets/js/site-experience.js" defer></script>
   </body>
 </html>

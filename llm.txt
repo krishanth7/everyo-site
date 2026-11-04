@@ -1,0 +1,8 @@
+# EveryO machine-readable documentation
+
+The canonical LLM discovery index is https://krishanth7.github.io/everyo-site/llms.txt.
+The expanded reference is https://krishanth7.github.io/everyo-site/llms-full.txt.
+The Markdown quickstart is https://krishanth7.github.io/everyo-site/documentation.md.
+
+This singular filename is a convenience pointer, not a separate standard.
+Project source and docstrings: https://github.com/krishanth7/EveryO

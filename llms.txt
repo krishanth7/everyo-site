@@ -12,6 +12,11 @@
 - [Runnable examples](https://krishanth7.github.io/everyo-site/examples.html)
 - [Community](https://krishanth7.github.io/everyo-site/community.html)
 
+## Machine-readable documentation
+
+- [Markdown quickstart](https://krishanth7.github.io/everyo-site/documentation.md)
+- [Full AI reference](https://krishanth7.github.io/everyo-site/llms-full.txt): self-contained guide and API map
+
 ## Authoritative sources
 
 - [Repository](https://github.com/krishanth7/EveryO)

@@ -132,6 +132,80 @@ const { chromium } = require("playwright");
     )
   )
     throw Error("share copy");
+  await page.goto(
+    (process.env.SITE_URL || "http://127.0.0.1:8000/") + "documentation.html",
+  );
+  await page.locator("#os-windows").click();
+  if (
+    !(await page.locator("#install-windows").isVisible()) ||
+    (await page.locator("#install-unix").isVisible())
+  )
+    throw Error("platform panel visibility");
+  await page.locator("#install-windows .copy-button").click();
+  if (
+    !(await page.evaluate(() => navigator.clipboard.readText())).includes(
+      "Activate.ps1",
+    )
+  )
+    throw Error("PowerShell installation copy");
+  await page.locator("#os-windows").focus();
+  await page.keyboard.press("ArrowLeft");
+  if (!(await page.locator("#install-unix").isVisible()))
+    throw Error("platform keyboard switching");
+  await page.locator("#docs-search-open").click();
+  await page.locator("#docs-search-input").fill("gradient");
+  if ((await page.locator("#docs-search-results a").count()) < 1)
+    throw Error("documentation search results");
+  await page.locator("#docs-search-input").fill("xzznonexistentquery");
+  if (
+    !(await page.locator("#docs-search-status").textContent()).includes(
+      "No matching",
+    )
+  )
+    throw Error("search empty state");
+  await page.locator("#docs-search-input").fill("pickle-free");
+  await page.keyboard.press("Enter");
+  if (
+    (await page.locator("#docs-search").isVisible()) ||
+    !page.url().endsWith("#serialization")
+  )
+    throw Error("search result navigation");
+  await page.keyboard.press("Control+k");
+  if (!(await page.locator("#docs-search").isVisible()))
+    throw Error("search keyboard shortcut");
+  await page.keyboard.press("Escape");
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.reload();
+  await page.locator('.docs-sidebar a[href="#api"]').click();
+  if (await page.locator(".motion-enter").count())
+    throw Error("reduced-motion animation");
+  await page.waitForFunction(
+    () =>
+      document
+        .querySelector('.docs-sidebar a[href="#api"]')
+        .getAttribute("aria-current") === "location",
+  );
+  const progress = await page
+    .locator("#page-progress-fill")
+    .evaluate((el) => el.style.transform);
+  if (progress === "scaleX(0)") throw Error("reading progress");
+  await page.emulateMedia({ reducedMotion: "no-preference" });
+  for (const file of [
+    "robots.txt",
+    "llms.txt",
+    "llms-full.txt",
+    "llm.txt",
+    "documentation.md",
+  ]) {
+    const response = await page.request.get(
+      (process.env.SITE_URL || "http://127.0.0.1:8000/") + file,
+    );
+    if (response.status() !== 200 || (await response.body()).length < 100)
+      throw Error("AI/crawler resource " + file);
+  }
+  console.log(
+    "PASS docs search, keyboard navigation, OS tabs and copy, reduced motion, reading progress, machine-readable resources",
+  );
   const nojs = await browser.newContext({
     javaScriptEnabled: false,
     viewport: { width: 390, height: 844 },
@@ -142,6 +216,14 @@ const { chromium } = require("playwright");
   );
   if (!(await simple.locator("#nav-links").isVisible()))
     throw Error("no-js menu");
+  await simple.goto(
+    (process.env.SITE_URL || "http://127.0.0.1:8000/") + "documentation.html",
+  );
+  if (
+    !(await simple.locator("#install-unix").isVisible()) ||
+    !(await simple.locator("#install-windows").isVisible())
+  )
+    throw Error("no-JS platform instructions");
   await nojs.close();
   if (errors.length) throw Error(errors.join("\n"));
   console.log(

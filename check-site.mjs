@@ -61,6 +61,33 @@ for (const [name, { text, ids }] of docs) {
     text.match(/<script type="application\/ld\+json">([^<]+)<\/script>/)[1],
   );
   assert.equal(schema.codeRepository, "https://github.com/krishanth7/EveryO");
+  const structured = [
+    ...text.matchAll(/<script type="application\/ld\+json">([^<]+)<\/script>/g),
+  ].map((match) => JSON.parse(match[1]));
+  const graph = structured.find((item) => Array.isArray(item["@graph"]))?.[
+    "@graph"
+  ];
+  assert.ok(graph, name + ": page discovery graph");
+  const page = graph.find(
+    (item) =>
+      item["@type"] ===
+      (name === "documentation.html" ? "TechArticle" : "WebPage"),
+  );
+  const canonical = text.match(/<link rel="canonical" href="([^"]+)"/)[1];
+  assert.equal(page.url, canonical, name + ": structured canonical URL");
+  assert.equal(
+    graph
+      .find((item) => item["@type"] === "BreadcrumbList")
+      .itemListElement.at(-1).item,
+    canonical,
+  );
+  assert.match(text, /max-image-preview:large/);
+  assert.match(text, /property="og:site_name" content="EveryO"/);
+  assert.match(text, /name="twitter:image:alt"/);
+  assert.match(
+    text,
+    /type="text\/plain" title="EveryO LLM index" href="llms.txt"/,
+  );
 }
 const sitemap = readFileSync(root + "sitemap.xml", "utf8");
 assert.equal((sitemap.match(/<loc>/g) || []).length, 5);
@@ -78,6 +105,38 @@ assert.ok(
 assert.match(
   readFileSync(root + "assets/css/developer-site.css", "utf8"),
   /prefers-reduced-motion:\s*reduce/,
+);
+for (const file of [
+  "llms.txt",
+  "llms-full.txt",
+  "llm.txt",
+  "documentation.md",
+]) {
+  const content = readFileSync(root + file, "utf8");
+  assert.ok(content.length > 100, file + ": readable machine documentation");
+  for (const [, path] of content.matchAll(
+    /https:\/\/krishanth7\.github\.io\/everyo-site\/([^\s)#]*)/g,
+  )) {
+    assert.ok(
+      existsSync(root + path.replace(/[.,;:]+$/, "")),
+      file + ": missing referenced local resource " + path,
+    );
+  }
+}
+const robotRules = readFileSync(root + "robots.txt", "utf8");
+assert.match(robotRules, /User-agent: \*/);
+assert.match(robotRules, /Allow: \/everyo-site\//);
+assert.match(
+  robotRules,
+  /Sitemap: https:\/\/krishanth7\.github\.io\/everyo-site\/sitemap.xml/,
+);
+const sitemapURLs = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(
+  (match) => match[1],
+);
+assert.equal(
+  new Set(sitemapURLs).size,
+  sitemapURLs.length,
+  "unique sitemap URLs",
 );
 console.log(
   `PASS: ${docs.size} pages; ${links} internal links; ${assets.size} local assets; valid anchors, controls, landmarks, metadata, social previews, structured data, and sitemap.`,

@@ -18,11 +18,13 @@ Open `http://localhost:8000`. Python 3 serves the site; Node.js 24 runs the depe
 
 - `index.html`: overview, computation graph, switchable code examples, architecture, and reproducible results.
 - `features.html`: tensors, autograd, network modules, training tools, and validation limits.
-- `documentation.html`: platform-specific installation, complete Python examples, training, and API essentials.
+- `documentation.html`: searchable documentation workspace, keyboard-accessible platform tabs, reading progress, complete Python examples, serialization, troubleshooting, and API essentials.
 - `examples.html`: 12 filterable experiments linked to the framework's actual scripts, with copyable commands.
 - `community.html`: contribution paths, issue guidance, native sharing with clipboard fallback, and project policies.
 - `assets/css/developer-site.css` and `assets/js/developer-site.js`: shared responsive design and progressive enhancements.
 - `assets/img/social-card.png`: original 1200 × 630 social preview used by every page.
+- `assets/css/documentation.css`: documentation layout and tools.
+- `assets/css/site-experience.css` and `assets/js/site-experience.js`: finite entrance animations, reading navigation, platform tabs, and local documentation search.
 
 The site supports light/dark modes, reduced motion, keyboard navigation, accessible status messages, and mobile navigation. Primary navigation and content remain available with JavaScript disabled. There are no external runtime scripts, analytics, tracking cookies, or font requests. The theme preference is stored locally in the browser.
 
@@ -41,11 +43,28 @@ An optional real-browser regression runner is in `tests/browser.cjs`. With Playw
 node tests/browser.cjs
 ```
 
-Set `CHROMIUM_PATH` for a different Chromium executable, and `SITE_URL` for a different server URL (include a trailing slash). Screenshots go to the operating system's temporary directory. The runner checks all five pages at desktop and mobile sizes, image loading, overflow, JavaScript errors, clipboard contents, filtering, theme persistence, Escape behavior, and navigation without JavaScript.
+Set `CHROMIUM_PATH` for a different Chromium executable, and `SITE_URL` for a different server URL (include a trailing slash). Screenshots go to the operating system's temporary directory. The runner checks all five pages at desktop and mobile sizes, image loading, overflow, JavaScript errors, clipboard contents, filtering, theme persistence, Escape behavior, and navigation without JavaScript. It also covers documentation search, empty results, result navigation, platform tabs and copy, reading position, machine-readable resources, and reduced-motion behavior.
+
+## Motion and documentation UX
+
+Entrance animations are progressive enhancements applied when content enters the viewport. Content is visible before scripts run, and the reduced-motion preference disables reveal animations, animated scrolling, and page transitions. Graph highlights stop after three short pulses. Search derives its index from the actual document, uses no network service, and supports Ctrl/Command+K, Enter, Tab, and Escape. Installation tabs support Left/Right arrows and Home/End; both instruction sets remain visible without JavaScript.
+
+## Search, social, and AI discovery
+
+Every page has a canonical URL, search directives, Open Graph and Twitter previews, descriptive metadata, and WebPage/TechArticle, WebSite, and BreadcrumbList structured data. `robots.txt` declares the project path and sitemap. `llms.txt` indexes authoritative sources; `llms-full.txt` includes the reviewed guide, API, architecture, autograd, diagnostics, and example catalog. `documentation.md` is the downloadable Markdown quickstart. `llm.txt` is a convenience pointer to the canonical index, not a separate standard.
+
+Regenerate the expanded AI reference from the selected framework checkout:
+
+```sh
+python3 scripts/build-ai-docs.py --source ../EveryO
+python3 scripts/build-ai-docs.py --source ../EveryO --check
+```
+
+The generator requires the checkout to match the reviewed revision in `llms.txt`, so upstream changes must be reviewed before updating provenance. It resolves upstream relative links to immutable source URLs. Metadata and LLM files improve discoverability; they do not guarantee crawler adoption or social reach.
 
 ## Content provenance
 
-Content was checked against the framework README, `pyproject.toml`, guides in `docs/`, API reference, example scripts, and project policies at upstream commit `6c05a061eb62fa2646e726d15cac07053d04c79e`. All three complete documentation Python examples were executed against that source, including the 20-epoch classifier.
+Content was checked against the framework README, `pyproject.toml`, guides in `docs/`, API reference, example scripts, and project policies at upstream commit `6c05a061eb62fa2646e726d15cac07053d04c79e`. All five documentation Python examples were executed against that source, including the 20-epoch classifier and a save/load/inference round trip.
 
 Keep capabilities and validation limits aligned with upstream. The 99.3% digit result is a reported example-run measurement, not a performance guarantee. CUDA runtime tests require actual GPU hardware; CPU stand-ins validate the resident-buffer transfer design only. Multi-machine training remains unverified. Optional integrations are not part of the base CPU installation.
 
