@@ -4,6 +4,20 @@ The public multipage website for [EveryO](https://github.com/krishanth7/EveryO),
 
 **Website:** https://krishanth7.github.io/everyo-site/
 
+## Documentation and release alignment
+
+The website currently identifies **EveryO v0.5.0** as the latest public release:
+
+- [v0.5.0 release, wheel and source tag](https://github.com/krishanth7/EveryO/releases/tag/v0.5.0)
+- [GitHub Wiki — 40 subject guides](https://github.com/krishanth7/EveryO/wiki)
+- [Getting Started](https://github.com/krishanth7/EveryO/wiki/Getting-Started)
+- [API Reference](https://github.com/krishanth7/EveryO/wiki/API-Reference)
+- [Release Process](https://github.com/krishanth7/EveryO/wiki/Release-Process)
+
+The homepage now includes a release overview, qualification boundaries, and a CPU-only installation path. The documentation page distinguishes its earlier archived source snapshot from the current v0.5.0 release and Wiki. Existing historical guide content is intentionally retained as provenance; it is not silently presented as a new implementation.
+
+**Qualification boundary:** published versions and passing CPU tests do not independently establish production certification, penetration-test sign-off, sustained authenticated load performance, or deployment recovery readiness.
+
 ## Develop locally
 
 No build step, package manager, or application credentials are required. Serve the repository root:

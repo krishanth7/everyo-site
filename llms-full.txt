@@ -55,7 +55,7 @@ Search spans the quickstart and the complete guide library.
 ## Scope and limits
 
 The documented CPU workflow supports Python 3.9–3.12. The core dependencies are
-NumPy and Matplotlib. Version 0.2.0 is declared in the reviewed pyproject.toml.
+NumPy and Matplotlib. The reviewed legacy reference snapshot declared 0.2.0; the latest public EveryO release is v0.5.0. See https://github.com/krishanth7/EveryO/releases/tag/v0.5.0 and the updated Wiki at https://github.com/krishanth7/EveryO/wiki for current release context.
 MIT licensed. Local core workflows require no account, API key, or telemetry.
 Installation may download packages. Optional components include TensorFlow
 reference checks, CUDA kernels, and ONNX export.

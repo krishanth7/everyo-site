@@ -124,7 +124,7 @@
             "codeRepository": "https://github.com/krishanth7/EveryO",
             "programmingLanguage": "Python",
             "runtimePlatform": "Python 3.9–3.12 with NumPy and Matplotlib",
-            "version": "0.2.0",
+            "version": "0.5.0",
             "license": "https://opensource.org/license/mit",
             "description": "A neural computing framework built from scratch on NumPy for learning, teaching, and small-scale experiments.",
             "isAccessibleForFree": true,
@@ -139,7 +139,7 @@
             "url": "https://krishanth7.github.io/everyo-site/",
             "applicationCategory": "DeveloperApplication",
             "operatingSystem": "Linux, macOS, Windows",
-            "softwareVersion": "0.2.0",
+            "softwareVersion": "0.5.0",
             "softwareRequirements": "Python 3.9–3.12, NumPy, Matplotlib",
             "license": "https://opensource.org/license/mit",
             "isAccessibleForFree": true,
@@ -179,6 +179,7 @@
       }
     </script>
     <link rel="stylesheet" href="assets/css/overview-results.css" />
+    <link rel="stylesheet" href="assets/css/release-guide.css" />
   </head>
   <body data-page="overview">
     <a class="skip" href="#main">Skip to content</a>
@@ -186,7 +187,7 @@
       <a href="https://github.com/krishanth7/EveryO/releases"
         >Open source. Open to your next idea.
         <span
-          >Explore EveryO 0.2.0
+          >Explore EveryO v0.5.0
           <svg
             class="arrow"
             viewBox="0 0 16 16"
@@ -793,6 +794,51 @@ print(x.grad)  # [4.]
           </article>
         </div>
       </section>
+      <section class="release-guide section" id="release-center" aria-labelledby="release-center-heading">
+        <div class="container">
+          <div class="release-guide-heading">
+            <div>
+              <p class="eyebrow">CURRENT PUBLIC RELEASE · NOVEMBER 2026</p>
+              <h2 id="release-center-heading">A clearer path from source to understanding<span class="accent-word">.</span></h2>
+              <p>EveryO v0.5.0 is the latest versioned checkpoint of a CPU-first research framework. Explore its release evidence, practical guides, and the qualification boundaries before you build.</p>
+            </div>
+            <a class="release-guide-main-link" href="https://github.com/krishanth7/EveryO/releases/tag/v0.5.0">Explore v0.5.0 <span aria-hidden="true">↗</span></a>
+          </div>
+          <div class="release-guide-grid">
+            <article class="release-guide-card">
+              <span class="release-guide-kicker">01 / RELEASES</span>
+              <h3>Traceable by version.</h3>
+              <p>Browse v0.3.0, v0.4.0 and v0.5.0, with separate source tags, release notes and Python wheels. The three releases are cumulative packaging checkpoints.</p>
+              <a href="https://github.com/krishanth7/EveryO/releases">Release archive <span aria-hidden="true">↗</span></a>
+            </article>
+            <article class="release-guide-card">
+              <span class="release-guide-kicker">02 / KNOWLEDGE BASE</span>
+              <h3>40 connected guides.</h3>
+              <p>Follow the GitHub Wiki for installation, autograd, model training, API reference, testing, troubleshooting and engineering policies.</p>
+              <a href="https://github.com/krishanth7/EveryO/wiki">Open the EveryO Wiki <span aria-hidden="true">↗</span></a>
+            </article>
+            <article class="release-guide-card">
+              <span class="release-guide-kicker">03 / ENGINEERING STATUS</span>
+              <h3>Evidence over claims.</h3>
+              <p>CPU checks and release artifacts do not establish independent production certification. Security assessment, sustained deployed load and recovery testing remain separate gates.</p>
+              <a href="https://github.com/krishanth7/EveryO/wiki/Release-Process">Review release qualification <span aria-hidden="true">↗</span></a>
+            </article>
+          </div>
+          <div class="release-guide-start">
+            <div>
+              <span class="release-guide-kicker">START ON CPU · NO GPU REQUIRED</span>
+              <h3>Your first verified workflow.</h3>
+              <p>Use a Python 3.9+ environment, install the tagged source, run diagnostics, then explore an example. Optional backends are separate.</p>
+              <a href="documentation.html#install">Read the complete getting-started guide <span aria-hidden="true">→</span></a>
+            </div>
+            <pre aria-label="Installation and verification commands"><code>git clone https://github.com/krishanth7/EveryO.git
+cd EveryO
+git checkout v0.5.0
+python -m pip install -e .
+everyo doctor</code></pre>
+          </div>
+        </div>
+      </section>
       <section class="cta-section" id="get-started">
         <div class="container">
           <p class="eyebrow">FROM “HOW DOES IT WORK?” TO “I BUILT THIS.”</p>
@@ -890,6 +936,8 @@ print(x.grad)  # [4.]
           </nav>
           <nav aria-label="Project">
             <h2>Project</h2>
+            <a href="https://github.com/krishanth7/EveryO/wiki">GitHub Wiki — v0.5.0</a>
+            <a href="https://github.com/krishanth7/EveryO/releases/tag/v0.5.0">Latest release</a>
             <a href="llms.txt">AI documentation</a>
             <a href="community.html">Community</a
             ><a
