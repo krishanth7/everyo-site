@@ -187,6 +187,7 @@
         ]
       }
     </script>
+    <link rel="stylesheet" href="assets/css/corporate-refinement.css" />
   </head>
   <body data-page="community">
     <a class="skip" href="#main">Skip to content</a>
@@ -298,6 +299,28 @@
               >
                 <path d="M3 13 13 3M3 3h10v10" /></svg></span
           ></a>
+        </div>
+      </section>
+      <section class="section container" id="contributor-workflow" aria-labelledby="contributor-workflow-title">
+        <div class="section-heading">
+          <p class="eyebrow">CONTRIBUTOR HANDBOOK</p>
+          <h2 id="contributor-workflow-title">Good contributions begin with a reproducible change.</h2>
+          <p>Whether you are improving documentation, numerical correctness or developer tooling, this workflow keeps changes small, reviewable and grounded in evidence.</p>
+        </div>
+        <div class="guide-panel">
+          <h3>From local setup to review.</h3>
+          <ol class="guide-steps">
+            <li><strong>Read the project policies.</strong><p>Review the contribution guidelines, code of conduct and security policy. For a vulnerability, use the private reporting route rather than opening a public issue.</p></li>
+            <li><strong>Reproduce the current behavior.</strong><p>Check the release, Python version, operating system and sample input. Capture an expected result and the observed result before editing.</p></li>
+            <li><strong>Work in a focused branch.</strong><p>Use an isolated environment, keep the diff scoped to one problem and preserve existing public APIs unless a change is explicitly discussed.</p></li>
+            <li><strong>Run the relevant tests.</strong><p>Execute the repository's documented CPU test command, add a regression test where appropriate and record any environment-dependent skips honestly.</p></li>
+            <li><strong>Explain the change.</strong><p>Describe what changed, why it matters, the validation performed and remaining limitations. Link the original issue when applicable.</p></li>
+          </ol>
+          <div class="guide-actions">
+            <a href="https://github.com/krishanth7/EveryO/blob/main/CONTRIBUTING.md">Official contribution policy ↗</a>
+            <a href="https://github.com/krishanth7/EveryO/issues">Issues and proposals ↗</a>
+            <a href="documentation.html#install">Local setup ↗</a>
+          </div>
         </div>
       </section>
       <section class="section container">
@@ -502,7 +525,7 @@
           </div>
         </div>
       </section>
-      <section class="section container">
+      <section class="section container" id="project-policies">
         <div class="section-heading">
           <p class="eyebrow">04 / HOW THE PROJECT WORKS</p>
           <h2>Open code.<br />Clear expectations.</h2>
@@ -694,6 +717,7 @@
         </div>
         <div class="footer-bottom">
           <span>© 2026 EveryO. Built in the open.</span
+          ><span class="footer-motto">Designed for developers. Built by developers.</span
           ><a href="https://github.com/krishanth7/EveryO/blob/main/LICENSE"
             >MIT License
             <svg

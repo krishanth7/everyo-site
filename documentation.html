@@ -201,7 +201,8 @@
     }
   ]
 }</script>
-  <link rel="stylesheet" href="assets/css/reference-docs.css"></head>
+  <link rel="stylesheet" href="assets/css/reference-docs.css">
+  <link rel="stylesheet" href="assets/css/corporate-refinement.css"></head>
   <body data-page="documentation">
     <a class="skip" href="#main">Skip to content</a>
     <div class="announcement">
@@ -494,6 +495,7 @@
                 </div>
                 <pre><code>git clone https://github.com/krishanth7/EveryO.git
 cd EveryO
+git checkout v0.5.0
 python -m venv .venv
 source .venv/bin/activate
 python -m pip install -e .
@@ -515,6 +517,7 @@ everyo demo</code></pre>
                 </div>
                 <pre><code>git clone https://github.com/krishanth7/EveryO.git
 cd EveryO
+git checkout v0.5.0
 python -m venv .venv
 .venv\Scripts\Activate.ps1
 python -m pip install -e .
@@ -531,6 +534,17 @@ everyo demo</code></pre>
                 digit classifier. Installation may download dependencies; core
                 experiments run locally once installed.
               </p>
+            </div>
+            <div class="guide-panel" id="installation-verification">
+              <h3>Verify the environment before building.</h3>
+              <p>The commands above select the published v0.5.0 tag for a reproducible starting point. A successful install is only the beginning: confirm the interpreter, run diagnostics and exercise the source test suite. Do not assume optional GPU support from a passing CPU diagnostic.</p>
+              <ol class="guide-steps">
+                <li><strong>Confirm the interpreter.</strong><p>Run <code>python --version</code> inside the activated virtual environment. Match the supported Python range for the checked-out version.</p></li>
+                <li><strong>Inspect dependencies.</strong><p>Run <code>python -m pip check</code> to identify incompatible installed packages before diagnosing framework behavior.</p></li>
+                <li><strong>Run the built-in diagnostic.</strong><p><code>everyo doctor</code> should report the result of its numerical checks; review the actual output rather than assuming a PASS.</p></li>
+                <li><strong>Check tests and outputs.</strong><p>Follow the pinned version's contributor and testing instructions, then compare observed outputs with the examples. Record failures, skips and environment limitations.</p></li>
+              </ol>
+              <div class="guide-actions"><a href="docs-troubleshooting.html">Troubleshooting reference ↗</a><a href="docs-api-reference.html">API reference ↗</a><a href="https://github.com/krishanth7/EveryO/wiki/Getting-Started">Current Wiki guide ↗</a></div>
             </div>
             <details>
               <summary>Do I need TensorFlow, ONNX, or CUDA?</summary>
@@ -1164,6 +1178,7 @@ print(predictions.shape)  # (3, 3)</code></pre>
         </div>
         <div class="footer-bottom">
           <span>© 2026 EveryO. Built in the open.</span
+          ><span class="footer-motto">Designed for developers. Built by developers.</span
           ><a href="https://github.com/krishanth7/EveryO/blob/main/LICENSE"
             >MIT License
             <svg

@@ -1,0 +1,37 @@
+/* EveryO design refinement: restrained typography, accessible motion, clear hierarchy. */
+:root {
+  --motion-curve: cubic-bezier(.22, 1, .36, 1);
+  --elevation-soft: 0 16px 46px -38px rgba(21, 33, 26, .38);
+}
+body { -webkit-font-smoothing: antialiased; }
+.site-header { backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); background: color-mix(in srgb, var(--bg) 91%, transparent); }
+.site-header .brand, .github-link, .footer-bottom a { transition: color .28s ease; }
+.site-header .brand:hover, .github-link:hover, .footer-bottom a:hover { color: var(--accent); }
+.button, .text-link, .card, .release-guide-card { transition-timing-function: var(--motion-curve); }
+.button { transition: transform .4s var(--motion-curve), box-shadow .4s var(--motion-curve), background .3s ease; }
+.button:hover { transform: translateY(-2px); box-shadow: var(--elevation-soft); }
+.corporate-directory { padding-block: clamp(72px, 9vw, 140px); border-top: 1px solid var(--line); }
+.corporate-directory .section-heading { max-width: 820px; }
+.corporate-directory .section-heading h2 { max-width: 760px; }
+.directory-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-top: 32px; }
+.directory-card { display: flex; flex-direction: column; gap: 17px; min-height: 240px; padding: clamp(22px, 3vw, 36px); background: var(--surface); border: 1px solid var(--line); border-radius: 12px; box-shadow: var(--elevation-soft); transition: transform .55s var(--motion-curve), border-color .35s ease, box-shadow .55s var(--motion-curve); }
+.directory-card:hover { transform: translateY(-5px); border-color: var(--accent); box-shadow: 0 24px 62px -38px rgba(21, 33, 26, .38); }
+.directory-card .eyebrow { color: var(--accent); }
+.directory-card h3 { font-size: clamp(1.5rem, 2.25vw, 2.1rem); line-height: 1.14; letter-spacing: -.045em; }
+.directory-card p { font-size: 14px; flex: 1; }
+.directory-card > a { font-size: 13px; font-weight: 700; align-self: flex-start; border-bottom: 1px solid currentColor; padding-bottom: 3px; }
+.guide-panel { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: clamp(24px, 4vw, 48px); margin-block: 28px; }
+.guide-panel h3 { font-size: clamp(1.35rem, 2.5vw, 2.1rem); margin-bottom: 14px; }
+.guide-panel p { max-width: 74ch; }
+.guide-steps { counter-reset: guide-step; display: grid; gap: 0; margin: 24px 0 0; padding: 0; list-style: none; }
+.guide-steps > li { counter-increment: guide-step; position: relative; border-top: 1px solid var(--line); padding: 20px 0 20px 52px; }
+.guide-steps > li::before { content: counter(guide-step, decimal-leading-zero); position: absolute; left: 0; top: 22px; color: var(--accent); font: 700 12px var(--mono); }
+.guide-steps strong { display: block; color: var(--ink); font-size: 15px; margin-bottom: 4px; }
+.guide-steps p { font-size: 14px; }
+.guide-actions { display: flex; gap: 14px 24px; flex-wrap: wrap; margin-top: 22px; }
+.guide-actions a { font-weight: 700; font-size: 13px; text-decoration: underline; text-underline-offset: 5px; }
+.footer-bottom .footer-motto { color: var(--muted); font-size: 12px; letter-spacing: .02em; }
+.footer-bottom { gap: 12px 24px; flex-wrap: wrap; }
+@media (max-width: 880px) { .directory-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 580px) { .directory-grid { grid-template-columns: 1fr; } .directory-card { min-height: 0; } .guide-steps > li { padding-left: 40px; } .footer-bottom .footer-motto { width: 100%; } }
+@media (prefers-reduced-motion: reduce) { .directory-card, .button, .text-link, .card, .release-guide-card { transition: none !important; transform: none !important; } }
