@@ -42,3 +42,11 @@ test("outside click and breakpoint changes close the menu", async () => {
   await x.media["(max-width: 800px)"].fire("change");
   assert.equal(x.ids["nav-links"].dataset.open, "false");
 });
+test("clipboard refusal offers a selectable manual copy dialog", async () => {
+  const x = setup({ deniedClipboard: true });
+  await x.ids["copy-project"].fire("click");
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.equal(x.manualDialog().open, true);
+  assert.equal(x.manualText(), "https://krishanth7.github.io/everyo-site/");
+  assert.match(x.ids["share-status"].textContent, /blocked/);
+});

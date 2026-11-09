@@ -77,7 +77,33 @@
     setMenu(false, hadFocus && mobile.matches);
   });
 
+  function showManualCopy(text) {
+    let dialog = document.getElementById("manual-copy-dialog");
+    if (!dialog) {
+      dialog = document.createElement("dialog");
+      dialog.id = "manual-copy-dialog";
+      dialog.className = "manual-copy-dialog";
+      dialog.setAttribute("aria-labelledby", "manual-copy-title");
+      dialog.innerHTML =
+        '<div class="manual-copy-inner"><h2 id="manual-copy-title">Copy this command</h2>' +
+        '<p>Your browser blocked automatic clipboard access. Select the text and press Ctrl+C (or ⌘C on macOS).</p>' +
+        '<textarea readonly aria-label="Command to copy" rows="5"></textarea>' +
+        '<button type="button" class="button manual-copy-close">Close</button></div>';
+      dialog.querySelector(".manual-copy-close").addEventListener("click", () => dialog.close());
+      document.body.appendChild(dialog);
+    }
+    const field = dialog.querySelector("textarea");
+    field.value = text;
+    if (typeof dialog.showModal === "function") dialog.showModal();
+    else dialog.setAttribute("open", "");
+    field.focus();
+    field.select();
+  }
   async function copy(text, status) {
+    if (typeof text !== "string" || !text.trim()) {
+      if (status) status.textContent = "No command available to copy.";
+      return false;
+    }
     let copied = false;
     try {
       if (navigator.clipboard && isSecureContext) {
@@ -101,9 +127,12 @@
       field.remove();
       previous?.focus({ preventScroll: true });
     }
-    status.textContent = copied
-      ? "Copied to clipboard."
-      : "Copy unavailable. Select and copy the text manually.";
+    if (status) {
+      status.textContent = copied
+        ? "Copied to clipboard."
+        : "Automatic copying is blocked. Use the selectable command dialog.";
+    }
+    if (!copied) showManualCopy(text);
     return copied;
   }
   function highlight(element) {
@@ -136,10 +165,13 @@
   document.addEventListener("click", (event) => {
     const button = event.target.closest(".copy-button, .copy-command");
     if (!button) return;
+    event.preventDefault();
     const parent = button.closest(".codebox, .experiment");
+    const command = button.dataset.command ?? parent?.querySelector("pre code")?.textContent;
+    const status = parent?.querySelector(".copy-status");
     copy(
-      button.dataset.command || parent.querySelector("pre code").textContent,
-      parent.querySelector(".copy-status"),
+      command,
+      status,
     );
   });
   const samples = {

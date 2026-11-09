@@ -18,6 +18,7 @@ function setup({
       this.dataset = {};
       this.textContent = "";
       this.hidden = false;
+      this.style = {};
     }
     addEventListener(type, handler) {
       (this.events[type] ||= []).push(handler);
@@ -84,7 +85,12 @@ function setup({
         : status;
   const document = new Element();
   document.documentElement = root;
-  document.getElementById = (id) => ids[id];
+  let manualDialog = null;
+  const manualField = new Element();
+  manualField.select = () => {};
+  const manualClose = new Element();
+  document.getElementById = (id) =>
+    id === "manual-copy-dialog" ? manualDialog : ids[id];
   document.querySelectorAll = (selector) =>
     ({
       "[data-example]": sampleButtons,
@@ -93,7 +99,24 @@ function setup({
     })[selector] || [];
   document.createDocumentFragment = () => ({ append() {} });
   document.createTextNode = (text) => text;
-  document.createElement = () => new Element();
+  document.createElement = (tag) => {
+    const element = new Element();
+    element.select = () => {};
+    element.remove = () => {};
+    if (tag === "dialog") {
+      element.querySelector = (selector) =>
+        selector === "textarea" ? manualField : manualClose;
+      element.showModal = () => { element.open = true; };
+      element.close = () => { element.open = false; };
+    }
+    return element;
+  };
+  document.body = {
+    appendChild(element) {
+      if (element.id === "manual-copy-dialog") manualDialog = element;
+    },
+  };
+  document.execCommand = () => false;
   const window = new Element();
   let stored = saved,
     clipboard = "";
@@ -143,6 +166,8 @@ function setup({
     codebar,
     status,
     clipboard: () => clipboard,
+    manualDialog: () => manualDialog,
+    manualText: () => manualField.value,
     stored: () => stored,
     setStored(value) {
       stored = value;

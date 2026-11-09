@@ -13,6 +13,6 @@ jobs:
         with:
           node-version: '24'
       - name: Test developer interactions
-        run: node --test --test-isolation=none header.test.cjs overview.test.cjs
+        run: node --test --test-isolation=none header.test.cjs overview.test.cjs tests/examples.test.cjs
       - name: Validate pages, links, assets, and metadata
         run: node check-site.mjs

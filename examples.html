@@ -285,7 +285,7 @@
                 <path d="M3 13 13 3M3 3h10v10" /></svg></span></a
           ><a
             class="button secondary"
-            href="https://github.com/krishanth7/EveryO/blob/main/examples/README.md"
+            href="https://github.com/krishanth7/EveryO/blob/v0.5.0/examples/README.md"
             >All upstream examples
             <span aria-hidden="true"
               ><svg
@@ -298,6 +298,43 @@
               >
                 <path d="M3 13 13 3M3 3h10v10" /></svg></span
           ></a>
+        </div>
+      </section>
+      <section class="container example-setup" id="run-examples" aria-labelledby="run-examples-title">
+        <div class="section-heading">
+          <p class="eyebrow">RUN LOCALLY / VERSIONED COMMANDS</p>
+          <h2 id="run-examples-title">Set up once. Run real scripts.</h2>
+          <p>The example links open the Python source on GitHub. The copy buttons copy terminal commands; this website does not execute Python in your browser. First clone EveryO and install the v0.5.0 release below. Run each example from the repository root.</p>
+        </div>
+        <div class="guide-panel">
+          <h3>macOS / Linux · first-time setup</h3>
+          <div class="codebox">
+            <div class="codebar"><span>Terminal · bash or zsh</span><button class="copy-button" type="button">Copy setup</button></div>
+            <pre><code>git clone https://github.com/krishanth7/EveryO.git
+cd EveryO
+git checkout v0.5.0
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install -e .
+python -m pip check
+everyo doctor</code></pre>
+            <span class="copy-status" role="status"></span>
+          </div>
+          <h3>Windows · first-time setup</h3>
+          <div class="codebox">
+            <div class="codebar"><span>Terminal · Windows PowerShell</span><button class="copy-button" type="button">Copy setup</button></div>
+            <pre><code>git clone https://github.com/krishanth7/EveryO.git
+cd EveryO
+git checkout v0.5.0
+py -3 -m venv .venv
+.venv\Scripts\Activate.ps1
+python -m pip install -e .
+python -m pip check
+everyo doctor</code></pre>
+            <span class="copy-status" role="status"></span>
+          </div>
+          <p>Each setup block is a sequence of terminal commands. If PowerShell prevents script activation, use <code>.venv\Scripts\python.exe</code> to invoke Python directly, or consult the <a href="docs-troubleshooting.html">troubleshooting guide</a>. The default examples require Python, Git and access to install dependencies; no GPU is needed for the CPU core.</p>
+          <div class="guide-actions"><a href="documentation.html#installation-verification">Installation verification ↗</a><a href="https://github.com/krishanth7/EveryO/blob/v0.5.0/examples/README.md">Version-pinned upstream README ↗</a></div>
         </div>
       </section>
       <section class="container experiments-section">
@@ -314,8 +351,8 @@
           </button>
         </div>
         <p class="caption" id="filter-status" role="status">
-          Showing all 12 experiments. Run commands from the EveryO framework
-          repository root.
+          Showing all 12 experiments. Run commands from the checked-out EveryO
+          v0.5.0 repository root after completing the setup above.
         </p>
         <div class="grid three experiment-grid">
           <article class="card experiment" data-category="fundamentals">
@@ -326,7 +363,7 @@
             <div class="experiment-actions">
               <a
                 class="text-link"
-                href="https://github.com/krishanth7/EveryO/blob/main/examples/tensor_basics.py"
+                href="https://github.com/krishanth7/EveryO/blob/v0.5.0/examples/tensor_basics.py"
                 >View source
                 <svg
                   class="arrow"
@@ -355,7 +392,7 @@
             <div class="experiment-actions">
               <a
                 class="text-link"
-                href="https://github.com/krishanth7/EveryO/blob/main/examples/linear_regression.py"
+                href="https://github.com/krishanth7/EveryO/blob/v0.5.0/examples/linear_regression.py"
                 >View source
                 <svg
                   class="arrow"
@@ -384,7 +421,7 @@
             <div class="experiment-actions">
               <a
                 class="text-link"
-                href="https://github.com/krishanth7/EveryO/blob/main/examples/neural_network.py"
+                href="https://github.com/krishanth7/EveryO/blob/v0.5.0/examples/neural_network.py"
                 >View source
                 <svg
                   class="arrow"
@@ -413,7 +450,7 @@
             <div class="experiment-actions">
               <a
                 class="text-link"
-                href="https://github.com/krishanth7/EveryO/blob/main/examples/binary_classification.py"
+                href="https://github.com/krishanth7/EveryO/blob/v0.5.0/examples/binary_classification.py"
                 >View source
                 <svg
                   class="arrow"
@@ -444,7 +481,7 @@
             <div class="experiment-actions">
               <a
                 class="text-link"
-                href="https://github.com/krishanth7/EveryO/blob/main/examples/convolutional_network.py"
+                href="https://github.com/krishanth7/EveryO/blob/v0.5.0/examples/convolutional_network.py"
                 >View source
                 <svg
                   class="arrow"
@@ -473,7 +510,7 @@
             <div class="experiment-actions">
               <a
                 class="text-link"
-                href="https://github.com/krishanth7/EveryO/blob/main/examples/sequence_models.py"
+                href="https://github.com/krishanth7/EveryO/blob/v0.5.0/examples/sequence_models.py"
                 >View source
                 <svg
                   class="arrow"
@@ -502,7 +539,7 @@
             <div class="experiment-actions">
               <a
                 class="text-link"
-                href="https://github.com/krishanth7/EveryO/blob/main/examples/save_and_load.py"
+                href="https://github.com/krishanth7/EveryO/blob/v0.5.0/examples/save_and_load.py"
                 >View source
                 <svg
                   class="arrow"
@@ -526,12 +563,12 @@
           <article class="card experiment" data-category="tools">
             <span class="card-index">08 / OPTIONAL · ONNX EXTRA</span>
             <h2>Export to ONNX</h2>
-            <p>Export a supported CNN and check it with ONNX Runtime.</p>
+            <p>Export a supported CNN and check it with ONNX Runtime. Install the optional <code>.[onnx]</code> extra before running this script.</p>
             <code class="file-name">onnx_export.py</code>
             <div class="experiment-actions">
               <a
                 class="text-link"
-                href="https://github.com/krishanth7/EveryO/blob/main/examples/onnx_export.py"
+                href="https://github.com/krishanth7/EveryO/blob/v0.5.0/examples/onnx_export.py"
                 >View source
                 <svg
                   class="arrow"
@@ -560,7 +597,7 @@
             <div class="experiment-actions">
               <a
                 class="text-link"
-                href="https://github.com/krishanth7/EveryO/blob/main/examples/profiling.py"
+                href="https://github.com/krishanth7/EveryO/blob/v0.5.0/examples/profiling.py"
                 >View source
                 <svg
                   class="arrow"
@@ -582,14 +619,14 @@
             <span class="copy-status" role="status"></span>
           </article>
           <article class="card experiment" data-category="tools">
-            <span class="card-index">10 / CPU · OMP_NUM_THREADS=1</span>
+            <span class="card-index">10 / CPU · MULTIPROCESSING</span>
             <h2>Train across processes</h2>
             <p>Compare CPU data parallelism with a single-process run.</p>
             <code class="file-name">distributed_training.py</code>
             <div class="experiment-actions">
               <a
                 class="text-link"
-                href="https://github.com/krishanth7/EveryO/blob/main/examples/distributed_training.py"
+                href="https://github.com/krishanth7/EveryO/blob/v0.5.0/examples/distributed_training.py"
                 >View source
                 <svg
                   class="arrow"
@@ -603,7 +640,7 @@
               ><button
                 type="button"
                 class="copy-command"
-                data-command="OMP_NUM_THREADS=1 python examples/distributed_training.py"
+                data-command="python examples/distributed_training.py"
               >
                 Copy command
               </button>
@@ -618,7 +655,7 @@
             <div class="experiment-actions">
               <a
                 class="text-link"
-                href="https://github.com/krishanth7/EveryO/blob/main/examples/mixed_precision.py"
+                href="https://github.com/krishanth7/EveryO/blob/v0.5.0/examples/mixed_precision.py"
                 >View source
                 <svg
                   class="arrow"
@@ -647,7 +684,7 @@
             <div class="experiment-actions">
               <a
                 class="text-link"
-                href="https://github.com/krishanth7/EveryO/blob/main/examples/quantization.py"
+                href="https://github.com/krishanth7/EveryO/blob/v0.5.0/examples/quantization.py"
                 >View source
                 <svg
                   class="arrow"
@@ -694,7 +731,7 @@
           </div>
           <a
             class="text-link"
-            href="https://github.com/krishanth7/EveryO/blob/main/examples/binary_classification.py"
+            href="https://github.com/krishanth7/EveryO/blob/v0.5.0/examples/binary_classification.py"
             >Run the two-moons experiment
             <svg
               class="arrow"
